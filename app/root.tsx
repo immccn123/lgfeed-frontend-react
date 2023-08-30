@@ -12,7 +12,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import { MainMenu } from './compoents/menu';
+import { MainMenu } from './components/menu';
 import { Container } from 'semantic-ui-react';
 
 export const meta: V2_MetaFunction = () => {

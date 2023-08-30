@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { api } from '../utils/api';
 import { RankResponse } from "~/interfaces";
 import { AxiosResponse } from 'axios';
-import { Leaderboard } from "~/compoents/rank";
+import { Leaderboard } from "~/components/rank";
 import { Loader, Segment } from "semantic-ui-react";
 
 export default function Index() {
