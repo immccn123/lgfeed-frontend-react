@@ -1,41 +1,80 @@
-import { useState, useEffect } from "react";
+import { Component } from "react";
 import { api } from '../utils/api';
 import { RankResponse } from "~/interfaces";
 import { AxiosResponse } from 'axios';
 import { Leaderboard } from "~/components/rank";
-import { Loader, Segment } from "semantic-ui-react";
+import { Dropdown, DropdownItemProps, DropdownProps, Loader, Segment } from "semantic-ui-react";
 
-export default function Index() {
-  const [data, setData] = useState<RankResponse>({
-    cached_at: 0,
-    content: [],
-  });
+interface DragonKingState {
+  rank?: RankResponse;
+  rankUrl: string;
+}
 
-  useEffect(() => {
-    api.get<RankResponse>('/rank/dragon')
+const rankOptions: DropdownItemProps[] = [
+  {
+    key: '/rank/dragon',
+    text: '30 日',
+    value: '/rank/dragon',
+  },
+  {
+    key: '/rank/dailyDragon',
+    text: '24 小时',
+    value: '/rank/dailyDragon',
+  },
+]
+
+export default class DragonKing extends Component<{}, DragonKingState> {
+  constructor(props: {}) {
+    super(props);
+    this.state = {
+      rank: undefined,
+      rankUrl: '/rank/dragon',
+    };
+  }
+
+  getRank() {
+    api.get<RankResponse>(this.state.rankUrl)
       .then((response: AxiosResponse<RankResponse>) => {
-        setData(response.data);
+        this.setState({ rank: response.data });
       })
-      .catch(error => {
-        console.log(error);
-      })
-  }, []);
+  }
 
-  return (
-    <div>
-      <h1>龙王榜</h1>
-      <Segment>
-        {data.content.length > 0 ? (
-          <div>
-            <p>Last Updated: {(new Date(data.cached_at * 1000)).toLocaleString()}<br />Update interval: 1 hour</p>
-            <Leaderboard data={data.content || []} />
-          </div>
-        ) : (
-          <div style={{ height: 100 }}>
-            <Loader active>加载中……</Loader>
-          </div>
-        )}
-      </Segment>
-    </div>
-  );
+  handleChange = async (_: React.SyntheticEvent<HTMLElement>, { value }: DropdownProps) => {
+    this.setState({ rankUrl: value?.toString() || "", rank: undefined }, () => {
+      this.getRank();
+    });
+  }
+
+  componentDidMount() {
+    this.getRank();
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>
+          <Dropdown
+            inline
+            options={rankOptions}
+            value={this.state.rankUrl}
+            onChange={this.handleChange}
+          ></Dropdown>
+          龙王榜
+        </h1>
+        <Segment>
+          {this.state.rank ? (
+            <div>
+              <p>Last Updated: {(new Date(this.state.rank.cached_at * 1000)).toLocaleString()}<br />Update interval: 1 hour</p>
+              <Leaderboard data={this.state.rank.content || []} />
+            </div>
+          ) : (
+            <div style={{ height: 100 }}>
+              <Loader active>加载中……</Loader>
+            </div>
+          )}
+        </Segment>
+      </div>
+    );
+  }
+
 }
