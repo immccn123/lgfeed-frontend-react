@@ -132,3 +132,4 @@ dist
 build/
 
 pnpm-lock.yaml
+public/clarity.js
