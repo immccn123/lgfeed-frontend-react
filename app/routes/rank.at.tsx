@@ -3,7 +3,8 @@ import { api } from '../utils/api';
 import { RankResponse } from "~/interfaces";
 import { AxiosResponse } from 'axios';
 import { Leaderboard } from "~/components/rank";
-import { Loader, Segment } from "semantic-ui-react";
+import { Segment } from "semantic-ui-react";
+import { SegmentLoader } from "~/components/loader";
 
 export default function Index() {
   const [data, setData] = useState<RankResponse>({
@@ -25,16 +26,17 @@ export default function Index() {
     <div>
       <h1>艾特榜</h1>
       <Segment>
-        {data.content.length > 0 ? (
-          <div>
-            <p>Last Updated: {(new Date(data.cached_at * 1000)).toLocaleString()}<br />Update interval: 1 hour</p>
-            <Leaderboard data={data.content || []} />
-          </div>
-        ) : (
-          <div style={{ height: 100 }}>
-            <Loader active>加载中……</Loader>
-          </div>
-        )}
+        {
+          data.content.length > 0 ? (
+            <>
+              <p>
+                Last Updated: {(new Date(data.cached_at * 1000)).toLocaleString()}<br />
+                Update interval: 1 hour
+              </p>
+              <Leaderboard data={data.content || []} />
+            </>
+          ) : (<SegmentLoader />)
+        }
       </Segment>
     </div>
   );

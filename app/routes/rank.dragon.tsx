@@ -4,6 +4,7 @@ import { RankResponse } from "~/interfaces";
 import { AxiosResponse } from 'axios';
 import { Leaderboard } from "~/components/rank";
 import { Dropdown, DropdownItemProps, DropdownProps, Loader, Segment } from "semantic-ui-react";
+import { SegmentLoader } from "~/components/loader";
 
 interface DragonKingState {
   rank?: RankResponse;
@@ -62,16 +63,17 @@ export default class DragonKing extends Component<{}, DragonKingState> {
           龙王榜
         </h1>
         <Segment>
-          {this.state.rank ? (
-            <div>
-              <p>Last Updated: {(new Date(this.state.rank.cached_at * 1000)).toLocaleString()}<br />Update interval: 1 hour</p>
-              <Leaderboard data={this.state.rank.content || []} />
-            </div>
-          ) : (
-            <div style={{ height: 100 }}>
-              <Loader active>加载中……</Loader>
-            </div>
-          )}
+          {
+            this.state.rank ? (
+              <>
+                <p>
+                  Last Updated: {(new Date(this.state.rank.cached_at * 1000)).toLocaleString()}<br />
+                  Update interval: 1 hour
+                </p>
+                <Leaderboard data={this.state.rank.content || []} />
+              </>
+            ) : (<SegmentLoader />)
+          }
         </Segment>
       </div>
     );

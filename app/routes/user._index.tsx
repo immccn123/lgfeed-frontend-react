@@ -35,7 +35,7 @@ class UserDefault extends Component<UserDefaultProps, UserDeafultState> {
             }
             onChange={(_, { value }) => { this.setState({ uid: parseInt(value) }) }}
             value={this.state.uid}
-            placeholder='UID...' type="number" min={0} max={10000000} />
+            placeholder='UID...' type="number" min={1} max={10000000} />
         </Segment>
       </div>
     )
