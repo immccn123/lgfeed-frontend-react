@@ -59,7 +59,7 @@ class AtTool extends Component<AtToolProps, AtToolState> {
     if (!this.state.userFeeds) return <></>;
     return this.state.userFeeds.length > 0 ? (
       this.state.userFeeds.map((value) => {
-        return <SingleFeed data={createUidFeed(value, -1)}></SingleFeed>;
+        return <SingleFeed data={value}></SingleFeed>;
       })
     ) : (
       <Message>
