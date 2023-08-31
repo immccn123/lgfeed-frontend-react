@@ -26,6 +26,9 @@ dependencies:
   isbot:
     specifier: ^3.6.8
     version: 3.6.8
+  marked-react:
+    specifier: ^2.0.0
+    version: 2.0.0(react@18.2.0)
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -5261,6 +5264,21 @@ packages:
     resolution: {integrity: sha512-WWC0ZuMzCyDHYCasEGs4IPvLyTGftYwh6wIEOULOF0HXcqZlhwRzrK0w2VUlxWA98xnvb/jszw4ZSkJ6ADpM6Q==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /marked-react@2.0.0(react@18.2.0):
+    resolution: {integrity: sha512-Mp5HqfONf/RDqFtA+6xw2EjKkSbA8/xNPwyJ8ewLy/q3v21lRsPA7h+HUndVAW/yEIoebvcyzzSDpbjzL/xjZg==}
+    peerDependencies:
+      react: ^16.8.0 || >=17.0.0
+    dependencies:
+      marked: 6.0.0
+      react: 18.2.0
+    dev: false
+
+  /marked@6.0.0:
+    resolution: {integrity: sha512-7E3m/xIlymrFL5gWswIT4CheIE3fDeh51NV09M4x8iOc7NDYlyERcQMLAIHcSlrvwliwbPQ4OGD+MpPSYiQcqw==}
+    engines: {node: '>= 16'}
+    hasBin: true
+    dev: false
 
   /mdast-util-definitions@5.1.2:
     resolution: {integrity: sha512-8SVPMuHqlPME/z3gqVwWY4zVXn8lqKv/pAhC57FuJ40ImXyBpmO5ukh98zB2v7Blql2FiHjHv9LVztSIqjY+MA==}

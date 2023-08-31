@@ -1,7 +1,11 @@
 import { Link } from '@remix-run/react';
 import React from 'react';
 import { Table, Image } from 'semantic-ui-react';
-import { LeaderboardProps } from '~/interfaces';
+import { LeaderboardItem } from '~/interfaces';
+
+export interface LeaderboardProps {
+  data: LeaderboardItem[];
+}
 
 export const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
   return (

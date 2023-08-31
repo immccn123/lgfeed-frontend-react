@@ -2,16 +2,7 @@ import { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { Loader, Segment, Statistic } from "semantic-ui-react";
 import { api } from "~/utils/api";
-
-interface Statistics {
-  total: number;
-  today: number;
-}
-
-interface StatisticsResponse {
-  cached_at: number;
-  content: Statistics;
-}
+import { StatisticsResponse } from "~/interfaces";
 
 export default function Index() {
   const [data, setData] = useState<StatisticsResponse | undefined>();
