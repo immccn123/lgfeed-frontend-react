@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { api } from '../utils/api';
+import { api } from "../utils/api";
 import { RankResponse } from "~/interfaces";
-import { AxiosResponse } from 'axios';
+import { AxiosResponse } from "axios";
 import { Leaderboard } from "~/components/rank";
 import { Segment } from "semantic-ui-react";
 import { SegmentLoader } from "~/components/loader";
@@ -13,30 +13,32 @@ export default function Index() {
   });
 
   useEffect(() => {
-    api.get<RankResponse>('/rank/bePinged')
+    api
+      .get<RankResponse>("/rank/bePinged")
       .then((response: AxiosResponse<RankResponse>) => {
         setData(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
-      })
+      });
   }, []);
 
   return (
     <div>
-      <h1>铃铛榜</h1>
+      <h1>30 日铃铛榜</h1>
       <Segment>
-        {
-          data.content.length > 0 ? (
-            <>
-              <p>
-                Last Updated: {(new Date(data.cached_at * 1000)).toLocaleString()}<br />
-                Update interval: 1 hour
-              </p>
-              <Leaderboard data={data.content || []} />
-            </>
-          ) : (<SegmentLoader />)
-        }
+        {data.content.length > 0 ? (
+          <>
+            <p>
+              Last Updated: {new Date(data.cached_at * 1000).toLocaleString()}
+              <br />
+              Update interval: 1 hour
+            </p>
+            <Leaderboard data={data.content || []} />
+          </>
+        ) : (
+          <SegmentLoader />
+        )}
       </Segment>
     </div>
   );

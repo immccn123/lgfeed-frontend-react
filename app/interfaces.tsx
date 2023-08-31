@@ -4,7 +4,6 @@ export interface LeaderboardItem {
   count: number;
 }
 
-
 export interface CachedResponse<ContentType> {
   cached_at: number;
   content: ContentType;
@@ -28,6 +27,12 @@ export interface UserFeeds {
   feeds: FeedItem[];
 }
 
-export interface RankResponse extends CachedResponse<LeaderboardItem[]> { }
-export interface StatisticsResponse extends CachedResponse<Statistics> { }
-export interface UserFeedsResponse extends CachedResponse<UserFeeds> { }
+export interface SingleFeedItem extends FeedItem {
+  uid: string | number;
+}
+
+export interface RankResponse extends CachedResponse<LeaderboardItem[]> {}
+export interface StatisticsResponse extends CachedResponse<Statistics> {}
+export interface UserFeedsResponse extends CachedResponse<UserFeeds> {}
+export interface SingleFeedItemResponse
+  extends CachedResponse<SingleFeedItem> {}

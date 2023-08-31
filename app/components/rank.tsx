@@ -1,7 +1,7 @@
-import { Link } from '@remix-run/react';
-import React from 'react';
-import { Table, Image } from 'semantic-ui-react';
-import { LeaderboardItem } from '~/interfaces';
+import { Link } from "@remix-run/react";
+import React from "react";
+import { Table, Image } from "semantic-ui-react";
+import { LeaderboardItem } from "~/interfaces";
 
 export interface LeaderboardProps {
   data: LeaderboardItem[];
@@ -23,7 +23,10 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ data }) => {
           <Table.Row key={index}>
             <Table.Cell>{index + 1}</Table.Cell>
             <Table.Cell>
-              <Image src={`https://cdn.luogu.com.cn/upload/usericon/${item.uid}.png`} avatar />
+              <Image
+                src={`https://cdn.luogu.com.cn/upload/usericon/${item.uid}.png`}
+                avatar
+              />
               <Link to={"/user/" + item.uid.toString()}>{item.name}</Link>
             </Table.Cell>
             <Table.Cell>{item.count}</Table.Cell>

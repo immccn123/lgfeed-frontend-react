@@ -5,17 +5,19 @@
     "build": "remix build",
     "dev": "remix dev",
     "start": "remix-serve build",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@remix-run/css-bundle": "^1.19.3",
     "@remix-run/node": "^1.19.3",
     "@remix-run/react": "^1.19.3",
     "@remix-run/serve": "^1.19.3",
-    "@types/axios": "^0.14.0",
     "axios": "^1.5.0",
     "isbot": "^3.6.8",
     "marked-react": "^2.0.0",
+    "prism-markdown": "link:prismjs/components/prism-markdown",
+    "prismjs": "^1.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "semantic-ui-css": "^2.5.0",
@@ -24,9 +26,11 @@
   "devDependencies": {
     "@remix-run/dev": "^1.19.3",
     "@remix-run/eslint-config": "^1.19.3",
+    "@types/prismjs": "^1.26.0",
     "@types/react": "^18.0.35",
     "@types/react-dom": "^18.0.11",
     "eslint": "^8.38.0",
+    "prettier": "3.0.3",
     "typescript": "^5.0.4"
   },
   "engines": {

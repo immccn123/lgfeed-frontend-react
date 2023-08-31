@@ -13,7 +13,7 @@ interface UserDefaultProps {
 class UserDefault extends Component<UserDefaultProps, UserDeafultState> {
   constructor(props: UserDefaultProps) {
     super(props);
-    this.state = { uid: undefined }
+    this.state = { uid: undefined };
     this.goToUserPage = this.goToUserPage.bind(this);
   }
 
@@ -23,22 +23,28 @@ class UserDefault extends Component<UserDefaultProps, UserDeafultState> {
 
   render() {
     return (
-      <div>
+      <>
         <h1>用户历史查询</h1>
-        <Segment>
-          <Input
-            action={
-              <Button
-                disabled={this.state.uid == null}
-                onClick={this.goToUserPage}
-              >Go</Button>
-            }
-            onChange={(_, { value }) => { this.setState({ uid: parseInt(value) }) }}
-            value={this.state.uid}
-            placeholder='UID...' type="number" min={1} max={10000000} />
-        </Segment>
-      </div>
-    )
+        <Input
+          action={
+            <Button
+              disabled={this.state.uid == null}
+              onClick={this.goToUserPage}
+            >
+              Go
+            </Button>
+          }
+          onChange={(_, { value }) => {
+            this.setState({ uid: parseInt(value) });
+          }}
+          value={this.state.uid}
+          placeholder="UID..."
+          type="number"
+          min={1}
+          max={10000000}
+        />
+      </>
+    );
   }
 }
 

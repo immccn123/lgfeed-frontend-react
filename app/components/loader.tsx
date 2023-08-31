@@ -1,4 +1,4 @@
-import { Loader } from "semantic-ui-react"
+import { Loader } from "semantic-ui-react";
 
 export const SegmentLoader = () => {
   return (
@@ -6,4 +6,4 @@ export const SegmentLoader = () => {
       <Loader active>少女祈祷中……</Loader>
     </div>
   );
-}
+};
