@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "@remix-run/react";
 import { api } from "~/utils/api";
 import { CachedResponse, SingleFeedItem } from "~/interfaces";
 import { AxiosResponse } from "axios";
-import { SingleFeed, createUidFeed } from "~/components/feed";
+import { SingleFeed } from "~/components/feed";
 import { SegmentLoader } from "~/components/loader";
 
 interface AtToolState {
@@ -95,18 +95,6 @@ class AtTool extends Component<AtToolProps, AtToolState> {
           placeholder="用户名"
         />
         <Segment>
-          <Message negative header="实验性功能">
-            <Message.Content>
-              本功能为实验性功能。
-              <br />
-              由于后端原因，本功能存在较多问题，包括但不限于
-              <ul>
-                <li>头像显示不正确</li>
-                <li>永久链接进不去</li>
-              </ul>
-              请不要对此页面进行问题反馈。
-            </Message.Content>
-          </Message>
           {this.state.userFeeds ? (
             <Feed>{this.buildFeedList()}</Feed>
           ) : (
