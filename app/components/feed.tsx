@@ -43,7 +43,9 @@ export const SingleFeed: React.FC<SingleFeedItemProps> = ({ data }) => {
           </Feed.Date>
         </Feed.Summary>
         <Feed.Extra text className="feed-content">
-          <Markdown>{data.content}</Markdown>
+          <div id={`feed-${data.id}`}>
+            <Markdown>{data.content}</Markdown>
+          </div>
         </Feed.Extra>
         <Feed.Meta>
           <Link to={`/feed/${data.id}`}>
@@ -75,7 +77,7 @@ export const SingleFeed: React.FC<SingleFeedItemProps> = ({ data }) => {
               <Button
                 onClick={() => {
                   window.navigator.clipboard.writeText(
-                    ` || @${data.name} : ${data.content}`,
+                    ` || @${data.name} : ${document.getElementById(`feed-${data.id}`)?.innerText}`,
                   );
                 }}
               >
