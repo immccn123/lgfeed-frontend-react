@@ -14,7 +14,7 @@ export default function Index() {
       .then((response: AxiosResponse<StatisticsResponse>) => {
         setData(response.data);
       });
-  });
+  }, []);
 
   return (
     <>
