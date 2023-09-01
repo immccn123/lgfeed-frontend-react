@@ -43,8 +43,11 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
     if (prevState.senderText !== this.state.senderText) {
       this.setState({
         sender:
-          this.state.senderText?.split(",").map((value) => parseInt(value)) ||
-          [],
+          this.state.senderText == ""
+            ? []
+            : this.state.senderText
+                ?.split(",")
+                .map((value) => parseInt(value)) || [],
       });
     }
   }
