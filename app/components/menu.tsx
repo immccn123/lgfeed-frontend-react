@@ -50,6 +50,12 @@ export const MainMenu = () => {
         active={location.pathname.startsWith("/user")}
         name="用户历史"
       />
+      <Menu.Item
+        as={Link}
+        to="/search"
+        active={location.pathname.startsWith("/search")}
+        name="高级检索"
+      />
     </Menu>
   );
 };
