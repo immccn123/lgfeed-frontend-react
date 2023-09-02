@@ -119,7 +119,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
     let params: string[] = [];
 
     if (keyword) params.push(`keyword=${encodeURIComponent(keyword)}`);
-    if (sender) sender.map((value) => params.push(`sender=${value}`));
+    if (sender) sender.map((value) => params.push(`senders=${value}`));
     if (dateAfter) params.push(`date_after=${dateAfter}`);
     if (dateBefore) params.push(`date_before=${dateBefore}`);
 
