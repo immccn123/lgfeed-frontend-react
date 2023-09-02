@@ -1,6 +1,6 @@
 import React from "react";
 import { Location, useLocation, useNavigate } from "@remix-run/react";
-import { Button, Feed, Segment, Form, Message } from "semantic-ui-react";
+import { Button, Feed, Segment, Form, Message, Icon } from "semantic-ui-react";
 import { SingleFeed } from "~/components/feed";
 import { CachedResponse, SingleFeedItem } from "~/interfaces";
 import { api } from "~/utils/api";
@@ -77,7 +77,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
   }
 
   async performSearch() {
-    this.setState({ loading: true });
+    this.setState({ loading: true, noMoreContent: false });
 
     const { keyword, sender, dateAfter, dateBefore } = this.state;
 
@@ -155,12 +155,16 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
                 <Form.Input
                   fluid
                   placeholder="AK IOI"
+                  icon="search"
+                  iconPosition="left"
                   label="关键词（大小写不敏感）"
                   value={keyword}
                   onChange={(_, { value }) => this.setState({ keyword: value })}
                 />
                 <Form.Input
                   placeholder="半角逗号分隔，如 1,385633"
+                  icon="user"
+                  iconPosition="left"
                   label="发送人 UID"
                   value={senderText}
                   onChange={(_, { value }) =>
@@ -169,13 +173,15 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
                 />
               </Form.Group>
               <Button
-                primary
                 onClick={() => {
                   this.setState({ results: [] }, () => {
                     this.handleSearch();
                   });
                 }}
+                icon
+                labelPosition="left"
               >
+                <Icon name="search" />
                 Search
               </Button>
             </Form>
@@ -212,13 +218,14 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
             ></Message>
           ) : (
             <Button
-              primary
+              fluid
               onClick={() => {
                 this.loadMore();
               }}
               disabled={loading}
               style={{ marginTop: "10px" }}
             >
+              <Icon name="chevron down" />
               加载更多
             </Button>
           )}
