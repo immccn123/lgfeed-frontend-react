@@ -1,10 +1,11 @@
 import React from "react";
 import { Location, useLocation, useNavigate } from "@remix-run/react";
-import { Button, Feed, Segment, Form } from "semantic-ui-react";
+import { Button, Feed, Segment, Form, Message } from "semantic-ui-react";
 import { SingleFeed } from "~/components/feed";
 import { CachedResponse, SingleFeedItem } from "~/interfaces";
 import { api } from "~/utils/api";
 import { SegmentLoader } from "~/components/loader";
+import { AxiosResponse } from "axios";
 
 interface SearchPageProps {
   navigate: (to: string) => void;
@@ -18,6 +19,7 @@ interface SearchPageState {
   dateAfter?: Date;
   dateBefore?: Date;
   loading: boolean;
+  noMoreContent: boolean;
   results: SingleFeedItem[];
 }
 
@@ -28,6 +30,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
       keyword: "",
       sender: [],
       loading: false,
+      noMoreContent: false,
       results: [],
     };
   }
@@ -79,28 +82,28 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
     const { keyword, sender, dateAfter, dateBefore } = this.state;
 
     let params: string[] = [];
-    if (keyword) params.push(`keyword=${keyword}`);
+    if (keyword) params.push(`keyword=${encodeURIComponent(keyword)}`);
     if (sender) sender.map((value) => params.push(`senders=${value}`));
     if (dateAfter) params.push(`date_after=${dateAfter.toISOString()}`);
     if (dateBefore) params.push(`date_before=${dateBefore.toISOString()}`);
 
     const apiUrl = `/tools/search?` + params.join("&");
 
-    try {
-      const response = await api.get<CachedResponse<SingleFeedItem[]>>(apiUrl);
-      this.setState({ results: response.data.content });
-    } catch (error) {
-      console.error("Error fetching search results:", error);
-    } finally {
-      this.setState({ loading: false });
-    }
+    api
+      .get<CachedResponse<SingleFeedItem[]>>(apiUrl)
+      .then((response: AxiosResponse<CachedResponse<SingleFeedItem[]>>) => {
+        if (response.data.content.length < 50)
+          this.setState({ noMoreContent: true });
+        this.setState({ results: response.data.content });
+        this.setState({ loading: false });
+      });
   }
 
   handleSearch = () => {
     const { keyword, sender, dateAfter, dateBefore } = this.state;
     let params: string[] = [];
 
-    if (keyword) params.push(`keyword=${keyword}`);
+    if (keyword) params.push(`keyword=${encodeURIComponent(keyword)}`);
     if (sender) sender.map((value) => params.push(`sender=${value}`));
     if (dateAfter) params.push(`date_after=${dateAfter}`);
     if (dateBefore) params.push(`date_before=${dateBefore}`);
@@ -108,6 +111,34 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
     const searchUrl = `/search?` + params.join("&");
 
     this.props.navigate(searchUrl);
+  };
+
+  loadMore = () => {
+    this.setState({ loading: true });
+    const { keyword, sender, dateAfter, dateBefore, results } = this.state;
+    let params: string[] = [];
+
+    if (keyword) params.push(`keyword=${encodeURIComponent(keyword)}`);
+    if (sender) sender.map((value) => params.push(`sender=${value}`));
+    if (dateAfter) params.push(`date_after=${dateAfter}`);
+    if (dateBefore) params.push(`date_before=${dateBefore}`);
+
+    params.push(`id_before=${results.slice(-1)[0].id}`);
+
+    const apiUrl = `/tools/search?` + params.join("&");
+
+    console.log(apiUrl);
+
+    api
+      .get<CachedResponse<SingleFeedItem[]>>(apiUrl)
+      .then((response: AxiosResponse<CachedResponse<SingleFeedItem[]>>) => {
+        if (response.data.content.length < 50)
+          this.setState({ noMoreContent: true });
+        this.setState((oldState) => {
+          return { results: [...oldState.results, ...response.data.content] };
+        });
+        this.setState({ loading: false });
+      });
   };
 
   render() {
@@ -137,7 +168,14 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
                   }
                 />
               </Form.Group>
-              <Button primary onClick={this.handleSearch}>
+              <Button
+                primary
+                onClick={() => {
+                  this.setState({ results: [] }, () => {
+                    this.handleSearch();
+                  });
+                }}
+              >
                 Search
               </Button>
             </Form>
@@ -164,21 +202,27 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
             ))}
           </Feed>
           {loading ? (
-            <SegmentLoader />
+            <Segment>
+              <SegmentLoader />
+            </Segment>
+          ) : this.state.noMoreContent || results.length === 0 ? (
+            <Message
+              header="没有更多内容啦"
+              content="之后就什么也没有了哦"
+            ></Message>
           ) : (
             <Button
               primary
               onClick={() => {
-                this.performSearch();
+                this.loadMore();
               }}
               disabled={loading}
               style={{ marginTop: "10px" }}
             >
-              Load More (Not Impl Yet)
+              加载更多
             </Button>
           )}
         </Segment>
-        {/* */}
       </div>
     );
   }
