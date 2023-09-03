@@ -1,29 +1,27 @@
-import { useParams } from "@remix-run/react";
-import { AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
+import { LoaderArgs } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import { Feed, Segment } from "semantic-ui-react";
 import { SingleFeed } from "~/components/feed";
-import { SegmentLoader } from "~/components/loader";
-import { SingleFeedItem, SingleFeedItemResponse } from "~/interfaces";
-import { api } from "~/utils/api";
+import { SingleFeedItemResponse } from "~/interfaces";
+
+export const loader = async ({ params }: LoaderArgs) => {
+  const { feedId } = params;
+  const response = await fetch(
+    `https://api-lgf.imken.moe/tools/getFeed/${feedId}`,
+  );
+  const data: SingleFeedItemResponse = await response.json();
+  return data;
+};
 
 export default function FeedInfo() {
-  const [data, setData] = useState<SingleFeedItem | undefined>();
-  const { feedId } = useParams();
-  feedId as string;
-
-  useEffect(() => {
-    api
-      .get<SingleFeedItemResponse>(`/tools/getFeed/${feedId}`)
-      .then((response: AxiosResponse<SingleFeedItemResponse>) => {
-        setData(response.data.content);
-      });
-  }, []);
+  const data = useLoaderData();
 
   return (
     <>
       <Segment>
-        <Feed>{data ? <SingleFeed data={data} /> : <SegmentLoader />}</Feed>
+        <Feed>
+          <SingleFeed data={data.content} />
+        </Feed>
       </Segment>
     </>
   );

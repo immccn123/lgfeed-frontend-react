@@ -1,45 +1,36 @@
-import { AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
 import { Segment, Statistic } from "semantic-ui-react";
-import { api } from "~/utils/api";
 import { StatisticsResponse } from "~/interfaces";
-import { SegmentLoader } from "~/components/loader";
+import { useLoaderData } from "@remix-run/react";
+
+export const loader = async () => {
+  const response = await fetch(`https://api-lgf.imken.moe/statistics`);
+  const statistics: StatisticsResponse = await response.json();
+  return statistics;
+};
 
 export default function Index() {
-  const [data, setData] = useState<StatisticsResponse | undefined>();
-
-  useEffect(() => {
-    api
-      .get<StatisticsResponse>("/statistics")
-      .then((response: AxiosResponse<StatisticsResponse>) => {
-        setData(response.data);
-      });
-  }, []);
+  const data = useLoaderData();
 
   return (
     <>
       <h1>犇犇保存站</h1>
       <Segment>
         <h2>Imken 的服务器娘一共发现了……</h2>
-        {data ? (
-          <div>
-            <Statistic>
-              <Statistic.Value>{data.content.today}</Statistic.Value>
-              <Statistic.Label>24 小时内犇犇总数</Statistic.Label>
-            </Statistic>
-            <Statistic>
-              <Statistic.Value>{data.content.total}</Statistic.Value>
-              <Statistic.Label>数据库内全部犇犇数量</Statistic.Label>
-            </Statistic>
-            <p>
-              Updated at: {new Date(data.cached_at * 1000).toLocaleString()}
-              <br />
-              Update interval: 30s
-            </p>
-          </div>
-        ) : (
-          <SegmentLoader />
-        )}
+        <div>
+          <Statistic>
+            <Statistic.Value>{data.content.today}</Statistic.Value>
+            <Statistic.Label>24 小时内犇犇总数</Statistic.Label>
+          </Statistic>
+          <Statistic>
+            <Statistic.Value>{data.content.total}</Statistic.Value>
+            <Statistic.Label>数据库内全部犇犇数量</Statistic.Label>
+          </Statistic>
+          <p>
+            Updated at: {new Date(data.cached_at * 1000).toLocaleString()}
+            <br />
+            Update interval: 30s
+          </p>
+        </div>
       </Segment>
       <Segment>
         <h2>关于本站</h2>

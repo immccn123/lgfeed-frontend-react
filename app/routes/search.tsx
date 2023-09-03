@@ -77,7 +77,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
   }
 
   async performSearch() {
-    this.setState({ loading: true, noMoreContent: false });
+    this.setState({ loading: true, noMoreContent: false, results: [] });
 
     const { keyword, sender, dateAfter, dateBefore } = this.state;
 
@@ -174,9 +174,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
               </Form.Group>
               <Button
                 onClick={() => {
-                  this.setState({ results: [] }, () => {
-                    this.handleSearch();
-                  });
+                  this.handleSearch();
                 }}
                 icon
                 labelPosition="left"

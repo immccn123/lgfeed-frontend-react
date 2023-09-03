@@ -1,25 +1,20 @@
-import { ActionArgs, Response, json, redirect } from "@remix-run/node";
+import { ActionArgs, Response, redirect } from "@remix-run/node";
 import {
-  Link,
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-import axios, { AxiosError, AxiosResponse } from "axios";
 import { useState } from "react";
 import Turnstile from "react-turnstile";
 import {
   Button,
   Feed,
   Form,
-  Grid,
   Icon,
-  Input,
   Segment,
 } from "semantic-ui-react";
 import { SingleFeed } from "~/components/feed";
 import {
-  FeedCollectionRequest,
   SingleFeedItem,
   SingleFeedItemResponse,
 } from "~/interfaces";
@@ -32,7 +27,7 @@ export async function loader() {
   return process.env.TURNSTILE_SITEKEY;
 }
 
-export async function action({ request, params }: ActionArgs) {
+export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
   const token = formData.get("cf-turnstile-response")?.toString();
   const feeds = formData

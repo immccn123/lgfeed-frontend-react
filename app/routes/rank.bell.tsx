@@ -1,45 +1,28 @@
-import { useState, useEffect } from "react";
-import { api } from "../utils/api";
 import { RankResponse } from "~/interfaces";
-import { AxiosResponse } from "axios";
 import { Leaderboard } from "~/components/rank";
 import { Segment } from "semantic-ui-react";
-import { SegmentLoader } from "~/components/loader";
+import { useLoaderData } from "@remix-run/react";
+
+export const loader = async () => {
+  const response = await fetch(`https://api-lgf.imken.moe/rank/bePinged`);
+  const rank: RankResponse = await response.json();
+  return rank;
+};
 
 export default function Index() {
-  const [data, setData] = useState<RankResponse>({
-    cached_at: 0,
-    content: [],
-  });
-
-  useEffect(() => {
-    api
-      .get<RankResponse>("/rank/bePinged")
-      .then((response: AxiosResponse<RankResponse>) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  const data = useLoaderData();
 
   return (
-    <div>
+    <>
       <h1>30 日铃铛榜</h1>
       <Segment>
-        {data.content.length > 0 ? (
-          <>
-            <p>
-              Last Updated: {new Date(data.cached_at * 1000).toLocaleString()}
-              <br />
-              Update interval: 1 hour
-            </p>
-            <Leaderboard data={data.content || []} />
-          </>
-        ) : (
-          <SegmentLoader />
-        )}
+        <p>
+          Last Updated: {new Date(data.cached_at * 1000).toLocaleString()}
+          <br />
+          Update interval: 1 hour
+        </p>
+        <Leaderboard data={data.content} />
       </Segment>
-    </div>
+    </>
   );
 }

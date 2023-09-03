@@ -7,7 +7,6 @@ import {
   Dropdown,
   DropdownItemProps,
   DropdownProps,
-  Loader,
   Segment,
 } from "semantic-ui-react";
 import { SegmentLoader } from "~/components/loader";
