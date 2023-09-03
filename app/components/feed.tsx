@@ -23,9 +23,13 @@ export const createUidFeed = (
 
 export interface SingleFeedItemProps {
   data: SingleFeedItem;
+  afterActions?: React.ReactNode[];
 }
 
-export const SingleFeed: React.FC<SingleFeedItemProps> = ({ data }) => {
+export const SingleFeed: React.FC<SingleFeedItemProps> = ({
+  data,
+  afterActions,
+}) => {
   return (
     <Feed.Event>
       <Feed.Label>
@@ -48,6 +52,7 @@ export const SingleFeed: React.FC<SingleFeedItemProps> = ({ data }) => {
           </div>
         </Feed.Extra>
         <Feed.Meta>
+          <span>#{data.id} </span>
           <Link to={`/feed/${data.id}`}>
             <Icon name="linkify" />
             Permalink
@@ -77,7 +82,9 @@ export const SingleFeed: React.FC<SingleFeedItemProps> = ({ data }) => {
               <Button
                 onClick={() => {
                   window.navigator.clipboard.writeText(
-                    ` || @${data.name} : ${document.getElementById(`feed-${data.id}`)?.innerText}`,
+                    ` || @${data.name} : ${document.getElementById(
+                      `feed-${data.id}`,
+                    )?.innerText}`,
                   );
                 }}
               >
@@ -90,6 +97,7 @@ export const SingleFeed: React.FC<SingleFeedItemProps> = ({ data }) => {
               </Button>,
             ]}
           />
+          {afterActions !== undefined ? <>{...afterActions}</> : <></>}
         </Feed.Meta>
       </Feed.Content>
     </Feed.Event>
