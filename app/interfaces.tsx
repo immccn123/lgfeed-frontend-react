@@ -31,6 +31,11 @@ export interface SingleFeedItem extends FeedItem {
   uid: string | number;
 }
 
+export interface FeedCollectionRequest {
+  token: string;
+  feeds: string;
+}
+
 export interface RankResponse extends CachedResponse<LeaderboardItem[]> {}
 export interface StatisticsResponse extends CachedResponse<Statistics> {}
 export interface UserFeedsResponse extends CachedResponse<UserFeeds> {}
