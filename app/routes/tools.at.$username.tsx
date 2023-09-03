@@ -69,6 +69,13 @@ class AtTool extends Component<AtToolProps, AtToolState> {
     );
   }
 
+  handleSearch() {
+    this.setState({ confirmUsername: this.state.username }, () => {
+      this.goToUserPage();
+      this.getUserFeed();
+    });
+  }
+
   render() {
     return (
       <div>
@@ -77,12 +84,7 @@ class AtTool extends Component<AtToolProps, AtToolState> {
           action={
             <Button
               disabled={this.state.username == null}
-              onClick={() => {
-                this.setState({ confirmUsername: this.state.username }, () => {
-                  this.goToUserPage();
-                  this.getUserFeed();
-                });
-              }}
+              onClick={this.handleSearch}
               loading={this.state.userFeeds === undefined}
             >
               Go

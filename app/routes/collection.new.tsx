@@ -1,30 +1,36 @@
-import { ActionArgs, Response, redirect } from "@remix-run/node";
+import { ActionArgs, LoaderArgs, Response, redirect } from "@remix-run/node";
 import {
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-import { useState } from "react";
+import { AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
 import Turnstile from "react-turnstile";
-import {
-  Button,
-  Feed,
-  Form,
-  Icon,
-  Segment,
-} from "semantic-ui-react";
+import { Button, Feed, Form, Icon, Message, Segment } from "semantic-ui-react";
 import { SingleFeed } from "~/components/feed";
-import {
-  SingleFeedItem,
-  SingleFeedItemResponse,
-} from "~/interfaces";
-import { createCollection } from "~/models/collection.server";
+import { CachedResponse, SingleFeedItem, SingleFeedItemResponse } from "~/interfaces";
+import { createCollection, getCollection } from "~/models/collection.server";
 import { validateTurnstileToken } from "~/turnstile.server";
 import { api } from "~/utils/api";
 import { randomString } from "~/utils/rand";
 
-export async function loader() {
-  return process.env.TURNSTILE_SITEKEY;
+export async function loader({ request }: LoaderArgs) {
+  const url = new URL(request.url);
+  const from = url.searchParams.get("from");
+  let feeds: number[] = [];
+  if (from) {
+    const collection = await getCollection(from);
+    if (collection === null) {
+      throw new Response("Collection Not Found", { status: 404 });
+    }
+    feeds = collection.feeds;
+  }
+  return {
+    SITEKEY: process.env.TURNSTILE_SITEKEY,
+    feeds,
+    feedLabel: from,
+  };
 }
 
 export async function action({ request }: ActionArgs) {
@@ -51,7 +57,7 @@ export default function CreateCollectionPage() {
   const [token, setToken] = useState<string | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const SITEKEY = useLoaderData();
+  const { SITEKEY, feeds: loaderFeed, feedLabel } = useLoaderData();
 
   const addFeed = async () => {
     try {
@@ -86,6 +92,64 @@ export default function CreateCollectionPage() {
     setFeedContent(newFeedContent);
   };
 
+  useEffect(() => {
+    if (feedLabel === null) return;
+    setFeeds(loaderFeed);
+    api.post(`/tools/collection/${feedLabel}`, loaderFeed)
+      .then((response: AxiosResponse<CachedResponse<SingleFeedItem[]>>) => {
+        setFeedContent(response.data.content);
+        setFeeds(loaderFeed);
+      })
+  }, [feedLabel]);
+
+  const renderFeeds = () => {
+    return feedContent.map((value, index) => {
+      return (
+        <Segment>
+          <Feed>
+            <SingleFeed
+              data={value}
+              afterActions={[
+                <a onClick={() => removeFeed(index)}>
+                  <Icon name="remove" />
+                  Remove
+                </a>,
+                <a
+                  onClick={() => swapFeed(index - 1, index)}
+                  hidden={index === 0}
+                >
+                  <Icon name="arrow up" />
+                  Up
+                </a>,
+                <a
+                  onClick={() => swapFeed(index + 1, index)}
+                  hidden={index + 1 === feedContent.length}
+                >
+                  <Icon name="arrow down" />
+                  Down
+                </a>,
+              ]}
+            />
+          </Feed>
+        </Segment>
+      );
+    });
+  };
+
+  const sortList = (
+    compare: (a: SingleFeedItem, b: SingleFeedItem) => number,
+  ) => {
+    const newFeedContent = [...feedContent];
+    newFeedContent.sort(compare);
+    setFeedContent(newFeedContent);
+    setFeeds(newFeedContent.map((value) => value.id));
+  };
+
+  const sortNewToOld = (a: SingleFeedItem, b: SingleFeedItem) =>
+    new Date(b.time).getTime() - new Date(a.time).getTime();
+  const sortOldToNew = (a: SingleFeedItem, b: SingleFeedItem) =>
+    new Date(a.time).getTime() - new Date(b.time).getTime();
+
   return (
     <Segment>
       <h1>创建合订本</h1>
@@ -116,49 +180,33 @@ export default function CreateCollectionPage() {
           type="hidden"
           name="feeds"
         />
-        <Feed>
-          {feedContent.map((value, index) => {
-            return (
-              <>
-                <SingleFeed
-                  data={value}
-                  afterActions={[
-                    <a
-                      onClick={() => {
-                        removeFeed(index);
-                      }}
-                    >
-                      <Icon name="remove" />
-                      Remove
-                    </a>,
-                    <a
-                      onClick={() => {
-                        swapFeed(index - 1, index);
-                      }}
-                      hidden={index === 0}
-                    >
-                      <Icon name="arrow up" />
-                      Up
-                    </a>,
-                    <a
-                      onClick={() => {
-                        swapFeed(index + 1, index);
-                      }}
-                      hidden={index + 1 === feedContent.length}
-                    >
-                      <Icon name="arrow down" />
-                      Down
-                    </a>,
-                  ]}
-                />
-              </>
-            );
-          })}
-        </Feed>
-        <Turnstile
-          sitekey={SITEKEY || ""}
-          onVerify={(token) => setToken(token)}
-        />
+        <div>
+          {feedContent.length !== 0 ? (
+            <>
+              <span>Sort By: </span>
+              <Button.Group>
+                <Button type="button" onClick={() => sortList(sortNewToOld)}>
+                  New to Old
+                </Button>
+                <Button type="button" onClick={() => sortList(sortOldToNew)}>
+                  Old to New
+                </Button>
+              </Button.Group>
+              {renderFeeds()}
+            </>
+          ) : (
+            <Message
+              header="Tips"
+              content="输入犇犇 ID（单条犇犇左下角 # 开头的是 ID），点击“添加”按钮即可往合订本中加入犇犇！"
+            ></Message>
+          )}
+        </div>
+        <div style={{ padding: 10 }}>
+          <Turnstile
+            sitekey={SITEKEY || ""}
+            onVerify={(token) => setToken(token)}
+          />
+        </div>
         <Button fluid type="submit" disabled={token === undefined}>
           <Icon name="add" />
           创建

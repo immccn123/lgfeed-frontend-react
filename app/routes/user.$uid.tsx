@@ -119,6 +119,14 @@ class UserDefault extends Component<UserDefaultProps, UserInfoState> {
     );
   }
 
+  handleSearch() {
+    this.setState({ confirmUid: this.state.uid }, () => {
+      this.goToUserPage();
+      this.getUserFeed();
+      this.getHistoryUsernames();
+    });
+  }
+
   render() {
     return (
       <div>
@@ -127,13 +135,7 @@ class UserDefault extends Component<UserDefaultProps, UserInfoState> {
           action={
             <Button
               disabled={this.state.uid == null}
-              onClick={() => {
-                this.setState({ confirmUid: this.state.uid }, () => {
-                  this.goToUserPage();
-                  this.getUserFeed();
-                  this.getHistoryUsernames();
-                });
-              }}
+              onClick={this.handleSearch}
               loading={this.state.userFeeds === undefined}
             >
               Go

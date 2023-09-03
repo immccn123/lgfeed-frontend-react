@@ -1,11 +1,12 @@
 import { LoaderArgs, Response } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
+  Link,
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-import { Feed, List, Segment } from "semantic-ui-react";
+import { Button, Feed, Icon, Segment } from "semantic-ui-react";
 import { SingleFeed } from "~/components/feed";
 import { CachedResponse, SingleFeedItem } from "~/interfaces";
 import { getCollection } from "~/models/collection.server";
@@ -37,6 +38,10 @@ export default function CollectionPage() {
   return (
     <Segment>
       <h1>合订本 #{data.collection.label}</h1>
+      <Button as={Link} to={`/collection/new?from=${data.collection.label}`}>
+        <Icon name="copy" />
+        复制并编辑
+      </Button>
       <Feed>
         {data.feeds.map((value) => {
           return <SingleFeed data={value} />;
