@@ -1,6 +1,6 @@
-import { Segment, Statistic } from "semantic-ui-react";
+import { Button, Icon, Segment, Statistic } from "semantic-ui-react";
 import { StatisticsResponse } from "~/interfaces";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 
 export const loader = async () => {
   const response = await fetch(`https://api-lgf.imken.moe/statistics`);
@@ -30,6 +30,10 @@ export default function Index() {
             <br />
             Update interval: 30s
           </p>
+          <Button as={Link} to="/statistics">
+            <Icon name="chart pie" />
+            查看更多统计信息
+          </Button>
         </div>
       </Segment>
       <Segment>

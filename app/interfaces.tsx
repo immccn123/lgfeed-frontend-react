@@ -36,8 +36,14 @@ export interface FeedCollectionRequest {
   feeds: string;
 }
 
+export interface StatisticsMap {
+  time: string | Date;
+  count: number;
+}
+
 export interface RankResponse extends CachedResponse<LeaderboardItem[]> {}
 export interface StatisticsResponse extends CachedResponse<Statistics> {}
 export interface UserFeedsResponse extends CachedResponse<UserFeeds> {}
 export interface SingleFeedItemResponse
   extends CachedResponse<SingleFeedItem> {}
+export interface StatisticsMapResponse extends CachedResponse<StatisticsMap> {}
