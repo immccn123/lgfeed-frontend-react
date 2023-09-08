@@ -10,12 +10,19 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
+  useNavigation,
+  useRouteError,
 } from "@remix-run/react";
+import { useEffect } from "react";
 
 import { MainMenu } from "./components/menu";
 import { Footer } from "./components/footer";
-import { Container } from "semantic-ui-react";
+import { Container, Segment } from "semantic-ui-react";
 import { Announcement } from "./components/announcement";
+
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 
 export const meta: V2_MetaFunction = () => {
   return [{ title: "犇犇黑历史" }];
@@ -26,6 +33,16 @@ export const links: LinksFunction = () => [
 ];
 
 export default function App() {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (navigation.state === "loading" || navigation.state === "submitting") {
+      NProgress.start();
+    } else {
+      NProgress.done();
+    }
+  }, [navigation.state]);
+
   return (
     <html lang="zh-cn">
       <head>
@@ -50,3 +67,45 @@ export default function App() {
     </html>
   );
 }
+
+export const ErrorBoundary = () => {
+  const error = useRouteError();
+
+  if (error instanceof Error) {
+    return (
+      <Segment>
+        <h1>出错了</h1>
+        <p>
+          错误提示：<pre>{error.message}</pre>
+        </p>
+      </Segment>
+    );
+  }
+
+  if (!isRouteErrorResponse(error)) {
+    return (
+      <Segment>
+        <h1>对不起！出错了！</h1>
+        <p>这是一个未知错误。</p>
+      </Segment>
+    );
+  }
+
+  if (error.status === 404) {
+    return (
+      <Segment>
+        <h1>出错了</h1>
+        <p>合订本未找到。</p>
+      </Segment>
+    );
+  }
+
+  return (
+    <Segment>
+      <h1>出错了</h1>
+      <p>
+        错误提示：<pre>{error.statusText}</pre>
+      </p>
+    </Segment>
+  );
+};

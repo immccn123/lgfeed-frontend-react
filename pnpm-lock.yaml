@@ -29,6 +29,9 @@ dependencies:
   marked-react:
     specifier: ^2.0.0
     version: 2.0.0(react@18.2.0)
+  nprogress:
+    specifier: ^0.2.0
+    version: 0.2.0
   prism-markdown:
     specifier: link:prismjs/components/prism-markdown
     version: link:prismjs/components/prism-markdown
@@ -64,6 +67,9 @@ devDependencies:
   '@remix-run/eslint-config':
     specifier: ^1.19.3
     version: 1.19.3(eslint@8.38.0)(react@18.2.0)(typescript@5.0.4)
+  '@types/nprogress':
+    specifier: ^0.2.0
+    version: 0.2.0
   '@types/prismjs':
     specifier: ^1.26.0
     version: 1.26.0
@@ -2380,6 +2386,10 @@ packages:
 
   /@types/node@20.5.7:
     resolution: {integrity: sha512-dP7f3LdZIysZnmvP3ANJYTSwg+wLLl8p7RqniVlV7j+oXSXAbt9h0WIBFmJy5inWZoX9wZN6eXx+YXd9Rh3RBA==}
+    dev: true
+
+  /@types/nprogress@0.2.0:
+    resolution: {integrity: sha512-1cYJrqq9GezNFPsWTZpFut/d4CjpZqA0vhqDUPFWYKF1oIyBz5qnoYMzR+0C/T96t3ebLAC1SSnwrVOm5/j74A==}
     dev: true
 
   /@types/prismjs@1.26.0:
@@ -6100,6 +6110,10 @@ packages:
     dependencies:
       path-key: 3.1.1
     dev: true
+
+  /nprogress@0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
+    dev: false
 
   /object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
