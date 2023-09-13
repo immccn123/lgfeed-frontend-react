@@ -35,7 +35,7 @@
     "@types/nprogress": "^0.2.0",
     "@types/prismjs": "^1.26.0",
     "@types/react": "^18.2.21",
-    "@types/react-dom": "^18.0.11",
+    "@types/react-dom": "^18.2.7",
     "eslint": "^8.38.0",
     "prettier": "3.0.3",
     "prisma": "^5.3.0",
