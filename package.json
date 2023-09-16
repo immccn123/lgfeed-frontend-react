@@ -10,7 +10,7 @@
     "vercel-build": "prisma generate && prisma migrate deploy && remix build"
   },
   "dependencies": {
-    "@prisma/client": "5.3.0",
+    "@prisma/client": "5.3.1",
     "@remix-run/css-bundle": "^2.0.0",
     "@remix-run/node": "^1.19.3",
     "@remix-run/react": "^2.0.0",
