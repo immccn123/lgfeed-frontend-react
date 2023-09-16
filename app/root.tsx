@@ -95,7 +95,7 @@ export const ErrorBoundary = () => {
     return (
       <Segment>
         <h1>出错了</h1>
-        <p>合订本未找到。</p>
+        <p>未找到。</p>
       </Segment>
     );
   }
