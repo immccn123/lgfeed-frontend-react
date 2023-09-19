@@ -7,3 +7,5 @@
 站点地址：<https://benben.imken.moe/>
 
 部分内容是服务端渲染的
+
+你站一直都是 Imken 一个人运营

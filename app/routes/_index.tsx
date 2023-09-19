@@ -39,13 +39,12 @@ export default function Index() {
       <Segment>
         <h2>关于本站</h2>
         <p>使用 React + Semantic 编写的船新犇犇保存站前端壳子！</p>
-        <p>不对数据完整性和正确性负责</p>
-        <p>现在新站大概有了原站的一大部分功能 但是有些细节还有问题</p>
-        <p>不知道什么时候可以写完</p>
+        <p>不对数据完整性和正确性负责 有一段时间的数据好像乱了自己看着办懒得处理了</p>
+        <p>还有，你站一直都是 Imken 一个人运营，而且免费对外提供 API 接口（https://api-lgf.imken.moe/docs），要用的自取</p>
         <p>咕咕咕</p>
         <p>—— By Imken</p>
         <p>
-          <a href="https://sponsor.imken.moe">饿饿，饭饭</a>
+          如果可以的话，<a href="https://sponsor.imken.moe">支持一下谢谢喵！</a>
         </p>
       </Segment>
     </>
