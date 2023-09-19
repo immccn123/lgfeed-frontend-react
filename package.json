@@ -16,7 +16,7 @@
     "@remix-run/react": "^2.0.0",
     "@remix-run/serve": "^2.0.0",
     "axios": "^1.5.0",
-    "isbot": "^3.6.13",
+    "isbot": "^3.7.0",
     "marked-react": "^2.0.0",
     "nprogress": "^0.2.0",
     "prism-markdown": "link:prismjs/components/prism-markdown",
