@@ -12,8 +12,8 @@ dependencies:
     specifier: ^2.0.1
     version: 2.0.1
   '@remix-run/node':
-    specifier: ^2.0.0
-    version: 2.0.0(typescript@5.2.2)
+    specifier: ^2.0.1
+    version: 2.0.1(typescript@5.2.2)
   '@remix-run/react':
     specifier: ^2.0.1
     version: 2.0.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
@@ -1299,26 +1299,6 @@ packages:
       express: 4.18.2
       typescript: 5.2.2
 
-  /@remix-run/node@2.0.0(typescript@5.2.2):
-    resolution: {integrity: sha512-wICp1W3Aue6CojlfSQZoKCQYnJ+7U/kk0poqQr6+CNihY5QPStzOce3hNYwB9NweagbZsMf80x47m6ef6a9psQ==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      typescript: ^5.1.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      '@remix-run/server-runtime': 2.0.0(typescript@5.2.2)
-      '@remix-run/web-fetch': 4.4.0
-      '@remix-run/web-file': 3.1.0
-      '@remix-run/web-stream': 1.1.0
-      '@web3-storage/multipart-parser': 1.0.0
-      cookie-signature: 1.2.1
-      source-map-support: 0.5.21
-      stream-slice: 0.1.2
-      typescript: 5.2.2
-    dev: false
-
   /@remix-run/node@2.0.1(typescript@5.2.2):
     resolution: {integrity: sha512-pWsbmkNRb7azYomh1IGSKeW68hkwBBp6L2AWvfKSq2r2MJXHCzqgAJEc0uWkEUx6OtFbVNOg27g/cMCyKvrjIA==}
     engines: {node: '>=18.0.0'}
@@ -1395,6 +1375,7 @@ packages:
       source-map: 0.7.4
       type-fest: 4.3.1
       typescript: 5.2.2
+    dev: true
 
   /@remix-run/server-runtime@2.0.1(typescript@5.2.2):
     resolution: {integrity: sha512-xCW2aw9EILx7F3orEHN2fcpEkNzZTRU8VzP7gS9pmHP45qteFqsY5Qg2/dnF17royWmeeBNhnXaJOgb76W1KEA==}
@@ -1419,19 +1400,6 @@ packages:
     dependencies:
       '@remix-run/web-stream': 1.1.0
       web-encoding: 1.1.5
-
-  /@remix-run/web-fetch@4.4.0:
-    resolution: {integrity: sha512-j6vswnGteHd3N5Y2lb5sRKP+NxChVCd1goXRDAanTMFfgxsCV/1ItlJFY8G/F4AESkDydcZ6tz6gAsttkGDiMA==}
-    engines: {node: ^10.17 || >=12.3}
-    dependencies:
-      '@remix-run/web-file': 3.1.0
-      '@remix-run/web-form-data': 3.1.0
-      '@remix-run/web-stream': 1.1.0
-      '@web3-storage/multipart-parser': 1.0.0
-      abort-controller: 3.0.0
-      data-uri-to-buffer: 3.0.1
-      mrmime: 1.0.1
-    dev: false
 
   /@remix-run/web-fetch@4.4.1:
     resolution: {integrity: sha512-xMceEGn2kvfeWS91nHSOhEQHPGgjFnmDVpWFZrbWPVdiTByMZIn421/tdSF6Kd1RsNsY+5Iwt3JFEKZHAcMQHw==}
