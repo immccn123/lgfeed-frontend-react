@@ -12,7 +12,7 @@ export const MainMenu = () => {
         active={location.pathname === "/"}
         name="首页"
       />
-      <Dropdown item text="排行榜">
+      {/* <Dropdown item text="排行榜">
         <Dropdown.Menu>
           <Menu.Item
             as={Link}
@@ -33,7 +33,7 @@ export const MainMenu = () => {
             name="艾特榜"
           />
         </Dropdown.Menu>
-      </Dropdown>
+      </Dropdown> */}
       <Dropdown item text="工具">
         <Dropdown.Menu>
           <Menu.Item

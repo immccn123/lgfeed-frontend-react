@@ -37,6 +37,13 @@ export default function Index() {
         </div>
       </Segment>
       <Segment>
+        <h2>需要您注意的</h2>
+        <ul>
+          <li>我们关闭了所有的排行榜。</li>
+          <li>近期站点访问可能不稳定。部分地区/运营商无法访问。</li>
+        </ul>
+      </Segment>
+      <Segment>
         <h2>关于本站</h2>
         <p>使用 React + Semantic 编写的船新犇犇保存站前端壳子！</p>
         <p>不对数据完整性和正确性负责 有一段时间的数据好像乱了自己看着办懒得处理了ww</p>
