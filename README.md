@@ -4,7 +4,7 @@
 
 除了一点 Prettier 规则外基本上没有项目规范。顺便让大家看下我下的史山（x）
 
-站点地址：<https://benben.imken.moe/>
+站点地址：<https://benben.imken.dev/>
 
 部分内容是服务端渲染的
 

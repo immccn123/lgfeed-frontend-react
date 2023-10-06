@@ -14,12 +14,12 @@ export const loader = async () => {
   const now = new Date().getTime();
   const [responseHour, responseDays] = await Promise.all([
     fetch(
-      `https://api-lgf.imken.moe/statistics/24h?date=${
+      `https://api-lgf.imken.dev/statistics/24h?date=${
         Math.floor(now / 60 / 60) * 3600
       }`,
     ),
     fetch(
-      `https://api-lgf.imken.moe/statistics/60d?date=${
+      `https://api-lgf.imken.dev/statistics/60d?date=${
         Math.floor(now / 60 / 60) * 3600
       }`,
     ),

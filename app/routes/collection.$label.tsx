@@ -18,7 +18,7 @@ export const loader = async ({ params }: LoaderArgs) => {
     throw new Response("Collection Not Found", { status: 404 });
   }
   const response = await fetch(
-    `https://api-lgf.imken.moe/tools/collection/${label}`,
+    `https://api-lgf.imken.dev/tools/collection/${label}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },

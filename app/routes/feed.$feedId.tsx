@@ -7,7 +7,7 @@ import { SingleFeedItemResponse } from "~/interfaces";
 export const loader = async ({ params }: LoaderArgs) => {
   const { feedId } = params;
   const response = await fetch(
-    `https://api-lgf.imken.moe/tools/getFeed/${feedId}`,
+    `https://api-lgf.imken.dev/tools/getFeed/${feedId}`,
   );
   const data: SingleFeedItemResponse = await response.json();
   return data;

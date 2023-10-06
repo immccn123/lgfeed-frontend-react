@@ -3,7 +3,7 @@ import { StatisticsResponse } from "~/interfaces";
 import { Link, useLoaderData } from "@remix-run/react";
 
 export const loader = async () => {
-  const response = await fetch(`https://api-lgf.imken.moe/statistics`);
+  const response = await fetch(`https://api-lgf.imken.dev/statistics`);
   const statistics: StatisticsResponse = await response.json();
   return statistics;
 };
