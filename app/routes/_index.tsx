@@ -39,6 +39,7 @@ export default function Index() {
       <Segment>
         <h2>需要您注意的</h2>
         <ul>
+          <li>备用网址 https://aws-benben.imken.dev</li>
           <li>我们关闭了所有的排行榜。</li>
           <li>近期站点访问可能不稳定。部分地区/运营商无法访问。</li>
         </ul>
