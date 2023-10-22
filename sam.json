@@ -1,7 +1,7 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
   "Transform": "AWS::Serverless-2016-10-31",
-  "Description": "Exported by architect/package@8.5.2 on 2023-10-22T14:15:56.078Z",
+  "Description": "Exported by architect/package@8.5.2 on 2023-10-22T23:35:19.826Z",
   "Resources": {
     "Role": {
       "Type": "AWS::IAM::Role",

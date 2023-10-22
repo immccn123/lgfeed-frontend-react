@@ -36,7 +36,6 @@
   },
   "devDependencies": {
     "@architect/architect": "^10.14.2",
-    "@architect/plugin-remix": "^0.2.3",
     "@remix-run/dev": "^2.1.0",
     "@remix-run/eslint-config": "^2.1.0",
     "@types/nprogress": "^0.2.2",

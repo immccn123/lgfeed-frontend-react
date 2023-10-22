@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Exported by architect/package@8.5.2 on 2023-10-22T14:15:56.078Z
+Description: Exported by architect/package@8.5.2 on 2023-10-22T23:35:19.826Z
 Resources:
   Role:
     Type: AWS::IAM::Role
@@ -131,7 +131,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      CodeUri: s3://lgf-frontend-react-cfn-deployments-44610/d8504ef0fe101185579a818e74a84251
+      CodeUri: s3://lgf-frontend-react-cfn-deployments-44610/94b0452d6dad3867ed403a946e75f7e1
       Runtime: nodejs18.x
       Architectures:
       - x86_64
