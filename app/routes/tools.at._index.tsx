@@ -27,7 +27,7 @@ class AtTool extends Component<AtToolProps, AtToolState> {
   render() {
     return (
       <div>
-        <h1>谁在拍我铃铛？（近 24 小时）</h1>
+        <h1>被 @ 查询（24 h）</h1>
         <Input
           action={
             <Button

@@ -1,7 +1,7 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
   "Transform": "AWS::Serverless-2016-10-31",
-  "Description": "Exported by architect/package@8.5.2 on 2023-10-22T23:35:19.826Z",
+  "Description": "Exported by architect/package@8.5.2 on 2023-10-23T07:05:50.913Z",
   "Resources": {
     "Role": {
       "Type": "AWS::IAM::Role",
@@ -244,8 +244,7 @@
               "Ref": "StaticBucket"
             },
             "ARC_STATIC_SPA": false,
-            "ARC_APP_SECRET": "ImkenMoeQwQNya520",
-            "DATABASE_URL": "postgresql://postgres:h2R5xqOmkS0RXy6V@db.fhmgxnfkyugzdhvahtuo.supabase.co:5432/postgres?schema=production&connection_limit=1&pool_timeout=0"
+            "ARC_APP_SECRET": "ImkenMoeQwQNya520"
           }
         },
         "Role": {

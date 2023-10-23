@@ -13,7 +13,7 @@ import { useNavigate, useParams } from "@remix-run/react";
 import { api } from "~/utils/api";
 import { CachedResponse, UserFeeds, UserFeedsResponse } from "~/interfaces";
 import { AxiosResponse } from "axios";
-import { SingleFeed, createUidFeed } from "~/components/feed";
+import { Benben, createUidFeed } from "~/components/feed";
 import { SegmentLoader } from "~/components/loader";
 
 interface UserInfoState {
@@ -103,13 +103,11 @@ class UserDefault extends Component<UserDefaultProps, UserInfoState> {
   }
 
   buildFeedList() {
-    if (!this.state.userFeeds) return <></>;
+    if (!this.state.userFeeds) return null;
     return this.state.userFeeds.feeds.length > 0 ? (
       this.state.userFeeds.feeds.map((value) => {
         const { confirmUid } = this.state;
-        return (
-          <SingleFeed data={createUidFeed(value, confirmUid || 0)}></SingleFeed>
-        );
+        return <Benben data={createUidFeed(value, confirmUid || 0)}></Benben>;
       })
     ) : (
       <Message>
@@ -159,9 +157,7 @@ class UserDefault extends Component<UserDefaultProps, UserInfoState> {
               <h2>曾用名</h2>
               <NameList data={this.state.historyUsernames} />
             </Segment>
-          ) : (
-            <></>
-          )}
+          ) : null}
         </Transition>
         <Segment>
           <h2>用户历史</h2>

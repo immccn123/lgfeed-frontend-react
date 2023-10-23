@@ -1,6 +1,6 @@
 import { Divider, Grid } from "semantic-ui-react";
 
-export const Footer = () => {
+export const Footer: React.FC<{ arcEnv?: string }> = ({ arcEnv }) => {
   return (
     <>
       <Divider />
@@ -38,9 +38,24 @@ export const Footer = () => {
             <p style={{ textAlign: "right", margin: 40 }}>
               Node Environment: {process.env.NODE_ENV}
               <br />
+              {arcEnv ? (
+                <>
+                  Architect Environment: {arcEnv}
+                  <br />
+                </>
+              ) : null}
               Built with Semantic UI and React (using Remix Framework)
               <br />
-              Powered by <a href="https://vercel.com">▲Vercel</a>
+              {arcEnv ? (
+                <>
+                  Powered by{" "}
+                  <a href="https://aws.amazon.com/lambda">AWS Lambda</a>
+                </>
+              ) : (
+                <>
+                  Powered by <a href="https://vercel.com">▲Vercel</a>
+                </>
+              )}
             </p>
           </Grid.Column>
         </Grid>

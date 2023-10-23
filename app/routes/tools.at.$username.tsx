@@ -2,18 +2,18 @@ import { Component } from "react";
 import { Button, Feed, Input, Message, Segment } from "semantic-ui-react";
 import { useNavigate, useParams } from "@remix-run/react";
 import { api } from "~/utils/api";
-import { CachedResponse, SingleFeedItem } from "~/interfaces";
+import { CachedResponse, BenbenItem } from "~/interfaces";
 import { AxiosResponse } from "axios";
-import { SingleFeed } from "~/components/feed";
+import { Benben } from "~/components/feed";
 import { SegmentLoader } from "~/components/loader";
 
 interface AtToolState {
   username?: string;
   confirmUsername?: string;
-  userFeeds?: SingleFeedItem[];
+  userFeeds?: BenbenItem[];
 }
 
-interface AtResponse extends CachedResponse<SingleFeedItem[]> {}
+interface AtResponse extends CachedResponse<BenbenItem[]> {}
 
 interface AtToolProps {
   navigate: (to: string) => void;
@@ -56,10 +56,10 @@ class AtTool extends Component<AtToolProps, AtToolState> {
   }
 
   buildFeedList() {
-    if (!this.state.userFeeds) return <></>;
+    if (!this.state.userFeeds) return null;
     return this.state.userFeeds.length > 0 ? (
       this.state.userFeeds.map((value) => {
-        return <SingleFeed data={value}></SingleFeed>;
+        return <Benben data={value}></Benben>;
       })
     ) : (
       <Message>

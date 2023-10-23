@@ -1,8 +1,8 @@
 import React from "react";
 import { Location, useLocation, useNavigate } from "@remix-run/react";
 import { Button, Feed, Segment, Form, Message, Icon } from "semantic-ui-react";
-import { SingleFeed } from "~/components/feed";
-import { CachedResponse, SingleFeedItem } from "~/interfaces";
+import { Benben } from "~/components/feed";
+import { CachedResponse, BenbenItem as BenbenItem } from "~/interfaces";
 import { api } from "~/utils/api";
 import { SegmentLoader } from "~/components/loader";
 import { AxiosResponse } from "axios";
@@ -20,7 +20,7 @@ interface SearchPageState {
   dateBefore?: Date;
   loading: boolean;
   noMoreContent: boolean;
-  results: SingleFeedItem[];
+  results: BenbenItem[];
 }
 
 class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
@@ -90,8 +90,8 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
     const apiUrl = `/tools/search?` + params.join("&");
 
     api
-      .get<CachedResponse<SingleFeedItem[]>>(apiUrl)
-      .then((response: AxiosResponse<CachedResponse<SingleFeedItem[]>>) => {
+      .get<CachedResponse<BenbenItem[]>>(apiUrl)
+      .then((response: AxiosResponse<CachedResponse<BenbenItem[]>>) => {
         if (response.data.content.length < 50)
           this.setState({ noMoreContent: true });
         this.setState({ results: response.data.content });
@@ -130,8 +130,8 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
     console.log(apiUrl);
 
     api
-      .get<CachedResponse<SingleFeedItem[]>>(apiUrl)
-      .then((response: AxiosResponse<CachedResponse<SingleFeedItem[]>>) => {
+      .get<CachedResponse<BenbenItem[]>>(apiUrl)
+      .then((response: AxiosResponse<CachedResponse<BenbenItem[]>>) => {
         if (response.data.content.length < 50)
           this.setState({ noMoreContent: true });
         this.setState((oldState) => {
@@ -149,7 +149,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
       <div>
         <h1>犇犇检索</h1>
         <div>
-          <Segment>
+          <div>
             <Form>
               <Form.Group widths="equal">
                 <Form.Input
@@ -183,7 +183,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
                 Search
               </Button>
             </Form>
-          </Segment>
+          </div>
           {/* <Input
             placeholder="Date After"
             value={dateAfter?.toISOString() || ""}
@@ -199,10 +199,10 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
             }
           /> */}
         </div>
-        <Segment>
+        <div style={{ paddingTop: "20px" }}>
           <Feed>
             {results.map((value) => (
-              <SingleFeed data={value} />
+              <Benben data={value} />
             ))}
           </Feed>
           {loading ? (
@@ -227,7 +227,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
               加载更多
             </Button>
           )}
-        </Segment>
+        </div>
       </div>
     );
   }

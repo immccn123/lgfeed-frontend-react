@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Button, Input, Segment } from "semantic-ui-react";
+import { Button, Input } from "semantic-ui-react";
 import { useNavigate } from "@remix-run/react";
 
 interface UserDeafultState {

@@ -27,7 +27,7 @@ export interface UserFeeds {
   feeds: FeedItem[];
 }
 
-export interface SingleFeedItem extends FeedItem {
+export interface BenbenItem extends FeedItem {
   uid: string | number;
 }
 
@@ -44,6 +44,5 @@ export interface StatisticsMap {
 export interface RankResponse extends CachedResponse<LeaderboardItem[]> {}
 export interface StatisticsResponse extends CachedResponse<Statistics> {}
 export interface UserFeedsResponse extends CachedResponse<UserFeeds> {}
-export interface SingleFeedItemResponse
-  extends CachedResponse<SingleFeedItem> {}
+export interface BenbenItemResponse extends CachedResponse<BenbenItem> {}
 export interface StatisticsMapResponse extends CachedResponse<StatisticsMap> {}

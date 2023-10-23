@@ -7,7 +7,7 @@ export default function Index() {
         negative
         icon="warning circle"
         header="Not Found"
-        content="我们找不到这个页面呢~"
+        content="找不到这个页面呢 qwq"
       />
     </div>
   );

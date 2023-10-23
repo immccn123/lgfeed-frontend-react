@@ -9,13 +9,13 @@ export const loader = async () => {
 };
 
 export default function Index() {
-  const data = useLoaderData();
+  const data = useLoaderData<StatisticsResponse>();
 
   return (
     <>
       <h1>犇犇保存站</h1>
       <Segment>
-        <h2>你站一共发现了</h2>
+        <h2>统计</h2>
         <div>
           <Statistic>
             <Statistic.Value>{data.content.today}</Statistic.Value>
@@ -37,24 +37,17 @@ export default function Index() {
         </div>
       </Segment>
       <Segment>
-        <h2>需要您注意的</h2>
-        <ul>
-          <li>备用网址 https://aws-benben.imken.dev</li>
-          <li>我们关闭了所有的排行榜。</li>
-          <li>近期站点访问可能不稳定。部分地区/运营商无法访问。</li>
-        </ul>
-      </Segment>
-      <Segment>
         <h2>关于本站</h2>
         <p>使用 React + Semantic 编写的船新犇犇保存站前端壳子！</p>
-        <p>不对数据完整性和正确性负责 有一段时间的数据好像乱了自己看着办懒得处理了ww</p>
-        <p>现在新壳子基本上稳定了 以后应该不会大改了哦</p>
-        <p>还有，你站一直都是 Imken 一个人运营，而且对外提供 API 接口（https://api-lgf.imken.moe/docs），要用的自取，要开跨域的联系咱就行了哦</p>
-        <p>你站不叫 Imken 保存站！！不要拿这个指代你站！！</p>
+        <p>
+          不对数据完整性和正确性负责
+          有一段时间的数据好像乱了自己看着办懒得处理了ww
+        </p>
         <p>咕咕咕</p>
         <p>—— By Imken</p>
         <p>
-          如果可以的话，<a href="https://sponsor.imken.moe">投喂支持</a>一下谢谢喵！
+          如果可以的话，<a href="https://sponsor.imken.moe">投喂支持</a>
+          一下谢谢喵！
         </p>
       </Segment>
     </>

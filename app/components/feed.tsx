@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Feed, Icon, Image, Modal } from "semantic-ui-react";
-import { FeedItem, SingleFeedItem } from "~/interfaces";
+import { FeedItem, BenbenItem } from "~/interfaces";
 import Markdown from "marked-react";
 import { Link } from "@remix-run/react";
 
@@ -10,7 +10,7 @@ import CodeSnippet from "./code";
 export const createUidFeed = (
   feed: FeedItem,
   uid: number | string,
-): SingleFeedItem => {
+): BenbenItem => {
   return {
     id: feed.id,
     name: feed.name,
@@ -21,15 +21,12 @@ export const createUidFeed = (
   };
 };
 
-export interface SingleFeedItemProps {
-  data: SingleFeedItem;
+export interface BenbenItemProps {
+  data: BenbenItem;
   afterActions?: React.ReactNode[];
 }
 
-export const SingleFeed: React.FC<SingleFeedItemProps> = ({
-  data,
-  afterActions,
-}) => {
+export const Benben: React.FC<BenbenItemProps> = ({ data, afterActions }) => {
   return (
     <Feed.Event>
       <Feed.Label>
@@ -97,7 +94,7 @@ export const SingleFeed: React.FC<SingleFeedItemProps> = ({
               </Button>,
             ]}
           />
-          {afterActions !== undefined ? <>{...afterActions}</> : <></>}
+          {afterActions !== undefined ? { ...afterActions } : null}
         </Feed.Meta>
       </Feed.Content>
     </Feed.Event>

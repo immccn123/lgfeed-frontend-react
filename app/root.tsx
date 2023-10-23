@@ -1,7 +1,7 @@
 import "semantic-ui-css/semantic.min.css";
 
 import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction, V2_MetaFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 
 import {
   Links,
@@ -11,6 +11,7 @@ import {
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
+  useLoaderData,
   useNavigation,
   useRouteError,
 } from "@remix-run/react";
@@ -24,7 +25,11 @@ import { Announcement } from "./components/announcement";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
-export const meta: V2_MetaFunction = () => {
+export const loader = () => {
+  return process.env.ARC_ENV;
+};
+
+export const meta: MetaFunction = () => {
   return [{ title: "犇犇黑历史" }];
 };
 
@@ -43,6 +48,8 @@ export default function App() {
     }
   }, [navigation.state]);
 
+  const arcEnv = useLoaderData<string | undefined>();
+
   return (
     <html lang="zh-cn">
       <head>
@@ -50,7 +57,11 @@ export default function App() {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
-        <script src="/clarity.js"></script>
+        {arcEnv ? (
+          <script src="/_static/clarity.js"></script>
+        ) : (
+          <script src="/clarity.js"></script>
+        )}
       </head>
       <body>
         <MainMenu />
@@ -59,7 +70,7 @@ export default function App() {
           <Announcement />
           <Outlet />
         </Container>
-        <Footer />
+        <Footer arcEnv={arcEnv} />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

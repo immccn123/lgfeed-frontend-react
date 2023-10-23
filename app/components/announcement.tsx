@@ -1,10 +1,9 @@
-import { Message, Icon } from "semantic-ui-react";
+import { Message } from "semantic-ui-react";
 
 export const Announcement = () => {
   return (
-    <Message warning>
-      <Icon name="info circle" />
-      不鼓励任何形式的刷榜行为。
+    <Message info>
+      若近期在境内访问本站较艰难，您可以使用 aws-benben.imken.dev 备用节点。
     </Message>
   );
 };

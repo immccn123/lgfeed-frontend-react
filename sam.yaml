@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Exported by architect/package@8.5.2 on 2023-10-22T23:35:19.826Z
+Description: Exported by architect/package@8.5.2 on 2023-10-23T07:05:50.913Z
 Resources:
   Role:
     Type: AWS::IAM::Role
@@ -131,7 +131,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      CodeUri: s3://lgf-frontend-react-cfn-deployments-44610/94b0452d6dad3867ed403a946e75f7e1
+      CodeUri: s3://lgf-frontend-react-cfn-deployments-44610/9caf3c8763da459b8ed4b637e12994e9
       Runtime: nodejs18.x
       Architectures:
       - x86_64
@@ -152,8 +152,6 @@ Resources:
             Ref: StaticBucket
           ARC_STATIC_SPA: false
           ARC_APP_SECRET: ImkenMoeQwQNya520
-          DATABASE_URL: 
-            postgresql://postgres:h2R5xqOmkS0RXy6V@db.fhmgxnfkyugzdhvahtuo.supabase.co:5432/postgres?schema=production&connection_limit=1&pool_timeout=0
       Role:
         Fn::Sub:
         - arn:aws:iam::${AWS::AccountId}:role/${roleName}

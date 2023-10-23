@@ -133,3 +133,6 @@ build/
 
 pnpm-lock.yaml
 public/clarity.js
+
+sam.json
+sam.yaml
