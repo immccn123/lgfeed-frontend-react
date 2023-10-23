@@ -26,7 +26,7 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
 export const loader = () => {
-  return process.env.ARC_ENV;
+  return process.env.ARC_ENV ?? null;
 };
 
 export const meta: MetaFunction = () => {
@@ -48,7 +48,7 @@ export default function App() {
     }
   }, [navigation.state]);
 
-  const arcEnv = useLoaderData<string | undefined>();
+  const arcEnv = useLoaderData<string | null>();
 
   return (
     <html lang="zh-cn">

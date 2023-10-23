@@ -1,6 +1,6 @@
 import { Divider, Grid } from "semantic-ui-react";
 
-export const Footer: React.FC<{ arcEnv?: string }> = ({ arcEnv }) => {
+export const Footer: React.FC<{ arcEnv?: string | null }> = ({ arcEnv }) => {
   return (
     <>
       <Divider />
