@@ -68,8 +68,8 @@ dependencies:
 
 devDependencies:
   '@architect/architect':
-    specifier: ^10.14.2
-    version: 10.14.2
+    specifier: ^10.15.0
+    version: 10.15.0
   '@remix-run/dev':
     specifier: ^2.1.0
     version: 2.1.0(@remix-run/serve@2.1.0)(typescript@5.2.2)
@@ -113,19 +113,19 @@ packages:
       '@jridgewell/trace-mapping': 0.3.19
     dev: true
 
-  /@architect/architect@10.14.2:
-    resolution: {integrity: sha512-NFlwV4P7aVlpxUQNs+vcftnoEYzhEg4ImN3zZCnSXmMh8cWu2/OOhAaY7T8yy4Tg5IxS2k1CwNw13uAcf+QdkA==}
+  /@architect/architect@10.15.0:
+    resolution: {integrity: sha512-7I1weZGhvOcsS+BFwI7A+sniKlDuqqH2Fu9V4FRKgTGX4GLx/G+poq5E6UfWgm/XQieF4J7BGd3oj7SZLTcm3Q==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@architect/create': 4.2.3
-      '@architect/deploy': 4.6.1
+      '@architect/deploy': 4.6.2
       '@architect/destroy': 3.0.13
       '@architect/env': 3.0.12
-      '@architect/hydrate': 3.3.1
-      '@architect/inventory': 3.6.1
+      '@architect/hydrate': 3.4.1
+      '@architect/inventory': 3.6.2
       '@architect/logs': 4.0.10
-      '@architect/sandbox': 5.8.2
+      '@architect/sandbox': 5.8.4
       '@architect/utils': 3.1.9
       '@aws-sdk/client-apigatewaymanagementapi': 3.433.0
       '@aws-sdk/client-dynamodb': 3.433.0
@@ -156,27 +156,27 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
-      '@architect/inventory': 3.6.1
+      '@architect/inventory': 3.6.2
       '@architect/utils': 3.1.9
       chalk: 4.1.2
       lambda-runtimes: 1.1.5
       minimist: 1.2.8
     dev: true
 
-  /@architect/deploy@4.6.1:
-    resolution: {integrity: sha512-URWRkmeKYle04PiHBzW5FSjC2a+XHB9Xlt0rvuoHnHMEwyxAsZ+sgCVeP9uUE3vjtymLJUMrIHudNVbr/kvNSA==}
+  /@architect/deploy@4.6.2:
+    resolution: {integrity: sha512-Fjrh2w98a5ezJS2MjcNfS2Krblsxc2zt2girPI4Ai9PoY6tnVqjc5PcteFb93DM71EjsvdoKiYA+VGbC0vsEWw==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@architect/create': 4.2.3
-      '@architect/hydrate': 3.3.1
-      '@architect/inventory': 3.6.1
+      '@architect/hydrate': 3.4.1
+      '@architect/inventory': 3.6.2
       '@architect/package': 8.5.2
       '@architect/utils': 3.1.9
       chalk: 4.1.2
       fs-extra: 11.1.1
       get-folder-size: 2.0.1
-      glob: 10.3.4
+      glob: 10.3.10
       mime-types: 2.1.35
       minimist: 1.2.8
       path-sort: 0.1.0
@@ -192,7 +192,7 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
-      '@architect/inventory': 3.6.1
+      '@architect/inventory': 3.6.2
       '@architect/utils': 3.1.9
       aws-sdk: 2.1478.0
       minimist: 1.2.8
@@ -205,7 +205,7 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
-      '@architect/inventory': 3.6.1
+      '@architect/inventory': 3.6.2
       '@architect/parser': 6.0.3
       '@architect/utils': 3.1.9
       aws-sdk: 2.1478.0
@@ -230,25 +230,25 @@ packages:
       uid-safe: 2.1.5
     dev: false
 
-  /@architect/hydrate@3.3.1:
-    resolution: {integrity: sha512-1glad5yjXZhJdp5T730k4iTXo6pOSjt+NUfFi6u2V8AAcm6CC+w/VXL5thJ1gbjUGQtUT7+KPuBTnnylKcVWuQ==}
+  /@architect/hydrate@3.4.1:
+    resolution: {integrity: sha512-PHTFRfceWHkbJwdGWr+pg2Ruk/LdXC7H569Bc5lJLd3h/JY/cco6LSyP5EQCUdnxrPz8b7H3rny1wGRCh4rmPA==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
-      '@architect/inventory': 3.6.1
+      '@architect/inventory': 3.6.2
       '@architect/utils': 3.1.9
       acorn-loose: 8.3.0
       chalk: 4.1.2
       cpr: 3.0.1
       esquery: 1.5.0
-      glob: 10.3.4
+      glob: 10.3.10
       minimist: 1.2.8
       run-series: 1.1.9
       symlink-or-copy: 1.3.1
     dev: true
 
-  /@architect/inventory@3.6.1:
-    resolution: {integrity: sha512-RsWqCyAUT0htgrRukgkw+UmKL1i5lxo8YwoZCob9E/YoZupMEQlspLlkvNMqVwWRUVTRExbodcwiwQumi0sAdg==}
+  /@architect/inventory@3.6.2:
+    resolution: {integrity: sha512-YUeTu4tAuSIav8qQke5lXavx+gIGgRSn53B3ruO/nYUmvWGat3zlmxw0XSdg+2Z9U+V/1uYo0tq7ReYnlwqGRg==}
     engines: {node: '>=14'}
     dependencies:
       '@architect/asap': 6.0.3
@@ -262,7 +262,7 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
-      '@architect/inventory': 3.6.1
+      '@architect/inventory': 3.6.2
       '@architect/utils': 3.1.9
       aws-sdk: 2.1478.0
       chalk: 4.1.2
@@ -276,7 +276,7 @@ packages:
     resolution: {integrity: sha512-I3y8Tn7AkVx3qOs/uehIunJviQv+ekEegj5hsjM8TIywZWOb8YGIBLCicms5BHacZTslQZOe0DcrzetYfJm/sQ==}
     engines: {node: '>=14'}
     dependencies:
-      '@architect/inventory': 3.6.1
+      '@architect/inventory': 3.6.2
       '@architect/utils': 3.1.9
     dev: true
 
@@ -285,15 +285,15 @@ packages:
     engines: {node: '>=14'}
     dev: true
 
-  /@architect/sandbox@5.8.2:
-    resolution: {integrity: sha512-yuM83nWHNtmVSmXcNp5Q6WusZHp4nIZabkmKSqSGzuQFCgJMYDaWDpQLY5wsubf0ktivkKzy7dDUb2V1+IRW1A==}
+  /@architect/sandbox@5.8.4:
+    resolution: {integrity: sha512-e5HS/3Cp3d0bpt2zAnkRWJ7j6ZxHeY6Xm1zuegCVZomY8SNt2AOquQnfI2m3nPLrguKvlej98DCAJdQbSGYPZw==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@architect/asap': 6.0.3
       '@architect/create': 4.2.3
-      '@architect/hydrate': 3.3.1
-      '@architect/inventory': 3.6.1
+      '@architect/hydrate': 3.4.1
+      '@architect/inventory': 3.6.2
       '@architect/utils': 3.1.9
       '@aws-sdk/client-apigatewaymanagementapi': 3.433.0
       '@aws-sdk/client-dynamodb': 3.433.0
@@ -310,7 +310,7 @@ packages:
       depstatus: 1.1.1
       dynalite: 3.2.2
       finalhandler: 1.2.0
-      glob: 10.3.4
+      glob: 10.3.10
       http-proxy: 1.18.1
       lambda-runtimes: 1.1.5
       minimist: 1.2.8
@@ -322,7 +322,7 @@ packages:
       tmp: 0.2.1
       tree-kill: 1.2.2
       update-notifier-cjs: 5.1.6
-      ws: 8.13.0
+      ws: 8.14.2
     transitivePeerDependencies:
       - aws-crt
       - bufferutil
@@ -5480,6 +5480,18 @@ packages:
       path-scurry: 1.10.1
     dev: true
 
+  /glob@10.3.10:
+    resolution: {integrity: sha512-fa46+tv1Ak0UPK1TOy/pZrIybNNt4HCv7SDzwyfiOZkvZLEbjsZkJBPtDHVshZjbecAoAGSC20MjLDG/qr679g==}
+    engines: {node: '>=16 || 14 >=14.17'}
+    hasBin: true
+    dependencies:
+      foreground-child: 3.1.1
+      jackspeak: 2.3.6
+      minimatch: 9.0.3
+      minipass: 7.0.3
+      path-scurry: 1.10.1
+    dev: true
+
   /glob@10.3.4:
     resolution: {integrity: sha512-6LFElP3A+i/Q8XQKEvZjkEWEOTgAIALR9AO2rwT8bgPhDd1anmqDJDZ6lLddI4ehxxxR1S5RIqKe1uapMQfYaQ==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -6083,6 +6095,15 @@ packages:
 
   /jackspeak@2.3.3:
     resolution: {integrity: sha512-R2bUw+kVZFS/h1AZqBKrSgDmdmjApzgY0AlCPumopFiAlbUxE2gf+SCuBzQ0cP5hHmUmFYF5yw55T97Th5Kstg==}
+    engines: {node: '>=14'}
+    dependencies:
+      '@isaacs/cliui': 8.0.2
+    optionalDependencies:
+      '@pkgjs/parseargs': 0.11.0
+    dev: true
+
+  /jackspeak@2.3.6:
+    resolution: {integrity: sha512-N3yCS/NegsOBokc8GAdM8UcmfsKiSS8cipheD/nivzr700H+nsMOxJjQnvwOcRYVuFkdH0wGUvW2WbXGmrZGbQ==}
     engines: {node: '>=14'}
     dependencies:
       '@isaacs/cliui': 8.0.2
@@ -9147,8 +9168,8 @@ packages:
         optional: true
     dev: true
 
-  /ws@8.13.0:
-    resolution: {integrity: sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==}
+  /ws@8.14.2:
+    resolution: {integrity: sha512-wEBG1ftX4jcglPxgFCMJmZ2PLtSbJ2Peg6TmpJFTbe9GZYOQCDPdMYu/Tm0/bGZkw8paZnJY45J4K2PZrLYq8g==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
