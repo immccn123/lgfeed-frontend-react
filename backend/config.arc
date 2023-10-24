@@ -1,4 +1,4 @@
 @aws
 runtime nodejs18.x
-memory 1152
+memory 256
 timeout 15
