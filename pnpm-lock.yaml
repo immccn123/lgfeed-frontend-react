@@ -68,8 +68,8 @@ dependencies:
 
 devDependencies:
   '@architect/architect':
-    specifier: ^10.15.0
-    version: 10.15.0
+    specifier: ^10.15.1
+    version: 10.15.1
   '@remix-run/dev':
     specifier: ^2.1.0
     version: 2.1.0(@remix-run/serve@2.1.0)(typescript@5.2.2)
@@ -113,8 +113,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.19
     dev: true
 
-  /@architect/architect@10.15.0:
-    resolution: {integrity: sha512-7I1weZGhvOcsS+BFwI7A+sniKlDuqqH2Fu9V4FRKgTGX4GLx/G+poq5E6UfWgm/XQieF4J7BGd3oj7SZLTcm3Q==}
+  /@architect/architect@10.15.1:
+    resolution: {integrity: sha512-sDOlpE6UkWsRS1t9mCpS69ZHI5uPOFAYqY0n4GitHu1EALe3KEmQ/Lcag5P1BRd+7ixuKNKveKK5SENrkKTbSw==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
@@ -125,7 +125,7 @@ packages:
       '@architect/hydrate': 3.4.1
       '@architect/inventory': 3.6.2
       '@architect/logs': 4.0.10
-      '@architect/sandbox': 5.8.4
+      '@architect/sandbox': 5.8.5
       '@architect/utils': 3.1.9
       '@aws-sdk/client-apigatewaymanagementapi': 3.433.0
       '@aws-sdk/client-dynamodb': 3.433.0
@@ -285,8 +285,8 @@ packages:
     engines: {node: '>=14'}
     dev: true
 
-  /@architect/sandbox@5.8.4:
-    resolution: {integrity: sha512-e5HS/3Cp3d0bpt2zAnkRWJ7j6ZxHeY6Xm1zuegCVZomY8SNt2AOquQnfI2m3nPLrguKvlej98DCAJdQbSGYPZw==}
+  /@architect/sandbox@5.8.5:
+    resolution: {integrity: sha512-Po7SDJxgPtGu2WBaEMb7GZKpt3VsmW8zpsGxLze307XWKPSazqYPXxoLBJqQQqHlMr75CWe7GZWoGPonXzHUEQ==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
@@ -5474,7 +5474,7 @@ packages:
     hasBin: true
     dependencies:
       foreground-child: 3.1.1
-      jackspeak: 2.3.3
+      jackspeak: 2.3.6
       minimatch: 9.0.3
       minipass: 5.0.0
       path-scurry: 1.10.1
@@ -5498,7 +5498,7 @@ packages:
     hasBin: true
     dependencies:
       foreground-child: 3.1.1
-      jackspeak: 2.3.3
+      jackspeak: 2.3.6
       minimatch: 9.0.3
       minipass: 7.0.3
       path-scurry: 1.10.1
@@ -6091,15 +6091,6 @@ packages:
       has-symbols: 1.0.3
       has-tostringtag: 1.0.0
       reflect.getprototypeof: 1.0.3
-    dev: true
-
-  /jackspeak@2.3.3:
-    resolution: {integrity: sha512-R2bUw+kVZFS/h1AZqBKrSgDmdmjApzgY0AlCPumopFiAlbUxE2gf+SCuBzQ0cP5hHmUmFYF5yw55T97Th5Kstg==}
-    engines: {node: '>=14'}
-    dependencies:
-      '@isaacs/cliui': 8.0.2
-    optionalDependencies:
-      '@pkgjs/parseargs': 0.11.0
     dev: true
 
   /jackspeak@2.3.6:
