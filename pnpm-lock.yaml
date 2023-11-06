@@ -12,8 +12,8 @@ dependencies:
     specifier: ^2.1.0
     version: 2.1.0
   '@remix-run/express':
-    specifier: ^2.1.0
-    version: 2.1.0(express@4.18.2)(typescript@5.2.2)
+    specifier: ^2.2.0
+    version: 2.2.0(express@4.18.2)(typescript@5.2.2)
   '@remix-run/node':
     specifier: ^2.2.0
     version: 2.2.0(typescript@5.2.2)
@@ -2422,6 +2422,21 @@ packages:
       '@remix-run/node': 2.1.0(typescript@5.2.2)
       express: 4.18.2
       typescript: 5.2.2
+
+  /@remix-run/express@2.2.0(express@4.18.2)(typescript@5.2.2):
+    resolution: {integrity: sha512-ztiQxiRCVAeo5UiYf/GiH3ON57V/WGX+RAjuIX1vZvlrtuupPIkfOWfxgFD3osgOuI2CIdvkHbm9No4cPOWMXw==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      express: ^4.17.1
+      typescript: ^5.1.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@remix-run/node': 2.2.0(typescript@5.2.2)
+      express: 4.18.2
+      typescript: 5.2.2
+    dev: false
 
   /@remix-run/node@2.1.0(typescript@5.2.2):
     resolution: {integrity: sha512-TeSgjXnZUUlmw5FVpBVnXY7MLpracjdnwFNwoJE5NQkiUEFnGD/Yhvk4F2fOCkszqc2Z25KRclc5noweyiFu6Q==}
