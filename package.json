@@ -38,7 +38,7 @@
   "devDependencies": {
     "@architect/architect": "^10.15.1",
     "@remix-run/dev": "^2.1.0",
-    "@remix-run/eslint-config": "^2.1.0",
+    "@remix-run/eslint-config": "^2.2.0",
     "@types/nprogress": "^0.2.2",
     "@types/prismjs": "^1.26.2",
     "@types/react": "^18.2.33",
