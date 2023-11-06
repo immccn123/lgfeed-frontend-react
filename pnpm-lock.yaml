@@ -68,8 +68,8 @@ dependencies:
 
 devDependencies:
   '@architect/architect':
-    specifier: ^10.15.1
-    version: 10.15.1
+    specifier: ^10.16.1
+    version: 10.16.1
   '@remix-run/dev':
     specifier: ^2.1.0
     version: 2.1.0(@remix-run/serve@2.1.0)(typescript@5.2.2)
@@ -113,19 +113,19 @@ packages:
       '@jridgewell/trace-mapping': 0.3.19
     dev: true
 
-  /@architect/architect@10.15.1:
-    resolution: {integrity: sha512-sDOlpE6UkWsRS1t9mCpS69ZHI5uPOFAYqY0n4GitHu1EALe3KEmQ/Lcag5P1BRd+7ixuKNKveKK5SENrkKTbSw==}
+  /@architect/architect@10.16.1:
+    resolution: {integrity: sha512-uVHxzAN2OnyddvZX9meMk63T+//MWTchyVPCEoRLuWmcXePKVYQ17goWaTZ71WNM+I/m0eoSzFJzdL0B6dC5Fw==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@architect/create': 4.2.3
-      '@architect/deploy': 4.6.2
+      '@architect/deploy': 4.6.3
       '@architect/destroy': 3.0.13
       '@architect/env': 3.0.12
-      '@architect/hydrate': 3.4.1
+      '@architect/hydrate': 3.5.0
       '@architect/inventory': 3.6.2
-      '@architect/logs': 4.0.10
-      '@architect/sandbox': 5.8.5
+      '@architect/logs': 4.1.0
+      '@architect/sandbox': 5.9.2
       '@architect/utils': 3.1.9
       '@aws-sdk/client-apigatewaymanagementapi': 3.433.0
       '@aws-sdk/client-dynamodb': 3.433.0
@@ -163,13 +163,13 @@ packages:
       minimist: 1.2.8
     dev: true
 
-  /@architect/deploy@4.6.2:
-    resolution: {integrity: sha512-Fjrh2w98a5ezJS2MjcNfS2Krblsxc2zt2girPI4Ai9PoY6tnVqjc5PcteFb93DM71EjsvdoKiYA+VGbC0vsEWw==}
+  /@architect/deploy@4.6.3:
+    resolution: {integrity: sha512-G0tH61PzzFWKv21fU3cHxd4gjeMRMXk0EvRP/3pAfAYezdrhQJAkLv6DP8bp1WHsACKTR0P5ZDe5kxJkIkY+ig==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@architect/create': 4.2.3
-      '@architect/hydrate': 3.4.1
+      '@architect/hydrate': 3.5.0
       '@architect/inventory': 3.6.2
       '@architect/package': 8.5.2
       '@architect/utils': 3.1.9
@@ -230,8 +230,8 @@ packages:
       uid-safe: 2.1.5
     dev: false
 
-  /@architect/hydrate@3.4.1:
-    resolution: {integrity: sha512-PHTFRfceWHkbJwdGWr+pg2Ruk/LdXC7H569Bc5lJLd3h/JY/cco6LSyP5EQCUdnxrPz8b7H3rny1wGRCh4rmPA==}
+  /@architect/hydrate@3.5.0:
+    resolution: {integrity: sha512-HrazYg0CKLjTgMe6UFD+p2I19djD9jjXHgAii/2MQvY4j9+yMhse/gboSllFWKRh4GdywKfH94mnYiCoXmhPkw==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
@@ -257,8 +257,8 @@ packages:
       lambda-runtimes: 1.1.5
     dev: true
 
-  /@architect/logs@4.0.10:
-    resolution: {integrity: sha512-MZ046B4pDoceq/myLcjLchS4hMstJvuHvAEzBWJJiHNSscRsg56AE8lfWGf53CYblfryfNCGtrvlploFdt7wGw==}
+  /@architect/logs@4.1.0:
+    resolution: {integrity: sha512-NF8JY2BRsI71aWROq7eCS6lMMt7JbfF76HXIgUqBpmtTPGHgJJMChJf4RRwPJsTK1zv8WBvWITiWImjwDystCg==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
@@ -285,14 +285,14 @@ packages:
     engines: {node: '>=14'}
     dev: true
 
-  /@architect/sandbox@5.8.5:
-    resolution: {integrity: sha512-Po7SDJxgPtGu2WBaEMb7GZKpt3VsmW8zpsGxLze307XWKPSazqYPXxoLBJqQQqHlMr75CWe7GZWoGPonXzHUEQ==}
+  /@architect/sandbox@5.9.2:
+    resolution: {integrity: sha512-QDTlkl2nmKOY2B1YEowZLS0Xp90Auj8Oyj0Vf5b+hVzCLtMkfElCmxmzkS3ZG308Yt9A+oWSNXYs4AylAqR6ng==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@architect/asap': 6.0.3
       '@architect/create': 4.2.3
-      '@architect/hydrate': 3.4.1
+      '@architect/hydrate': 3.5.0
       '@architect/inventory': 3.6.2
       '@architect/utils': 3.1.9
       '@aws-sdk/client-apigatewaymanagementapi': 3.433.0
@@ -2261,7 +2261,7 @@ packages:
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     dependencies:
       '@npmcli/git': 4.1.0
-      glob: 10.3.4
+      glob: 10.3.10
       hosted-git-info: 6.1.1
       json-parse-even-better-errors: 3.0.0
       normalize-package-data: 5.0.0
@@ -3871,7 +3871,7 @@ packages:
     dependencies:
       '@npmcli/fs': 3.1.0
       fs-minipass: 3.0.3
-      glob: 10.3.4
+      glob: 10.3.10
       lru-cache: 7.18.3
       minipass: 7.0.3
       minipass-collect: 1.0.2
@@ -5482,18 +5482,6 @@ packages:
 
   /glob@10.3.10:
     resolution: {integrity: sha512-fa46+tv1Ak0UPK1TOy/pZrIybNNt4HCv7SDzwyfiOZkvZLEbjsZkJBPtDHVshZjbecAoAGSC20MjLDG/qr679g==}
-    engines: {node: '>=16 || 14 >=14.17'}
-    hasBin: true
-    dependencies:
-      foreground-child: 3.1.1
-      jackspeak: 2.3.6
-      minimatch: 9.0.3
-      minipass: 7.0.3
-      path-scurry: 1.10.1
-    dev: true
-
-  /glob@10.3.4:
-    resolution: {integrity: sha512-6LFElP3A+i/Q8XQKEvZjkEWEOTgAIALR9AO2rwT8bgPhDd1anmqDJDZ6lLddI4ehxxxR1S5RIqKe1uapMQfYaQ==}
     engines: {node: '>=16 || 14 >=14.17'}
     hasBin: true
     dependencies:
