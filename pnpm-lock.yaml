@@ -80,8 +80,8 @@ devDependencies:
     specifier: ^0.2.2
     version: 0.2.2
   '@types/prismjs':
-    specifier: ^1.26.2
-    version: 1.26.2
+    specifier: ^1.26.3
+    version: 1.26.3
   '@types/react':
     specifier: ^18.2.33
     version: 18.2.33
@@ -3211,8 +3211,8 @@ packages:
     resolution: {integrity: sha512-2wLrSJXLztGmr7wXwM0hA/wuIOY9DznVdd+ZFofHOiXcj9JnVt+2ZeLRJ7v5ZVlmheSkUOSg3Q3O4Ce7yji79A==}
     dev: true
 
-  /@types/prismjs@1.26.2:
-    resolution: {integrity: sha512-/r7Cp7iUIk7gts26mHXD66geUC+2Fo26TZYjQK6Nr4LDfi6lmdRmMqM0oPwfiMhUwoBAOFe8GstKi2pf6hZvwA==}
+  /@types/prismjs@1.26.3:
+    resolution: {integrity: sha512-A0D0aTXvjlqJ5ZILMz3rNfDBOx9hHxLZYv2by47Sm/pqW35zzjusrZTryatjN/Rf8Us2gZrJD+KeHbUSTux1Cw==}
     dev: true
 
   /@types/prop-types@15.7.5:
