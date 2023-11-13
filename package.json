@@ -20,7 +20,7 @@
     "@remix-run/node": "^2.2.0",
     "@remix-run/react": "^2.2.0",
     "@remix-run/serve": "^2.1.0",
-    "axios": "^1.6.0",
+    "axios": "^1.6.1",
     "express": "^4.18.2",
     "isbot": "^3.7.0",
     "marked-react": "^2.0.0",
