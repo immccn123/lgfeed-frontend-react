@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@remix-run/architect':
-    specifier: ^2.2.0
-    version: 2.2.0(typescript@5.3.2)
+    specifier: ^2.3.1
+    version: 2.3.1(typescript@5.3.2)
   '@remix-run/css-bundle':
     specifier: ^2.1.0
     version: 2.1.0
@@ -2274,8 +2274,8 @@ packages:
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
     dev: false
 
-  /@remix-run/architect@2.2.0(typescript@5.3.2):
-    resolution: {integrity: sha512-+HQp7gR9RzmVk0goG9D1Ubo0Zkss3fZST6fIYKOwHT/Lh6xyPtxZ+V78STIxCHmIPOLI6nkmzJRzoLNfOIqu5Q==}
+  /@remix-run/architect@2.3.1(typescript@5.3.2):
+    resolution: {integrity: sha512-6qonpP9NcOf0LKRVnB+y1e979CGwY5uPSg5HGQukEyD5qOO/bD6Pw4sayfLKyvAZo+iM2O4HeyZWEcSFS/C5Yg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       typescript: ^5.1.0
@@ -2284,7 +2284,7 @@ packages:
         optional: true
     dependencies:
       '@architect/functions': 5.4.1
-      '@remix-run/node': 2.2.0(typescript@5.3.2)
+      '@remix-run/node': 2.3.1(typescript@5.3.2)
       '@types/aws-lambda': 8.10.125
       typescript: 5.3.2
     dev: false
