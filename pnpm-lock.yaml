@@ -68,8 +68,8 @@ dependencies:
 
 devDependencies:
   '@architect/architect':
-    specifier: ^10.16.2
-    version: 10.16.2
+    specifier: ^10.16.3
+    version: 10.16.3
   '@remix-run/dev':
     specifier: ^2.1.0
     version: 2.1.0(@remix-run/serve@2.1.0)(typescript@5.3.2)
@@ -113,8 +113,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.19
     dev: true
 
-  /@architect/architect@10.16.2:
-    resolution: {integrity: sha512-tGeePNU7Sz2Tlsy/OjQJ8IIQdVTTkZeMBIkrM6mkZwWuJ6NoIFs9TnVl89aVfsntb+5ea2WPrv8hTVs4b3pJdg==}
+  /@architect/architect@10.16.3:
+    resolution: {integrity: sha512-sa0+PTv/ZrdRwYwHfa3UhtFjQeWDCU3i0oQ1uZR85CN06itk+17/dPYGy4CAi6aw7zgb+nFpywvgXTVNaeQW9Q==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
@@ -125,7 +125,7 @@ packages:
       '@architect/hydrate': 3.5.1
       '@architect/inventory': 3.6.3
       '@architect/logs': 4.1.0
-      '@architect/sandbox': 5.9.2
+      '@architect/sandbox': 5.9.4
       '@architect/utils': 3.1.9
       '@aws-sdk/client-apigatewaymanagementapi': 3.433.0
       '@aws-sdk/client-dynamodb': 3.433.0
@@ -148,6 +148,11 @@ packages:
 
   /@architect/asap@6.0.3:
     resolution: {integrity: sha512-LxqrtZl141Ao+DH+1Wy8Xvks5Uay/BMoPYa9b47B5Ag4s4PItl33asXI53ueiS2aQDUq01y4C7lfT1KQ4oJGzA==}
+    engines: {node: '>=14'}
+    dev: true
+
+  /@architect/asap@6.0.4:
+    resolution: {integrity: sha512-UUK9hM+/VEr6KXM6Z1sZVTSVklnGU9iaPEvGG0gEEopFIMl7ehLrKp4DWnLhsHDsEYn0bRpiExAS6XgzG3sjSw==}
     engines: {node: '>=14'}
     dev: true
 
@@ -285,12 +290,12 @@ packages:
     engines: {node: '>=14'}
     dev: true
 
-  /@architect/sandbox@5.9.2:
-    resolution: {integrity: sha512-QDTlkl2nmKOY2B1YEowZLS0Xp90Auj8Oyj0Vf5b+hVzCLtMkfElCmxmzkS3ZG308Yt9A+oWSNXYs4AylAqR6ng==}
+  /@architect/sandbox@5.9.4:
+    resolution: {integrity: sha512-BA19H/4ykch4asxsZ3tGT6Xma1hqyBwjwHIr3+kyPs9hLx2cEraBW7/7sU+HPWX6Ftq/5w+vsuQxBY3y6TjBhg==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
-      '@architect/asap': 6.0.3
+      '@architect/asap': 6.0.4
       '@architect/create': 4.2.4
       '@architect/hydrate': 3.5.1
       '@architect/inventory': 3.6.3
@@ -312,7 +317,7 @@ packages:
       finalhandler: 1.2.0
       glob: 10.3.10
       http-proxy: 1.18.1
-      lambda-runtimes: 1.1.5
+      lambda-runtimes: 1.1.6
       minimist: 1.2.8
       router: 1.3.8
       run-parallel: 1.2.0
@@ -6269,11 +6274,6 @@ packages:
   /kleur@4.1.5:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
-    dev: true
-
-  /lambda-runtimes@1.1.5:
-    resolution: {integrity: sha512-EXW6OcDdTVoSjuoV27vq0XynZ2W12CQ//rVyqCiI7PekR7XixvI5l8dfzGtR4h054bS2PocCQQFnZqFtA+11SA==}
-    engines: {node: '>=14'}
     dev: true
 
   /lambda-runtimes@1.1.6:
