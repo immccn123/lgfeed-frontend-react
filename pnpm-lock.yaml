@@ -83,8 +83,8 @@ devDependencies:
     specifier: ^1.26.3
     version: 1.26.3
   '@types/react':
-    specifier: ^18.2.33
-    version: 18.2.33
+    specifier: ^18.2.43
+    version: 18.2.43
   '@types/react-dom':
     specifier: ^18.2.15
     version: 18.2.15
@@ -3269,11 +3269,11 @@ packages:
   /@types/react-dom@18.2.15:
     resolution: {integrity: sha512-HWMdW+7r7MR5+PZqJF6YFNSCtjz1T0dsvo/f1BV6HkV+6erD/nA7wd9NM00KVG83zf2nJ7uATPO9ttdIPvi3gg==}
     dependencies:
-      '@types/react': 18.2.33
+      '@types/react': 18.2.43
     dev: true
 
-  /@types/react@18.2.33:
-    resolution: {integrity: sha512-v+I7S+hu3PIBoVkKGpSYYpiBT1ijqEzWpzQD62/jm4K74hPpSP7FF9BnKG6+fg2+62weJYkkBWDJlZt5JO/9hg==}
+  /@types/react@18.2.43:
+    resolution: {integrity: sha512-nvOV01ZdBdd/KW6FahSbcNplt2jCJfyWdTos61RYHV+FVv5L/g9AOX1bmbVcWcLFL8+KHQfh1zVIQrud6ihyQA==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
