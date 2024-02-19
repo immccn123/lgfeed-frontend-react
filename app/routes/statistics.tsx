@@ -30,10 +30,7 @@ export const loader = async () => {
 };
 
 export default function Statistics() {
-  const { statisticsHour, statisticsDays } = useLoaderData<{
-    statisticsHour: StatisticsMapResponse;
-    statisticsDays: StatisticsMapResponse;
-  }>();
+  const { statisticsHour, statisticsDays } = useLoaderData<typeof loader>();
 
   return (
     <>

@@ -1,10 +1,10 @@
-import { LoaderArgs } from "@remix-run/node";
+import { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { Feed, Segment } from "semantic-ui-react";
 import { Benben } from "~/components/feed";
 import { BenbenItemResponse } from "~/interfaces";
 
-export const loader = async ({ params }: LoaderArgs) => {
+export const loader = async ({ params }: LoaderFunctionArgs) => {
   const { feedId } = params;
   const response = await fetch(
     `https://api-lgf.imken.dev/tools/getFeed/${feedId}`,
@@ -14,7 +14,7 @@ export const loader = async ({ params }: LoaderArgs) => {
 };
 
 export default function FeedInfo() {
-  const data = useLoaderData();
+  const data = useLoaderData<typeof loader>();
 
   return (
     <>
