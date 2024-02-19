@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import {
   Button,
   Feed,
@@ -7,12 +7,10 @@ import {
   Message,
   Pagination,
   Segment,
-  Transition,
 } from "semantic-ui-react";
 import { useNavigate, useParams } from "@remix-run/react";
 import { api } from "~/utils/api";
-import { CachedResponse, UserFeeds, UserFeedsResponse } from "~/interfaces";
-import { AxiosResponse } from "axios";
+import { UserFeeds } from "~/interfaces";
 import { Benben, createUidFeed } from "~/components/feed";
 import { SegmentLoader } from "~/components/loader";
 
@@ -30,16 +28,6 @@ interface UserDefaultProps {
 }
 
 const NameList: React.FC<{ data: string[] }> = ({ data }) => {
-  if (data.length == 0) {
-    return (
-      <Message>
-        <Message.Header>唔……？</Message.Header>
-        <Message.Content>
-          没有找到 Ta 的数据呢，似乎是因为 Ta 没有发过犇犇？
-        </Message.Content>
-      </Message>
-    );
-  }
   return (
     <List bulleted>
       {data.map((value) => (
@@ -49,149 +37,114 @@ const NameList: React.FC<{ data: string[] }> = ({ data }) => {
   );
 };
 
-class UserDefault extends Component<UserDefaultProps, UserInfoState> {
-  constructor(props: UserDefaultProps) {
-    super(props);
-    this.state = {
-      uid: props.uid,
-      confirmUid: props.uid,
-      page: 1,
-    };
-    this.goToUserPage = this.goToUserPage.bind(this);
-  }
+const UserDefault = (props: UserDefaultProps) => {
+  const [uid, setUid] = useState(props.uid);
+  const [confirmUid, setConfirmUid] = useState(props.uid);
+  const [page, setPage] = useState(1);
+  const [userFeeds, setUserFeeds] = useState<UserFeeds | undefined>(undefined);
+  const [historyUsernames, setHistoryUsernames] = useState<string[] | undefined>(undefined);
 
-  goToUserPage() {
-    this.props.navigate(`/user/${this.state.uid}`);
-  }
+  const goToUserPage = () => {
+    props.navigate(`/user/${uid}`);
+  };
 
-  getUserFeed() {
-    this.setState(
-      {
-        userFeeds: undefined,
-      },
-      () => {
-        api
-          .get<UserFeedsResponse>(
-            `/blackHistory/feed/${this.state.uid}?page=${this.state.page}`,
-          )
-          .then((response: AxiosResponse<UserFeedsResponse>) => {
-            this.setState({
-              userFeeds: response.data.content,
-            });
-          });
-      },
-    );
-  }
-
-  getHistoryUsernames() {
-    this.setState({ historyUsernames: undefined }, () => {
-      api
-        .get<CachedResponse<string[]>>(
-          `/blackHistory/usernames/${this.state.uid}`,
-        )
-        .then((response: AxiosResponse<CachedResponse<string[]>>) => {
-          this.setState({
-            historyUsernames: response.data.content,
-          });
-        });
+  const getUserFeed = () => {
+    setUserFeeds(undefined);
+    api.get(`/blackHistory/feed/${uid}?page=${page}`).then((response) => {
+      setUserFeeds(response.data.content);
     });
-  }
+  };
 
-  componentDidMount() {
-    this.getUserFeed();
-    this.getHistoryUsernames();
-  }
+  const getHistoryUsernames = () => {
+    setHistoryUsernames(undefined);
+    api.get(`/blackHistory/usernames/${uid}`).then((response) => {
+      setHistoryUsernames(response.data.content);
+    });
+  };
 
-  buildFeedList() {
-    if (!this.state.userFeeds) return null;
-    return this.state.userFeeds.feeds.length > 0 ? (
-      this.state.userFeeds.feeds.map((value) => {
-        const { confirmUid } = this.state;
-        return <Benben data={createUidFeed(value, confirmUid || 0)}></Benben>;
-      })
+  useEffect(() => {
+    getUserFeed();
+    getHistoryUsernames();
+  }, [confirmUid]);
+
+  const buildFeedList = () => {
+    if (!userFeeds) return <></>;
+    return userFeeds.feeds.length > 0 ? (
+      userFeeds.feeds.map((value) => (
+        <Benben key={value.id} data={createUidFeed(value, confirmUid || 0)} />
+      ))
     ) : (
       <Message>
         <Message.Header>唔……？</Message.Header>
         <Message.Content>没有找到 Ta 的数据呢</Message.Content>
       </Message>
     );
-  }
+  };
 
-  handleSearch() {
-    this.setState({ confirmUid: this.state.uid }, () => {
-      this.goToUserPage();
-      this.getUserFeed();
-      this.getHistoryUsernames();
-    });
-  }
+  const handleSearch = () => {
+    setConfirmUid(uid);
+    goToUserPage();
+    getUserFeed();
+    getHistoryUsernames();
+  };
 
-  render() {
-    return (
-      <div>
-        <h1>用户历史查询</h1>
-        <Input
-          action={
-            <Button
-              disabled={this.state.uid == null}
-              onClick={this.handleSearch}
-              loading={this.state.userFeeds === undefined}
-            >
-              Go
-            </Button>
-          }
-          onChange={(_, { value }) => {
-            this.setState({ uid: parseInt(value) });
-          }}
-          value={this.state.uid}
-          placeholder="UID..."
-          type="number"
-          min={1}
-          max={10000000}
-        />
-        <Transition
-          visible={this.state.historyUsernames !== undefined}
-          animation="fade down"
-        >
-          {this.state.historyUsernames ? (
-            <Segment>
-              <h2>曾用名</h2>
-              <NameList data={this.state.historyUsernames} />
-            </Segment>
-          ) : null}
-        </Transition>
+  return (
+    <div>
+      <h1>用户历史查询</h1>
+      <Input
+        action={
+          <Button
+            disabled={uid === null}
+            onClick={handleSearch}
+            loading={userFeeds === undefined}
+          >
+            Go
+          </Button>
+        }
+        onChange={(_, { value }) => setUid(parseInt(value))}
+        value={uid}
+        placeholder="UID..."
+        type="number"
+        min={1}
+        max={10000000}
+        disabled={userFeeds === undefined}
+      />
+
+      {historyUsernames !== undefined && historyUsernames.length > 0 ? (
+        <Segment>
+          <h2>曾用名</h2>
+          <NameList data={historyUsernames} />
+        </Segment>
+      ) : null}
+
+      {userFeeds ? (
         <Segment>
           <h2>用户历史</h2>
           <Pagination
             boundaryRange={0}
-            activePage={this.state.page}
+            activePage={page}
             ellipsisItem={null}
             firstItem={null}
             lastItem={null}
             siblingRange={3}
             totalPages={1024}
-            onPageChange={(_, { activePage }) => {
-              this.setState(
-                {
-                  page: parseInt(activePage?.toString() || "0"),
-                  userFeeds: undefined,
-                },
-                this.getUserFeed,
-              );
-            }}
+            onPageChange={(_, { activePage }) =>
+              setPage(parseInt(activePage?.toString() || "0"))
+            }
           />
-          {this.state.userFeeds ? (
-            <Feed>{this.buildFeedList()}</Feed>
-          ) : (
-            <SegmentLoader />
-          )}
+          <Feed>{buildFeedList()}</Feed>
         </Segment>
-      </div>
-    );
-  }
-}
+      ) : (
+        <Segment>
+          <SegmentLoader />
+        </Segment>
+      )}
+    </div>
+  );
+};
 
 export default function UserDefaultWrapper() {
   const navigate = useNavigate(),
     { uid } = useParams();
-  return <UserDefault navigate={navigate} uid={uid} />;
+  return <UserDefault navigate={navigate} uid={uid} key={uid} />;
 }
