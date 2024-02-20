@@ -112,7 +112,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
     queryParams.get("keyword"),
   );
   const [senderText, setSenderText] = useState<string | null>(
-    queryParams.getAll("sender").join(","),
+    queryParams.getAll("senders").join(","),
   );
   const [loading, setLoading] = useState(true);
   const [results, setResults] = useState<BenbenItem[]>([]);
@@ -136,7 +136,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
 
     if (keyword) params.push(`keyword=${encodeURIComponent(keyword)}`);
     if (senderText)
-      getSender(senderText).forEach((value) => params.push(`sender=${value}`));
+      getSender(senderText).forEach((value) => params.push(`senders=${value}`));
     if (dateBefore)
       params.push(`date_before=${encodeURIComponent(dateBefore.getTime())}`);
     if (dateAfter)
