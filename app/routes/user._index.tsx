@@ -1,33 +1,10 @@
-import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Feed,
-  Input,
-  List,
-  Message,
-  Pagination,
-  Segment,
-} from "semantic-ui-react";
+import { useState } from "react";
+import { Button, Input } from "semantic-ui-react";
 import { useNavigate } from "@remix-run/react";
-import { api } from "~/utils/api";
-import { UserFeeds } from "~/interfaces";
-import { Benben, createUidFeed } from "~/components/feed";
-import { SegmentLoader } from "~/components/loader";
-import useSWR from "swr";
 
 interface UserDefaultProps {
   navigate: (to: string) => void;
 }
-
-const NameList: React.FC<{ data: string[] }> = ({ data }) => {
-  return (
-    <List bulleted>
-      {data.map((value) => (
-        <List.Item>{value}</List.Item>
-      ))}
-    </List>
-  );
-};
 
 const UserDefault = (props: UserDefaultProps) => {
   const [uid, setUid] = useState<number | null>();
@@ -58,9 +35,5 @@ const UserDefault = (props: UserDefaultProps) => {
 export default function UserDefaultWrapper() {
   const navigate = useNavigate();
 
-  return (
-    <UserDefault
-      navigate={navigate}
-    />
-  );
+  return <UserDefault navigate={navigate} />;
 }

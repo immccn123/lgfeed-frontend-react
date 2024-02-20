@@ -27,6 +27,67 @@ export interface BenbenItemProps {
 }
 
 export const Benben: React.FC<BenbenItemProps> = ({ data, afterActions }) => {
+  const copyReply = () =>
+    window.navigator.clipboard.writeText(
+      ` || @${data.name} : ${document.getElementById(`feed-${data.id}`)
+        ?.innerText}`,
+    );
+
+  const copyText = () => window.navigator.clipboard.writeText(data.content);
+
+  const rawFeedContent = (
+    <div style={{ margin: 20, overflow: "scroll" }}>
+      <CodeSnippet code={data.content} language="markdown" />
+    </div>
+  );
+
+  const feedActions = [
+    <Button onClick={copyText}>
+      <Icon name="copy outline" />
+      Copy
+    </Button>,
+    <Button onClick={copyReply}>
+      <Icon name="reply" />
+      Copy Reply
+    </Button>,
+    <Button negative>
+      <Icon name="close" />
+      Close
+    </Button>,
+  ];
+
+  const summary = (
+    <>
+      <Link to={`/user/${data.uid}`}>{data.name}</Link>
+      <Feed.Date>
+        Sent at {new Date(data.time).toLocaleString()}, Saved at{" "}
+        {new Date(data.grab_time).toLocaleString()}
+      </Feed.Date>
+    </>
+  );
+
+  const metaActions = (
+    <>
+      <span>#{data.id} </span>
+      <Link to={`/feed/${data.id}`}>
+        <Icon name="linkify" />
+        Permalink
+      </Link>
+      <Modal
+        trigger={
+          <a>
+            <Icon name="code" />
+            Show Raw Code
+          </a>
+        }
+        header={`Feed #${data.id} Source Code`}
+        content={rawFeedContent}
+        actions={feedActions}
+      />
+      {afterActions !== undefined ? { ...afterActions } : null}
+    </>
+  );
+
   return (
     <Feed.Event>
       <Feed.Label>
@@ -36,66 +97,13 @@ export const Benben: React.FC<BenbenItemProps> = ({ data, afterActions }) => {
         />
       </Feed.Label>
       <Feed.Content>
-        <Feed.Summary>
-          <Link to={`/user/${data.uid}`}>{data.name}</Link>
-          <Feed.Date>
-            Sent at {new Date(data.time).toLocaleString()}, Saved at{" "}
-            {new Date(data.grab_time).toLocaleString()}
-          </Feed.Date>
-        </Feed.Summary>
+        <Feed.Summary>{summary}</Feed.Summary>
         <Feed.Extra text className="feed-content">
           <div id={`feed-${data.id}`}>
             <Markdown>{data.content}</Markdown>
           </div>
         </Feed.Extra>
-        <Feed.Meta>
-          <span>#{data.id} </span>
-          <Link to={`/feed/${data.id}`}>
-            <Icon name="linkify" />
-            Permalink
-          </Link>
-          <Modal
-            trigger={
-              <a>
-                <Icon name="code" />
-                Show Raw Code
-              </a>
-            }
-            header={`Feed #${data.id} Source Code`}
-            content={
-              <div style={{ margin: 20, overflow: "scroll" }}>
-                <CodeSnippet code={data.content} language="markdown" />
-              </div>
-            }
-            actions={[
-              <Button
-                onClick={() => {
-                  window.navigator.clipboard.writeText(data.content);
-                }}
-              >
-                <Icon name="copy outline" />
-                Copy
-              </Button>,
-              <Button
-                onClick={() => {
-                  window.navigator.clipboard.writeText(
-                    ` || @${data.name} : ${document.getElementById(
-                      `feed-${data.id}`,
-                    )?.innerText}`,
-                  );
-                }}
-              >
-                <Icon name="reply" />
-                Copy Reply
-              </Button>,
-              <Button negative>
-                <Icon name="close" />
-                Close
-              </Button>,
-            ]}
-          />
-          {afterActions !== undefined ? { ...afterActions } : null}
-        </Feed.Meta>
+        <Feed.Meta>{metaActions}</Feed.Meta>
       </Feed.Content>
     </Feed.Event>
   );

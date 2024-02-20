@@ -81,7 +81,7 @@ export default function App() {
         <Footer arcEnv={env} />
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
+        {/* <LiveReload /> */}
       </body>
     </html>
   );

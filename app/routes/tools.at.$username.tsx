@@ -13,12 +13,12 @@ interface AtToolProps {
   username?: string;
 }
 
-const AtTool: React.FC<AtToolProps> = (props) => {
-  const [username, setUsername] = useState<string | undefined>(props.username);
+const AtTool: React.FC<AtToolProps> = ({ username: _username, navigate }) => {
+  const [username, setUsername] = useState<string | undefined>(_username);
   const [userFeeds, setUserFeeds] = useState<BenbenItem[] | undefined>();
 
   const goToUserPage = () => {
-    props.navigate(`/tools/at/${username}`);
+    navigate(`/tools/at/${username}`);
   };
 
   const getUserFeed = () => {
@@ -33,16 +33,16 @@ const AtTool: React.FC<AtToolProps> = (props) => {
     getUserFeed();
   }, []);
 
-  const buildFeedList = () => {
+  const FeedList: React.FC<{}> = () => {
     if (!userFeeds) return null;
-    return userFeeds.length > 0 ? (
-      userFeeds.map((value) => <Benben key={value.id} data={value} />)
-    ) : (
-      <Message>
-        <Message.Header>唔……？</Message.Header>
-        <Message.Content>没有找到 Ta 的数据呢</Message.Content>
-      </Message>
-    );
+    if (userFeeds.length <= 0)
+      return (
+        <Message>
+          <Message.Header>唔……？</Message.Header>
+          <Message.Content>没有找到 Ta 的数据呢</Message.Content>
+        </Message>
+      );
+    return userFeeds.map((value) => <Benben key={value.id} data={value} />);
   };
 
   const handleSearch = () => {
@@ -55,21 +55,27 @@ const AtTool: React.FC<AtToolProps> = (props) => {
       <Input
         action={
           <Button
-            disabled={username === undefined}
+            disabled={!username}
+            loading={!userFeeds}
             onClick={handleSearch}
-            loading={userFeeds === undefined}
           >
             Go
           </Button>
         }
-        onChange={(_, { value }) => {
-          setUsername(value)
-        }}
+        onChange={(_, { value }) => setUsername(value)}
         value={username}
         placeholder="用户名"
       />
       <>
-        {userFeeds ? <Feed>{buildFeedList()}</Feed> : <Segment><SegmentLoader /></Segment>}
+        {userFeeds ? (
+          <Feed>
+            <FeedList />
+          </Feed>
+        ) : (
+          <Segment>
+            <SegmentLoader />
+          </Segment>
+        )}
       </>
     </div>
   );

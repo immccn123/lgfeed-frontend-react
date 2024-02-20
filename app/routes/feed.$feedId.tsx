@@ -17,12 +17,10 @@ export default function FeedInfo() {
   const data = useLoaderData<typeof loader>();
 
   return (
-    <>
-      <Segment>
-        <Feed>
-          <Benben data={data.content} />
-        </Feed>
-      </Segment>
-    </>
+    <Segment>
+      <Feed>
+        <Benben data={data.content} />
+      </Feed>
+    </Segment>
   );
 }

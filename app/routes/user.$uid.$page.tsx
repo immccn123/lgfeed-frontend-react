@@ -31,11 +31,61 @@ const NameList: React.FC<{ data: string[] }> = ({ data }) => {
   );
 };
 
+const Paginator: React.FC<{
+  goToPage: (page?: number | string) => void;
+  totalPages: number;
+  disabled?: boolean;
+  activePage: number;
+}> = ({ goToPage, totalPages, disabled: isDisabled, activePage }) => {
+  const [page, setPage] = useState<number>(activePage);
+  const pageInput = (
+    <Input
+      action={
+        <Button disabled={isDisabled} onClick={() => goToPage(page)}>
+          Go
+        </Button>
+      }
+      onChange={(_, { value }) => setPage(parseInt(value))}
+      value={page}
+      placeholder="Page"
+      type="number"
+      min={1}
+      max={10000000}
+      disabled={isDisabled}
+    />
+  );
+
+  return (
+    <div
+      style={{
+        position: "sticky",
+        bottom: "12px",
+        textAlign: "center",
+        width: "100%",
+      }}
+    >
+      <Segment>
+        <Pagination
+          boundaryRange={0}
+          activePage={activePage}
+          ellipsisItem={null}
+          siblingRange={3}
+          totalPages={totalPages}
+          onPageChange={(_, { activePage }) => goToPage(activePage)}
+          disabled={isDisabled}
+        />
+        <div style={{ padding: 10, display: "inline-block" }}>
+          {pageInput}
+        </div>
+      </Segment>
+    </div>
+  );
+};
+
 const UserDefault = (props: UserDefaultProps) => {
   const confirmUid = props.uid;
   const [uid, setUid] = useState(parseInt(props.uid));
   const [userFeeds, setUserFeeds] = useState<UserFeeds>();
-  const [pageInput, setPageInput] = useState<number>(parseInt(props.page));
 
   const { data: historyUsernames } = useSWR(
     `/blackHistory/usernames/${confirmUid}`,
@@ -43,9 +93,11 @@ const UserDefault = (props: UserDefaultProps) => {
   );
 
   useEffect(() => {
-    api.get(`/blackHistory/feed/${confirmUid}?page=${props.page}`).then((response) => {
-      setUserFeeds(response.data.content);
-    });
+    api
+      .get(`/blackHistory/feed/${confirmUid}?page=${props.page}`)
+      .then((response) => {
+        setUserFeeds(response.data.content);
+      });
   }, [confirmUid]);
 
   const handleSearch = () => {
@@ -56,27 +108,31 @@ const UserDefault = (props: UserDefaultProps) => {
     props.navigate(`/user/${confirmUid}/${page ?? 1}`);
   };
 
+  const UidInput = (
+    <Input
+      action={
+        <Button
+          disabled={uid === null || !userFeeds}
+          onClick={handleSearch}
+          loading={!userFeeds}
+        >
+          Go
+        </Button>
+      }
+      onChange={(_, { value }) => setUid(parseInt(value))}
+      value={uid}
+      placeholder="UID..."
+      type="number"
+      min={1}
+      max={10000000}
+      disabled={!userFeeds}
+    />
+  );
+
   return (
     <div>
       <h1>用户历史查询</h1>
-      <Input
-        action={
-          <Button
-            disabled={uid === null || !userFeeds}
-            onClick={handleSearch}
-            loading={!userFeeds}
-          >
-            Go
-          </Button>
-        }
-        onChange={(_, { value }) => setUid(parseInt(value))}
-        value={uid}
-        placeholder="UID..."
-        type="number"
-        min={1}
-        max={10000000}
-        disabled={!userFeeds}
-      />
+      {UidInput}
 
       {historyUsernames && historyUsernames.length > 0 ? (
         <>
@@ -97,60 +153,23 @@ const UserDefault = (props: UserDefaultProps) => {
             ))}
           </Feed>
         </>
+      ) : userFeeds ? (
+        <Message>
+          <Message.Header>唔……？</Message.Header>
+          <Message.Content>没有找到 Ta 的数据呢</Message.Content>
+        </Message>
       ) : (
-        <>
-          {userFeeds ? (
-            <Message>
-              <Message.Header>唔……？</Message.Header>
-              <Message.Content>没有找到 Ta 的数据呢</Message.Content>
-            </Message>
-          ) : (
-            <Segment>
-              <SegmentLoader />
-            </Segment>
-          )}
-        </>
+        <Segment>
+          <SegmentLoader />
+        </Segment>
       )}
 
-      <div
-        style={{
-          position: "sticky",
-          bottom: "12px",
-          textAlign: "center",
-          width: "100%",
-        }}
-      >
-        <Segment>
-          <Pagination
-            boundaryRange={0}
-            activePage={props.page}
-            ellipsisItem={null}
-            siblingRange={3}
-            totalPages={1024}
-            onPageChange={(_, { activePage }) => goToPage(activePage)}
-            disabled={userFeeds === undefined}
-          />
-          <div style={{ padding: 10, display: "inline-block" }}>
-            <Input
-              action={
-                <Button
-                  disabled={userFeeds === undefined}
-                  onClick={() => goToPage(pageInput)}
-                >
-                  Go
-                </Button>
-              }
-              onChange={(_, { value }) => setPageInput(parseInt(value))}
-              value={pageInput}
-              placeholder="Page"
-              type="number"
-              min={1}
-              max={10000000}
-              disabled={userFeeds === undefined}
-            />
-          </div>
-        </Segment>
-      </div>
+      <Paginator
+        goToPage={goToPage}
+        totalPages={1024}
+        disabled={userFeeds === undefined}
+        activePage={parseInt(props.page)}
+      />
     </div>
   );
 };
