@@ -1,54 +1,66 @@
-import { Component } from "react";
-import { Button, Input } from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Feed,
+  Input,
+  List,
+  Message,
+  Pagination,
+  Segment,
+} from "semantic-ui-react";
 import { useNavigate } from "@remix-run/react";
-
-interface UserDeafultState {
-  uid?: number;
-}
+import { api } from "~/utils/api";
+import { UserFeeds } from "~/interfaces";
+import { Benben, createUidFeed } from "~/components/feed";
+import { SegmentLoader } from "~/components/loader";
+import useSWR from "swr";
 
 interface UserDefaultProps {
   navigate: (to: string) => void;
 }
 
-class UserDefault extends Component<UserDefaultProps, UserDeafultState> {
-  constructor(props: UserDefaultProps) {
-    super(props);
-    this.state = { uid: undefined };
-    this.goToUserPage = this.goToUserPage.bind(this);
-  }
+const NameList: React.FC<{ data: string[] }> = ({ data }) => {
+  return (
+    <List bulleted>
+      {data.map((value) => (
+        <List.Item>{value}</List.Item>
+      ))}
+    </List>
+  );
+};
 
-  goToUserPage() {
-    this.props.navigate(`/user/${this.state.uid}`);
-  }
+const UserDefault = (props: UserDefaultProps) => {
+  const [uid, setUid] = useState<number | null>();
 
-  render() {
-    return (
-      <>
-        <h1>用户历史查询</h1>
-        <Input
-          action={
-            <Button
-              disabled={this.state.uid == null}
-              onClick={this.goToUserPage}
-            >
-              Go
-            </Button>
-          }
-          onChange={(_, { value }) => {
-            this.setState({ uid: parseInt(value) });
-          }}
-          value={this.state.uid}
-          placeholder="UID..."
-          type="number"
-          min={1}
-          max={10000000}
-        />
-      </>
-    );
-  }
-}
+  return (
+    <div>
+      <h1>用户历史查询</h1>
+      <Input
+        action={
+          <Button
+            disabled={uid === null}
+            onClick={() => props.navigate((uid ?? 1).toString())}
+          >
+            Go
+          </Button>
+        }
+        onChange={(_, { value }) => setUid(parseInt(value))}
+        value={uid}
+        placeholder="UID..."
+        type="number"
+        min={1}
+        max={10000000}
+      />
+    </div>
+  );
+};
 
 export default function UserDefaultWrapper() {
   const navigate = useNavigate();
-  return <UserDefault navigate={navigate} />;
+
+  return (
+    <UserDefault
+      navigate={navigate}
+    />
+  );
 }

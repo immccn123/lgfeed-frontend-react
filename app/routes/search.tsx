@@ -1,3 +1,7 @@
+// 不想重构这一坨初学 React 写的史了。
+// 为什么当时我要开历史倒车写 类组件。
+// 纯纯想不开。
+
 import React from "react";
 import { Location, useLocation, useNavigate } from "@remix-run/react";
 import { Button, Feed, Segment, Form, Message, Icon } from "semantic-ui-react";
@@ -50,7 +54,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
             ? []
             : this.state.senderText
                 ?.split(",")
-                .map((value) => parseInt(value)) || [],
+                .map((value) => parseInt(value)) ?? [],
       });
     }
   }
@@ -64,11 +68,11 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
 
     this.setState(
       {
-        keyword: keywordParam || "",
+        keyword: keywordParam ?? "",
         senderText: senderParam.join(","),
         sender: senderParam.map((value) => parseInt(value)),
-        // dateAfter: new Date(dateAfterParam || 0),
-        // dateBefore: new Date(dateBeforeParam || 0),
+        // dateAfter: new Date(dateAfterParam ?? 0),
+        // dateBefore: new Date(dateBeforeParam ?? 0),
       },
       () => {
         this.performSearch();
@@ -186,14 +190,14 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
           </div>
           {/* <Input
             placeholder="Date After"
-            value={dateAfter?.toISOString() || ""}
+            value={dateAfter?.toISOString() ?? ""}
             onChange={(_, { value }) =>
               this.setState({ dateAfter: new Date(value) })
             }
           />
           <Input
             placeholder="Date Before"
-            value={dateBefore?.toISOString() || ""}
+            value={dateBefore?.toISOString() ?? ""}
             onChange={(_, { value }) =>
               this.setState({ dateBefore: new Date(value) })
             }

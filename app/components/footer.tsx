@@ -1,8 +1,12 @@
 import { Divider, Grid } from "semantic-ui-react";
+import "./styles/footer.css";
 
-export const Footer: React.FC<{ arcEnv?: string | null }> = ({ arcEnv }) => {
+export const Footer: React.FC<{
+  arcEnv?: string | null;
+  disablePoweredBy?: boolean;
+}> = ({ arcEnv, disablePoweredBy }) => {
   return (
-    <>
+    <footer>
       <Divider />
       <div>
         <Grid>
@@ -46,7 +50,7 @@ export const Footer: React.FC<{ arcEnv?: string | null }> = ({ arcEnv }) => {
               ) : null}
               Built with Semantic UI and React (using Remix Framework)
               <br />
-              {arcEnv ? (
+              {disablePoweredBy ? null : arcEnv ? (
                 <>
                   Powered by{" "}
                   <a href="https://aws.amazon.com/lambda">AWS Lambda</a>
@@ -60,6 +64,6 @@ export const Footer: React.FC<{ arcEnv?: string | null }> = ({ arcEnv }) => {
           </Grid.Column>
         </Grid>
       </div>
-    </>
+    </footer>
   );
 };

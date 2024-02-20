@@ -1,17 +1,10 @@
-import { Component, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Feed, Input, Message, Segment } from "semantic-ui-react";
 import { useNavigate, useParams } from "@remix-run/react";
 import { api } from "~/utils/api";
 import { CachedResponse, BenbenItem } from "~/interfaces";
-import { AxiosResponse } from "axios";
 import { Benben } from "~/components/feed";
 import { SegmentLoader } from "~/components/loader";
-
-interface AtToolState {
-  username?: string;
-  confirmUsername?: string;
-  userFeeds?: BenbenItem[];
-}
 
 interface AtResponse extends CachedResponse<BenbenItem[]> {}
 
@@ -75,9 +68,9 @@ const AtTool: React.FC<AtToolProps> = (props) => {
         value={username}
         placeholder="用户名"
       />
-      <Segment>
-        {userFeeds ? <Feed>{buildFeedList()}</Feed> : <SegmentLoader />}
-      </Segment>
+      <>
+        {userFeeds ? <Feed>{buildFeedList()}</Feed> : <Segment><SegmentLoader /></Segment>}
+      </>
     </div>
   );
 };
