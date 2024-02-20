@@ -1,20 +1,109 @@
-// 不想重构这一坨初学 React 写的史了。
-// 为什么当时我要开历史倒车写 类组件。
-// 纯纯想不开。
-
 import React, { useEffect, useState } from "react";
 import { Location, useLocation, useNavigate } from "@remix-run/react";
-import { Button, Feed, Segment, Form, Message, Icon } from "semantic-ui-react";
+import {
+  Button,
+  Feed,
+  Segment,
+  Form,
+  Message,
+  Icon,
+  Select,
+} from "semantic-ui-react";
 import { Benben } from "~/components/feed";
 import { CachedResponse, BenbenItem as BenbenItem } from "~/interfaces";
 import { api } from "~/utils/api";
 import { SegmentLoader } from "~/components/loader";
 import { AxiosResponse } from "axios";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 interface SearchPageProps {
   navigate: (to: string) => void;
   location: Location;
 }
+
+const CustomDatePicker: React.FC<{
+  onChange(
+    date: Date | null,
+    event: React.SyntheticEvent<any, Event> | undefined,
+  ): void;
+  selected: Date | null | undefined;
+}> = ({ selected, onChange }) => {
+  const years = Array.from({ length: 50 }, (_, index) => {
+    let yr = (1990 + index).toString();
+    return { key: yr, value: yr, text: yr + " 年" };
+  });
+
+  const months = [
+    { key: 1, value: 1, text: "1 月" },
+    { key: 2, value: 2, text: "2 月" },
+    { key: 3, value: 3, text: "3 月" },
+    { key: 4, value: 4, text: "4 月" },
+    { key: 5, value: 5, text: "5 月" },
+    { key: 6, value: 6, text: "6 月" },
+    { key: 7, value: 7, text: "7 月" },
+    { key: 8, value: 8, text: "8 月" },
+    { key: 9, value: 9, text: "9 月" },
+    { key: 10, value: 10, text: "10 月" },
+    { key: 11, value: 11, text: "11 月" },
+    { key: 12, value: 12, text: "12 月" },
+  ];
+
+  return (
+    <DatePicker
+      selected={selected}
+      onChange={onChange}
+      showTimeSelect
+      timeIntervals={10}
+      dateFormat="yyyy/MM/dd HH:mm"
+      renderCustomHeader={({
+        date,
+        changeYear,
+        changeMonth,
+        decreaseMonth,
+        increaseMonth,
+        prevMonthButtonDisabled,
+        nextMonthButtonDisabled,
+      }) => (
+        <div
+          style={{
+            margin: 10,
+            display: "flex",
+            justifyContent: "center",
+          }}
+          className="imken-date-picker"
+        >
+          <Button
+            onClick={decreaseMonth}
+            disabled={prevMonthButtonDisabled}
+            icon="left arrow"
+          />
+          <Select
+            search
+            value={date.getFullYear().toString()}
+            onChange={(_, { value }) => changeYear(parseInt(String(value)))}
+            options={years}
+          ></Select>
+
+          <Select
+            search
+            value={date.getMonth() + 1}
+            onChange={(_, { value }) =>
+              changeMonth(parseInt(String(value)) - 1)
+            }
+            options={months}
+          ></Select>
+          <Button
+            onClick={increaseMonth}
+            disabled={nextMonthButtonDisabled}
+            icon="right arrow"
+          />
+        </div>
+      )}
+    />
+  );
+};
 
 const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
   const queryParams = new URLSearchParams(location.search);
@@ -28,8 +117,16 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
   const [loading, setLoading] = useState(true);
   const [results, setResults] = useState<BenbenItem[]>([]);
   const [noMoreContent, setNoMoreContent] = useState(false);
-  // const [dateBefore, setDateBefore] = useState<Date>();
-  // const [dateAfter, setDateAfter] = useState<Date>();
+
+  const dateBeforeParam = queryParams.get("date_before");
+  const dateAfterParam = queryParams.get("date_after");
+
+  const [dateBefore, setDateBefore] = useState<Date | null>(
+    dateBeforeParam ? new Date(parseInt(dateBeforeParam)) : null,
+  );
+  const [dateAfter, setDateAfter] = useState<Date | null>(
+    dateAfterParam ? new Date(parseInt(dateAfterParam)) : null,
+  );
 
   const getSender = (senderText: string) =>
     senderText.split(",").map((x) => parseInt(x.trim()));
@@ -40,6 +137,10 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
     if (keyword) params.push(`keyword=${encodeURIComponent(keyword)}`);
     if (senderText)
       getSender(senderText).forEach((value) => params.push(`sender=${value}`));
+    if (dateBefore)
+      params.push(`date_before=${encodeURIComponent(dateBefore.getTime())}`);
+    if (dateAfter)
+      params.push(`date_after=${encodeURIComponent(dateAfter.getTime())}`);
 
     return params;
   };
@@ -93,26 +194,28 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
                 onChange={(_, { value }) => setSenderText(value)}
               />
             </Form.Group>
+            <Form.Group widths="equal">
+              <Form.Field>
+                <label>起始时间（留空不作约束）</label>
+                <CustomDatePicker
+                  selected={dateAfter}
+                  onChange={(date) => setDateAfter(date)}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>终止时间（留空不作约束）</label>
+                <CustomDatePicker
+                  selected={dateBefore}
+                  onChange={(date) => setDateBefore(date)}
+                />
+              </Form.Field>
+            </Form.Group>
             <Button onClick={handleSearch} icon labelPosition="left">
               <Icon name="search" />
               Search
             </Button>
           </Form>
         </div>
-        {/* <Input
-            placeholder="Date After"
-            value={dateAfter?.toISOString() ?? ""}
-            onChange={(_, { value }) =>
-              this.setState({ dateAfter: new Date(value) })
-            }
-          />
-          <Input
-            placeholder="Date Before"
-            value={dateBefore?.toISOString() ?? ""}
-            onChange={(_, { value }) =>
-              this.setState({ dateBefore: new Date(value) })
-            }
-          /> */}
       </div>
       <div style={{ paddingTop: "20px" }}>
         <Feed>

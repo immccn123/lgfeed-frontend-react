@@ -3,3 +3,22 @@ body {
   height: auto;
   position: relative;
 }
+
+.field .react-datepicker-wrapper {
+  width: 100%;
+}
+
+.container .react-datepicker {
+  font-size: unset;
+  font-family: unset;
+}
+
+.imken-date-picker > .dropdown {
+  width: 35px;
+  min-width: fit-content !important;
+  width: fit-content;
+}
+
+.imken-date-picker .ui.icon.button {
+  margin: 0 0.25em;
+}
