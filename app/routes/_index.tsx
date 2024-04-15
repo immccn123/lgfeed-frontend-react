@@ -50,11 +50,29 @@ export default function Index() {
     </Segment>
   );
 
+  const extraContent = (
+    <>
+      <Segment>
+        <h2>劳动节假期计划内维护的主要内容</h2>
+        <ul>
+          <li>
+            将搜索后端从数据库暴力检索更换至{" "}
+            <a href="https://github.com/valeriansaliou/sonic">Sonic</a>！
+          </li>
+          <li>接口后端将会使用 Rxxx 语言重构！</li>
+          <li>移除接口中间的缓存层</li>
+          <li>还有什么呢？</li>
+        </ul>
+      </Segment>
+    </>
+  );
+
   return (
     <>
       <h1>犇犇保存站</h1>
       {statisticContent}
       {aboutContent}
+      {extraContent}
     </>
   );
 }
