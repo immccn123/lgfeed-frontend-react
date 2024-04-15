@@ -57,7 +57,7 @@ export default function Index() {
         <ul>
           <li>
             将搜索后端从数据库暴力检索更换至{" "}
-            <a href="https://github.com/valeriansaliou/sonic">Sonic</a>！
+            <a href="https://github.com/valeriansaliou/sonic">Sonic</a> 或者 Meilisearch！
           </li>
           <li>接口后端将会使用 Rxxx 语言重构！</li>
           <li>移除接口中间的缓存层</li>
