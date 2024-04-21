@@ -3,10 +3,11 @@ import { StatisticsResponse } from "~/interfaces";
 import { Link } from "@remix-run/react";
 import { SegmentLoader } from "~/components/loader";
 import useSWR from "swr";
+import { BASE_URL } from "~/utils/api";
 
 export default function Index() {
   const { data } = useSWR<StatisticsResponse>(
-    `https://api-lgf.imken.dev/statistics`,
+    `${BASE_URL}/statistics`,
     (url: string) => fetch(url).then((res) => res.json()),
   );
 
@@ -16,19 +17,18 @@ export default function Index() {
       {data ? (
         <div>
           <Statistic>
-            <Statistic.Value>{data.content.today}</Statistic.Value>
+            <Statistic.Value>{data.today}</Statistic.Value>
             <Statistic.Label>24 小时内犇犇总数</Statistic.Label>
           </Statistic>
           <Statistic>
-            <Statistic.Value>{data.content.total}</Statistic.Value>
+            <Statistic.Value>{data.total}</Statistic.Value>
             <Statistic.Label>数据库内全部犇犇数量</Statistic.Label>
           </Statistic>
-          <br />
+          {/* <br />
           <Button as={Link} to="/statistics">
             <Icon name="chart pie" />
             查看更多统计信息
-          </Button>
-          <p>Updated at: {new Date(data.cached_at * 1000).toLocaleString()}</p>
+          </Button> */}
         </div>
       ) : (
         <SegmentLoader />

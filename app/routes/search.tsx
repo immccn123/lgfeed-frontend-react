@@ -153,14 +153,13 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
     if (results.length !== 0)
       params.push(`id_before=${results.slice(-1)[0].id}`);
 
-    const apiUrl = `/tools/search?` + params.join("&");
-    console.log(apiUrl);
+    const apiUrl = `/search/db?` + params.join("&");
 
     api
-      .get<CachedResponse<BenbenItem[]>>(apiUrl)
-      .then((resp: AxiosResponse<CachedResponse<BenbenItem[]>>) => {
-        if (resp.data.content.length < 50) setNoMoreContent(true);
-        setResults(results.concat(resp.data.content));
+      .get<BenbenItem[]>(apiUrl)
+      .then((resp: AxiosResponse<BenbenItem[]>) => {
+        if (resp.data.length < 50) setNoMoreContent(true);
+        setResults(results.concat(resp.data));
         setLoading(false);
       });
   };

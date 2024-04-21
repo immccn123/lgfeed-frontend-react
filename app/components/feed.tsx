@@ -13,11 +13,11 @@ export const createUidFeed = (
 ): BenbenItem => {
   return {
     id: feed.id,
-    name: feed.name,
+    username: feed.username,
     time: feed.time,
     content: feed.content,
-    grab_time: feed.grab_time,
-    uid: uid,
+    grabTime: feed.grabTime,
+    userId: uid,
   };
 };
 
@@ -29,7 +29,7 @@ export interface BenbenItemProps {
 export const Benben: React.FC<BenbenItemProps> = ({ data, afterActions }) => {
   const copyReply = () =>
     window.navigator.clipboard.writeText(
-      ` || @${data.name} : ${document.getElementById(`feed-${data.id}`)
+      ` || @${data.username} : ${document.getElementById(`feed-${data.id}`)
         ?.innerText}`,
     );
 
@@ -58,10 +58,10 @@ export const Benben: React.FC<BenbenItemProps> = ({ data, afterActions }) => {
 
   const summary = (
     <>
-      <Link to={`/user/${data.uid}`}>{data.name}</Link>
+      <Link to={`/user/${data.userId}`}>{data.username}</Link>
       <Feed.Date>
         Sent at {new Date(data.time).toLocaleString()}, Saved at{" "}
-        {new Date(data.grab_time).toLocaleString()}
+        {new Date(data.grabTime).toLocaleString()}
       </Feed.Date>
     </>
   );
@@ -93,7 +93,7 @@ export const Benben: React.FC<BenbenItemProps> = ({ data, afterActions }) => {
       <Feed.Label>
         <Image
           avatar
-          src={`https://cdn.luogu.com.cn/upload/usericon/${data.uid}.png`}
+          src={`https://cdn.luogu.com.cn/upload/usericon/${data.userId}.png`}
         />
       </Feed.Label>
       <Feed.Content>

@@ -74,29 +74,28 @@ const Paginator: React.FC<{
           onPageChange={(_, { activePage }) => goToPage(activePage)}
           disabled={isDisabled}
         />
-        <div style={{ padding: 10, display: "inline-block" }}>
-          {pageInput}
-        </div>
+        <div style={{ padding: 10, display: "inline-block" }}>{pageInput}</div>
       </Segment>
     </div>
   );
 };
 
 const UserDefault = (props: UserDefaultProps) => {
+  const perPage = 50;
   const confirmUid = props.uid;
   const [uid, setUid] = useState(parseInt(props.uid));
   const [userFeeds, setUserFeeds] = useState<UserFeeds>();
 
   const { data: historyUsernames } = useSWR(
     `/blackHistory/usernames/${confirmUid}`,
-    (url: string) => api.get(url).then((resp) => resp.data.content as string[]),
+    (url: string) => api.get(url).then(({ data }) => data as string[]),
   );
 
   useEffect(() => {
     api
-      .get(`/blackHistory/feed/${confirmUid}?page=${props.page}`)
-      .then((response) => {
-        setUserFeeds(response.data.content);
+      .get(`/blackHistory/feed/${confirmUid}?page=${props.page}&per_page=${perPage}`)
+      .then(({ data }) => {
+        setUserFeeds(data);
       });
   }, [confirmUid]);
 
@@ -166,7 +165,7 @@ const UserDefault = (props: UserDefaultProps) => {
 
       <Paginator
         goToPage={goToPage}
-        totalPages={1024}
+        totalPages={userFeeds ? Math.ceil(userFeeds.count / perPage) : 1}
         disabled={userFeeds === undefined}
         activePage={parseInt(props.page)}
       />
