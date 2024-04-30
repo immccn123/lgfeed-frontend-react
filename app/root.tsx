@@ -76,7 +76,7 @@ export default function App() {
         <MainMenu />
         <Container>
           <Announcement />
-          <Outlet />
+          {/* <Outlet /> */}
         </Container>
         <Footer arcEnv={env} />
         <ScrollRestoration />
