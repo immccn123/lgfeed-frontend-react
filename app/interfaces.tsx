@@ -10,8 +10,10 @@ export interface CachedResponse<ContentType> {
 }
 
 export interface Statistics {
-  total: number;
-  today: number;
+  total_count: number;
+  today_count: number;
+  today_user: number;
+  total_user: number;
 }
 
 export interface FeedItem {

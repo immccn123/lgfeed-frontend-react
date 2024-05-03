@@ -4,11 +4,10 @@ import { BenbenItem } from "~/interfaces";
 import Markdown from "marked-react";
 import { Link } from "@remix-run/react";
 import { AwesomeQR } from "awesome-qr";
-import html2canvas from "html2canvas";
 
 import "./styles/feed.css";
 import CodeSnippet from "./code";
-import { takeSnapshot } from "~/utils/snapshot";
+import html2canvas from "html2canvas";
 
 const generateQRCode = (text: string): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -44,6 +43,7 @@ export const Benben: React.FC<BenbenItemProps> = ({
   hideOperations,
 }) => {
   const [linkQR, setLinkQR] = useState<string>();
+  const id = `benben-${data.id}`;
 
   const copyReply = () =>
     window.navigator.clipboard.writeText(
@@ -101,9 +101,6 @@ export const Benben: React.FC<BenbenItemProps> = ({
             generateQRCode(
               new URL(`/feed/${data.id}`, location.origin).toString(),
             ).then((x) => setLinkQR(x));
-          // takeSnapshot(<Benben data={data} hideOperations={true} />).then((x) =>
-          //   console.log(x),
-          // );
         }}
         trigger={
           <a>
@@ -125,7 +122,39 @@ export const Benben: React.FC<BenbenItemProps> = ({
           >
             复制链接
           </Link>
+          {" | "}
         </span>
+        <Link
+          to="#"
+          onClick={() => {
+            const el = document.querySelector(`#${id}`) as HTMLElement;
+            const width = el.style.width,
+              padding = el.style.padding;
+
+            el.style.width = "600px";
+            el.style.padding = "10px";
+
+            html2canvas(el, {
+              allowTaint: true,
+              useCORS: true,
+              imageTimeout: 500,
+            })
+              .then((x) => x.toDataURL())
+              .then((data) => {
+                el.style.width = width;
+                el.style.padding = padding;
+
+                const link = document.createElement("a");
+                link.download = `${id}.png`;
+                link.href = data;
+
+                link.click();
+              });
+          }}
+        >
+          下载截图
+        </Link>
+        （可能有部分用户头像会消失）
       </Popup>
       <Modal
         trigger={
@@ -143,7 +172,7 @@ export const Benben: React.FC<BenbenItemProps> = ({
   );
 
   return (
-    <Feed.Event>
+    <Feed.Event id={id}>
       <Feed.Label>
         <Image
           avatar

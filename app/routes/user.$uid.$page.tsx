@@ -12,7 +12,6 @@ import { useLoaderData, useNavigate } from "@remix-run/react";
 import { fetcher } from "~/utils/api";
 import { UserFeeds } from "~/interfaces";
 import { Benben } from "~/components/feed";
-import { SegmentLoader } from "~/components/loader";
 import useSWR from "swr";
 import { ZodError, z } from "zod";
 import { LoaderFunctionArgs } from "@remix-run/node";
