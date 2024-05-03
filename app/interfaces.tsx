@@ -10,25 +10,27 @@ export interface CachedResponse<ContentType> {
 }
 
 export interface Statistics {
-  total: number;
-  today: number;
+  total_count: number;
+  today_count: number;
+  today_user: number;
+  total_user: number;
 }
 
 export interface FeedItem {
   id: number;
-  name: string;
+  username: string;
   time: string;
   content: string;
-  grab_time: string;
+  grabTime: string;
 }
 
 export interface UserFeeds {
-  user_color: string;
-  feeds: FeedItem[];
+  feeds: BenbenItem[];
+  count: number;
 }
 
 export interface BenbenItem extends FeedItem {
-  uid: string | number;
+  userId: string | number;
 }
 
 export interface FeedCollectionRequest {
@@ -41,8 +43,8 @@ export interface StatisticsMap {
   count: number;
 }
 
-export interface RankResponse extends CachedResponse<LeaderboardItem[]> {}
-export interface StatisticsResponse extends CachedResponse<Statistics> {}
-export interface UserFeedsResponse extends CachedResponse<UserFeeds> {}
-export interface BenbenItemResponse extends CachedResponse<BenbenItem> {}
-export interface StatisticsMapResponse extends CachedResponse<StatisticsMap> {}
+export type RankResponse = LeaderboardItem[];
+export interface StatisticsResponse extends Statistics {}
+export interface UserFeedsResponse extends UserFeeds {}
+export interface BenbenItemResponse extends BenbenItem {}
+export interface StatisticsMapResponse extends StatisticsMap {}

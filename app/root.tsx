@@ -7,7 +7,7 @@ import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Link,
   Links,
-  LiveReload,
+  // LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -25,13 +25,12 @@ import {
   Button,
   ButtonGroup,
   Container,
-  Message,
-  Segment,
 } from "semantic-ui-react";
 import { Announcement } from "./components/announcement";
 
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import nProgress from "nprogress";
 
 export const meta: MetaFunction = () => {
   return [{ title: "犇犇黑历史" }];
@@ -108,18 +107,9 @@ const ErrorSlot: React.FC<PropsWithChildren<{}>> = ({ children }) => {
 };
 
 export const ErrorBoundary = () => {
-  const error = useRouteError();
+  const error: any = useRouteError();
 
-  if (error instanceof Error) {
-    return (
-      <ErrorSlot>
-        <h1>出错了</h1>
-        <p>
-          错误提示：<pre>{String(error)}</pre>
-        </p>
-      </ErrorSlot>
-    );
-  }
+  nProgress.done();
 
   if (!isRouteErrorResponse(error)) {
     return (
@@ -150,9 +140,19 @@ export const ErrorBoundary = () => {
     );
   }
 
+  if (error.status === 400) {
+    return (
+      <ErrorSlot>
+        <h1>400 Bad Request - 参数错误</h1>
+        <p>错误信息：</p>
+        <pre>{error.data}</pre>
+      </ErrorSlot>
+    );
+  }
+
   return (
     <>
-      <h1>出错了</h1>
+      <h1>这似乎是一个未知的错误……</h1>
       <p>
         错误提示：<pre>{String(error)}</pre>
       </p>

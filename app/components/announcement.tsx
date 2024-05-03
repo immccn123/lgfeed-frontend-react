@@ -1,6 +1,8 @@
 import { Message } from "semantic-ui-react";
 
 export const Announcement = () => {
+  return null;
+
   return (
     <Message>
       <h3>维护信息</h3>

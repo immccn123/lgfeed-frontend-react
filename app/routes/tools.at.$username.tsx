@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Button, Feed, Input, Message, Segment } from "semantic-ui-react";
 import { useNavigate, useParams } from "@remix-run/react";
 import { api } from "~/utils/api";
-import { CachedResponse, BenbenItem } from "~/interfaces";
+import { BenbenItem } from "~/interfaces";
 import { Benben } from "~/components/feed";
 import { SegmentLoader } from "~/components/loader";
 
-interface AtResponse extends CachedResponse<BenbenItem[]> {}
+type AtResponse = BenbenItem[];
 
 interface AtToolProps {
   navigate: (to: string) => void;
@@ -24,9 +24,9 @@ const AtTool: React.FC<AtToolProps> = ({ username: _username, navigate }) => {
   const getUserFeed = () => {
     setUserFeeds(undefined);
 
-    api.get<AtResponse>(`/tools/at/${username}`).then((response) => {
-      setUserFeeds(response.data.content);
-    });
+    api
+      .get<AtResponse>(`/tools/at/${username}`)
+      .then(({ data }) => setUserFeeds(data));
   };
 
   useEffect(() => {
