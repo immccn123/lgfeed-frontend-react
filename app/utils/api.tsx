@@ -7,3 +7,7 @@ export const api = axois.create({
   timeout: 30000,
   headers: { Accept: "application/json" },
 });
+
+export async function fetcher<T>(x: string) {
+  return await api.get<T>(x).then(({ data }) => data);
+}

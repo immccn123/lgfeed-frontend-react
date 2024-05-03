@@ -10,7 +10,7 @@ import {
   Select,
 } from "semantic-ui-react";
 import { Benben } from "~/components/feed";
-import { CachedResponse, BenbenItem as BenbenItem } from "~/interfaces";
+import { BenbenItem as BenbenItem } from "~/interfaces";
 import { api } from "~/utils/api";
 import { SegmentLoader } from "~/components/loader";
 import { AxiosResponse } from "axios";
@@ -151,7 +151,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
     setLoading(true);
     let params = getParams();
     if (results.length !== 0)
-      params.push(`id_before=${results.slice(-1)[0].id}`);
+      params.push(`id_after=${results.slice(-1)[0].id}`);
 
     const apiUrl = `/search/db?` + params.join("&");
 
@@ -219,7 +219,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
       <div style={{ paddingTop: "20px" }}>
         <Feed>
           {results.map((value) => (
-            <Benben data={value} />
+            <Benben data={value} key={value.id} />
           ))}
         </Feed>
         {loading ? (

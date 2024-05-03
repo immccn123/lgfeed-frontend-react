@@ -23,7 +23,7 @@ export interface FeedItem {
 }
 
 export interface UserFeeds {
-  feeds: FeedItem[];
+  feeds: BenbenItem[];
   count: number;
 }
 

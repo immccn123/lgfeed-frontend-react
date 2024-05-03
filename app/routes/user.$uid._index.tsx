@@ -1,9 +1,5 @@
-import { useEffect } from "react";
-import { useNavigate, useParams } from "@remix-run/react";
+import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 
-export default function UserDefaultWrapper() {
-  const navigate = useNavigate(),
-    { uid } = useParams();
-  useEffect(() => navigate(`/user/${uid}/1`), []);
-  return null;
+export function loader({params}: LoaderFunctionArgs) {
+  throw redirect(`/user/${params.uid}/1`)
 }

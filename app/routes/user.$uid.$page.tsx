@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Feed,
@@ -8,27 +8,64 @@ import {
   Pagination,
   Segment,
 } from "semantic-ui-react";
-import { useNavigate, useParams } from "@remix-run/react";
-import { api } from "~/utils/api";
+import { useLoaderData, useNavigate } from "@remix-run/react";
+import { fetcher } from "~/utils/api";
 import { UserFeeds } from "~/interfaces";
-import { Benben, createUidFeed } from "~/components/feed";
+import { Benben } from "~/components/feed";
 import { SegmentLoader } from "~/components/loader";
 import useSWR from "swr";
+import { ZodError, z } from "zod";
+import { LoaderFunctionArgs } from "@remix-run/node";
+
+import {
+  PlaceholderParagraph,
+  PlaceholderLine,
+  PlaceholderHeader,
+  Placeholder,
+} from "semantic-ui-react";
 
 interface UserDefaultProps {
   navigate: (to: string) => void;
-  uid: string;
-  page: string;
+  uid: number;
+  page: number;
+}
+
+export async function loader({ params }: LoaderFunctionArgs) {
+  const checker = z.object({
+    uid: z.coerce
+      .number({ invalid_type_error: "UID 的类型必须为 number" })
+      .min(1, { message: "UID 必须大于或等于 1" }),
+    page: z.coerce
+      .number({ invalid_type_error: "页码的类型必须为 number" })
+      .min(1, { message: "页码必须大于或等于 1" }),
+  });
+
+  try {
+    return checker.parse(params);
+  } catch (e) {
+    throw new Response(
+      (e as ZodError).issues.map((x) => x.message).join("\n"),
+      { status: 400 },
+    );
+  }
 }
 
 const NameList: React.FC<{ data: string[] }> = ({ data }) => {
-  return (
-    <List bulleted>
-      {data.map((value) => (
-        <List.Item>{value}</List.Item>
-      ))}
-    </List>
-  );
+  return data.map((value, idx) => (
+    <span key={value}>
+      <pre
+        style={{
+          display: "inline-block",
+          background: "#cfcfcf",
+          padding: "3px",
+          borderRadius: "3px",
+        }}
+      >
+        {value}
+      </pre>
+      {idx !== data.length - 1 ? " · " : null}
+    </span>
+  ));
 };
 
 const Paginator: React.FC<{
@@ -80,46 +117,46 @@ const Paginator: React.FC<{
   );
 };
 
-const UserDefault = (props: UserDefaultProps) => {
+const UserDefault = ({ navigate, uid, page }: UserDefaultProps) => {
   const perPage = 50;
-  const confirmUid = props.uid;
-  const [uid, setUid] = useState(parseInt(props.uid));
-  const [userFeeds, setUserFeeds] = useState<UserFeeds>();
+  const [inputUid, setInputUid] = useState(uid);
 
-  const { data: historyUsernames } = useSWR(
-    `/blackHistory/usernames/${confirmUid}`,
-    (url: string) => api.get(url).then(({ data }) => data as string[]),
+  const { data: historyUsernames } = useSWR<string[]>(
+    `/blackHistory/usernames/${uid}`,
+    fetcher,
   );
 
-  useEffect(() => {
-    api
-      .get(`/blackHistory/feed/${confirmUid}?page=${props.page}&per_page=${perPage}`)
-      .then(({ data }) => {
-        setUserFeeds(data);
-      });
-  }, [confirmUid]);
+  const { data: userFeeds, isLoading } = useSWR<UserFeeds>(
+    `/blackHistory/feed/${uid}?page=${page}&per_page=${perPage}`,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      revalidateIfStale: false,
+    },
+  );
 
   const handleSearch = () => {
-    props.navigate(`/user/${uid}/1`);
+    navigate(`/user/${inputUid}/1`);
   };
 
   const goToPage = (page?: number | string) => {
-    props.navigate(`/user/${confirmUid}/${page ?? 1}`);
+    navigate(`/user/${uid}/${page ?? 1}`);
   };
 
   const UidInput = (
     <Input
       action={
         <Button
-          disabled={uid === null || !userFeeds}
+          disabled={inputUid === null || isLoading}
           onClick={handleSearch}
-          loading={!userFeeds}
+          loading={isLoading}
         >
           Go
         </Button>
       }
-      onChange={(_, { value }) => setUid(parseInt(value))}
-      value={uid}
+      onChange={(_, { value }) => setInputUid(parseInt(value))}
+      value={inputUid}
       placeholder="UID..."
       type="number"
       min={1}
@@ -133,22 +170,38 @@ const UserDefault = (props: UserDefaultProps) => {
       <h1>用户历史查询</h1>
       {UidInput}
 
-      {historyUsernames && historyUsernames.length > 0 ? (
-        <>
-          <h2>曾用名</h2>
-          <NameList data={historyUsernames} />
-        </>
-      ) : null}
+      <List>
+        <List.Item>
+          {historyUsernames && historyUsernames.length > 0 ? (
+            <>
+              曾用名：
+              <NameList data={historyUsernames} />
+            </>
+          ) : (
+            <Placeholder>
+              <PlaceholderParagraph>
+                <PlaceholderLine />
+              </PlaceholderParagraph>
+            </Placeholder>
+          )}
+        </List.Item>
+        {userFeeds && userFeeds.feeds.length > 0 ? (
+          <List.Item>累计犇犇发送数量：{userFeeds.count}</List.Item>
+        ) : (
+          <Placeholder>
+            <PlaceholderParagraph>
+              <PlaceholderLine />
+            </PlaceholderParagraph>
+          </Placeholder>
+        )}
+      </List>
 
+      <h2>历史犇犇</h2>
       {userFeeds && userFeeds.feeds.length > 0 ? (
         <>
-          <h2>历史犇犇</h2>
           <Feed>
             {userFeeds.feeds.map((value) => (
-              <Benben
-                key={value.id}
-                data={createUidFeed(value, confirmUid ?? 0)}
-              />
+              <Benben key={value.id} data={value} />
             ))}
           </Feed>
         </>
@@ -158,16 +211,26 @@ const UserDefault = (props: UserDefaultProps) => {
           <Message.Content>没有找到 Ta 的数据呢</Message.Content>
         </Message>
       ) : (
-        <Segment>
-          <SegmentLoader />
-        </Segment>
+        <>
+          <Placeholder fluid>
+            <PlaceholderHeader image>
+              <PlaceholderLine />
+              <PlaceholderLine />
+            </PlaceholderHeader>
+            <PlaceholderParagraph>
+              <PlaceholderLine />
+              <PlaceholderLine />
+            </PlaceholderParagraph>
+          </Placeholder>
+          <div style={{ height: 30 }}></div>
+        </>
       )}
 
       <Paginator
         goToPage={goToPage}
         totalPages={userFeeds ? Math.ceil(userFeeds.count / perPage) : 1}
-        disabled={userFeeds === undefined}
-        activePage={parseInt(props.page)}
+        disabled={!(userFeeds && userFeeds.feeds.length > 0)}
+        activePage={page}
       />
     </div>
   );
@@ -175,14 +238,14 @@ const UserDefault = (props: UserDefaultProps) => {
 
 export default function UserDefaultWrapper() {
   const navigate = useNavigate(),
-    { uid, page } = useParams();
+    { uid, page } = useLoaderData<typeof loader>();
 
   return (
     <UserDefault
       navigate={navigate}
-      uid={uid!}
-      page={page!}
-      key={uid!.toString() + page!.toString()}
+      uid={uid}
+      page={page}
+      key={uid.toString() + "/" + page.toString()}
     />
   );
 }
