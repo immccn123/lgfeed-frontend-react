@@ -22,3 +22,14 @@ export function dataURItoBlob(dataURI: string) {
   var blob = new Blob([ab], { type: mimeString });
   return blob;
 }
+
+export function join<T, E>(inner: T[], separator: E) {
+  type Result = T | E;
+
+  const result: Result[] = [];
+  inner.forEach((element, index) => {
+    result.push(element);
+    if (index !== inner.length - 1) result.push(separator);
+  });
+  return result;
+}

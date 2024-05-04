@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Button, Feed, Icon, Image, Modal, Popup } from "semantic-ui-react";
 import { BenbenItem } from "~/interfaces";
 import Markdown from "marked-react";
@@ -8,7 +8,7 @@ import { AwesomeQR } from "awesome-qr";
 import "./styles/feed.css";
 import CodeSnippet from "./code";
 import html2canvas from "html2canvas";
-import { dataURItoBlob } from "~/utils";
+import { dataURItoBlob, join } from "~/utils";
 
 const generateQRCode = (text: string): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -46,6 +46,7 @@ export const Benben: React.FC<BenbenItemProps> = ({
   const [linkQR, setLinkQR] = useState<string>();
   const [imgSrc, setImgSrc] = useState<string>();
   const [copyDone, setCopyDone] = useState(false);
+  const [replyCopyDone, setReplyCopyDone] = useState(false);
   const id = `benben-${data.id}`;
 
   useEffect(() => {
@@ -53,33 +54,33 @@ export const Benben: React.FC<BenbenItemProps> = ({
     fetch(src).then(() => setImgSrc(src));
   }, [data.userId]);
 
-  const copyReply = () =>
-    window.navigator.clipboard.writeText(
-      ` || @${data.username} : ${document.getElementById(`feed-${data.id}`)
-        ?.innerText}`,
-    );
+  const copyReply = () => {
+    const el = document.getElementById(`feed-${data.id}`) as HTMLElement;
+    navigator.clipboard.writeText(` || @${data.username} : ${el.innerText}`);
+    setReplyCopyDone(true);
+  };
 
-  const copyText = () => window.navigator.clipboard.writeText(data.content);
-
-  const rawFeedContent = (
-    <div style={{ margin: 20, overflow: "scroll" }}>
-      <CodeSnippet code={data.content} language="markdown" />
-    </div>
+  const copyText = useMemo(
+    () => () => navigator.clipboard.writeText(data.content),
+    [data.content],
+  );
+  const copyLink = useMemo(
+    () => () =>
+      navigator.clipboard.writeText(
+        new URL(`/feed/${data.id}`, location.origin).toString(),
+      ),
+    [data.id],
   );
 
   const genImg = (operation: "copy" | "download") => {
     const el = document.querySelector(`#${id}`) as HTMLElement;
-    const width = el.style.width,
-      padding = el.style.padding;
+    const width = el.style.width;
+    const padding = el.style.padding;
 
     el.style.width = "600px";
     el.style.padding = "10px";
 
-    html2canvas(el, {
-      allowTaint: true,
-      useCORS: true,
-      imageTimeout: 1000,
-    })
+    html2canvas(el, { allowTaint: true, useCORS: true, imageTimeout: 1000 })
       .then((x) => x.toDataURL())
       .then((data) => {
         el.style.width = width;
@@ -92,42 +93,109 @@ export const Benben: React.FC<BenbenItemProps> = ({
           link.click();
         } else {
           navigator.clipboard
-            .write([
-              new ClipboardItem(
-                { "image/png": dataURItoBlob(data) },
-                { presentationStyle: "attachment" },
-              ),
-            ])
-            .then(() => {
-              setCopyDone(true);
-            });
+            .write([new ClipboardItem({ "image/png": dataURItoBlob(data) })])
+            .then(() => setCopyDone(true));
         }
       });
   };
 
-  const feedActions = [
-    <Button onClick={copyText}>
-      <Icon name="copy outline" />
-      复制
-    </Button>,
-    <Button onClick={copyReply}>
-      <Icon name="reply" />
-      复制回复文本
-    </Button>,
-    <Button negative>
-      <Icon name="close" />
-      关闭
-    </Button>,
-  ];
+  const rawFeedContent = useMemo(
+    () => (
+      <div style={{ margin: 20, overflow: "scroll" }}>
+        <CodeSnippet code={data.content} language="markdown" />
+      </div>
+    ),
+    [data.content],
+  );
 
-  const summary = (
-    <>
-      <Link to={`/user/${data.userId}`}>{data.username}</Link>
-      <Feed.Date>
-        发送于 {new Date(data.time).toLocaleString()}，保存于{" "}
-        {new Date(data.grabTime).toLocaleString()}
-      </Feed.Date>
-    </>
+  const feedActions = useMemo(
+    () => [
+      <Button onClick={copyText}>
+        <Icon name="copy outline" />
+        复制
+      </Button>,
+      <Button negative>
+        <Icon name="close" />
+        关闭
+      </Button>,
+    ],
+    [data.content],
+  );
+
+  const summary = useMemo(
+    () => (
+      <>
+        <Link to={`/user/${data.userId}`}>{data.username}</Link>
+        <Feed.Date>
+          发送于 {new Date(data.time).toLocaleString()}，保存于{" "}
+          {new Date(data.grabTime).toLocaleString()}
+        </Feed.Date>
+      </>
+    ),
+    [data.id],
+  );
+
+  const shareItems = useMemo(
+    () => [
+      <>
+        {linkQR ? <Image src={linkQR} /> : null}
+        扫描二维码
+      </>,
+      <a className="clickable" onClick={copyLink}>
+        复制链接
+      </a>,
+      <a className="clickable" onClick={() => genImg("download")}>
+        下载截图
+      </a>,
+      <Popup
+        trigger={
+          <a className="clickable" onClick={() => genImg("copy")}>
+            复制截图
+          </a>
+        }
+        open={copyDone}
+        onClose={() => setCopyDone(false)}
+      >
+        复制完成！
+      </Popup>,
+    ],
+    [linkQR],
+  );
+
+  const share = (
+    <Popup
+      flowing
+      hoverable
+      onOpen={() => {
+        if (linkQR === undefined)
+          generateQRCode(
+            new URL(`/feed/${data.id}`, location.origin).toString(),
+          ).then((x) => setLinkQR(x));
+      }}
+      trigger={
+        <a>
+          <Icon name="share square" />
+          分享
+        </a>
+      }
+    >
+      {...join(shareItems, " | ")}
+    </Popup>
+  );
+
+  const reply = (
+    <Popup
+      trigger={
+        <a onClick={copyReply}>
+          <Icon name="reply" />
+          回复
+        </a>
+      }
+      open={replyCopyDone}
+      onClose={() => setReplyCopyDone(false)}
+    >
+      回复文本已复制！
+    </Popup>
   );
 
   const metaActions = hideOperations ? (
@@ -139,53 +207,8 @@ export const Benben: React.FC<BenbenItemProps> = ({
         <Icon name="linkify" />
         永久链接
       </Link>
-      <Popup
-        flowing
-        hoverable
-        onOpen={() => {
-          if (linkQR === undefined)
-            generateQRCode(
-              new URL(`/feed/${data.id}`, location.origin).toString(),
-            ).then((x) => setLinkQR(x));
-        }}
-        trigger={
-          <a>
-            <Icon name="share square" />
-            分享
-          </a>
-        }
-      >
-        {linkQR ? <Image src={linkQR} /> : null}
-        <span>
-          手机扫描二维码或者
-          <Link
-            to={`#`}
-            onClick={() => {
-              window.navigator.clipboard.writeText(
-                new URL(`/feed/${data.id}`, location.origin).toString(),
-              );
-            }}
-          >
-            复制链接
-          </Link>
-          {" | "}
-        </span>
-        <Link to="#" onClick={() => genImg("download")}>
-          下载截图
-        </Link>
-        {" | "}
-        <Popup
-          trigger={
-            <Link to="#" onClick={() => genImg("copy")}>
-              复制截图
-            </Link>
-          }
-          open={copyDone}
-          onClose={() => setCopyDone(false)}
-        >
-          复制完成！
-        </Popup>
-      </Popup>
+      {reply}
+      {share}
       <Modal
         trigger={
           <a>
