@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Feed, Icon, Image, Modal, Popup } from "semantic-ui-react";
 import { BenbenItem } from "~/interfaces";
 import Markdown from "marked-react";
@@ -8,6 +8,7 @@ import { AwesomeQR } from "awesome-qr";
 import "./styles/feed.css";
 import CodeSnippet from "./code";
 import html2canvas from "html2canvas";
+import { dataURItoBlob } from "~/utils";
 
 const generateQRCode = (text: string): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -43,7 +44,14 @@ export const Benben: React.FC<BenbenItemProps> = ({
   hideOperations,
 }) => {
   const [linkQR, setLinkQR] = useState<string>();
+  const [imgSrc, setImgSrc] = useState<string>();
+  const [copyDone, setCopyDone] = useState(false);
   const id = `benben-${data.id}`;
+
+  useEffect(() => {
+    const src = `https://cdn.luogu.com.cn/upload/usericon/${data.userId}.png`;
+    fetch(src).then(() => setImgSrc(src));
+  }, [data.userId]);
 
   const copyReply = () =>
     window.navigator.clipboard.writeText(
@@ -58,6 +66,44 @@ export const Benben: React.FC<BenbenItemProps> = ({
       <CodeSnippet code={data.content} language="markdown" />
     </div>
   );
+
+  const genImg = (operation: "copy" | "download") => {
+    const el = document.querySelector(`#${id}`) as HTMLElement;
+    const width = el.style.width,
+      padding = el.style.padding;
+
+    el.style.width = "600px";
+    el.style.padding = "10px";
+
+    html2canvas(el, {
+      allowTaint: true,
+      useCORS: true,
+      imageTimeout: 1000,
+    })
+      .then((x) => x.toDataURL())
+      .then((data) => {
+        el.style.width = width;
+        el.style.padding = padding;
+
+        if (operation === "download") {
+          const link = document.createElement("a");
+          link.download = `${id}.png`;
+          link.href = data;
+          link.click();
+        } else {
+          navigator.clipboard
+            .write([
+              new ClipboardItem(
+                { "image/png": dataURItoBlob(data) },
+                { presentationStyle: "attachment" },
+              ),
+            ])
+            .then(() => {
+              setCopyDone(true);
+            });
+        }
+      });
+  };
 
   const feedActions = [
     <Button onClick={copyText}>
@@ -124,37 +170,21 @@ export const Benben: React.FC<BenbenItemProps> = ({
           </Link>
           {" | "}
         </span>
-        <Link
-          to="#"
-          onClick={() => {
-            const el = document.querySelector(`#${id}`) as HTMLElement;
-            const width = el.style.width,
-              padding = el.style.padding;
-
-            el.style.width = "600px";
-            el.style.padding = "10px";
-
-            html2canvas(el, {
-              allowTaint: true,
-              useCORS: true,
-              imageTimeout: 500,
-            })
-              .then((x) => x.toDataURL())
-              .then((data) => {
-                el.style.width = width;
-                el.style.padding = padding;
-
-                const link = document.createElement("a");
-                link.download = `${id}.png`;
-                link.href = data;
-
-                link.click();
-              });
-          }}
-        >
+        <Link to="#" onClick={() => genImg("download")}>
           下载截图
         </Link>
-        （可能有部分用户头像会消失）
+        {" | "}
+        <Popup
+          trigger={
+            <Link to="#" onClick={() => genImg("copy")}>
+              复制截图
+            </Link>
+          }
+          open={copyDone}
+          onClose={() => setCopyDone(false)}
+        >
+          复制完成！
+        </Popup>
       </Popup>
       <Modal
         trigger={
@@ -174,10 +204,7 @@ export const Benben: React.FC<BenbenItemProps> = ({
   return (
     <Feed.Event id={id}>
       <Feed.Label>
-        <Image
-          avatar
-          src={`https://cdn.luogu.com.cn/upload/usericon/${data.userId}.png`}
-        />
+        <Image avatar src={imgSrc} id={`${id}-avatar`} />
       </Feed.Label>
       <Feed.Content>
         <Feed.Summary>{summary}</Feed.Summary>
