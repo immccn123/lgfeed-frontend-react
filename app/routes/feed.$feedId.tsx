@@ -38,9 +38,7 @@ export default function FeedInfo() {
 
   return (
     <Segment>
-      {
-        status === 404
-      }
+      {status === 404}
       <Feed>{benben ? <Benben data={benben} /> : <SegmentLoader />}</Feed>
     </Segment>
   );

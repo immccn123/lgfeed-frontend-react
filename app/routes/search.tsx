@@ -155,13 +155,11 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
 
     const apiUrl = `/search/db?` + params.join("&");
 
-    api
-      .get<BenbenItem[]>(apiUrl)
-      .then((resp: AxiosResponse<BenbenItem[]>) => {
-        if (resp.data.length < 50) setNoMoreContent(true);
-        setResults(results.concat(resp.data));
-        setLoading(false);
-      });
+    api.get<BenbenItem[]>(apiUrl).then((resp: AxiosResponse<BenbenItem[]>) => {
+      if (resp.data.length < 50) setNoMoreContent(true);
+      setResults(results.concat(resp.data));
+      setLoading(false);
+    });
   };
 
   useEffect(() => {

@@ -21,6 +21,7 @@ import {
   PlaceholderLine,
   PlaceholderHeader,
   Placeholder,
+  Form,
 } from "semantic-ui-react";
 
 interface UserDefaultProps {
@@ -144,24 +145,26 @@ const UserDefault = ({ navigate, uid, page }: UserDefaultProps) => {
   };
 
   const UidInput = (
-    <Input
-      action={
-        <Button
-          disabled={inputUid === null || isLoading}
-          onClick={handleSearch}
-          loading={isLoading}
-        >
-          Go
-        </Button>
-      }
-      onChange={(_, { value }) => setInputUid(parseInt(value))}
-      value={inputUid}
-      placeholder="UID..."
-      type="number"
-      min={1}
-      max={10000000}
-      disabled={!userFeeds}
-    />
+    <Form onSubmit={handleSearch}>
+      <Input
+        action={
+          <Button
+            disabled={inputUid === null || isLoading}
+            loading={isLoading}
+            type="submit"
+          >
+            Go
+          </Button>
+        }
+        onChange={(_, { value }) => setInputUid(parseInt(value))}
+        value={inputUid}
+        placeholder="UID..."
+        type="number"
+        min={1}
+        max={10000000}
+        disabled={!userFeeds}
+      />
+    </Form>
   );
 
   return (
