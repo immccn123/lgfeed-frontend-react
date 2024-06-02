@@ -55,7 +55,7 @@ const AtTool: React.FC<AtToolProps> = ({ username: _username, navigate }) => {
       <Form onSubmit={() => navigate(`/tools/at/${username}`)}>
         <Input
           action={
-            <Button disabled={!username} type="submit">
+            <Button disabled={!username} loading={!userFeeds} type="submit">
               Go
             </Button>
           }
