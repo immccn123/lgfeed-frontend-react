@@ -10,7 +10,7 @@ export const MainMenu = () => {
         position: "sticky",
         top: 0,
         zIndex: 999,
-        paddingBottom: "10px"
+        paddingBottom: "10px",
       }}
     >
       <Menu>

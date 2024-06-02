@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Feed, Input, Message, Segment } from "semantic-ui-react";
+import { Button, Feed, Input, Message, Segment, Form } from "semantic-ui-react";
 import { useNavigate, useParams } from "@remix-run/react";
 import { api } from "~/utils/api";
 import { BenbenItem } from "~/interfaces";
@@ -52,20 +52,18 @@ const AtTool: React.FC<AtToolProps> = ({ username: _username, navigate }) => {
   return (
     <div>
       <h1>谁在拍我铃铛？（近 24 小时）</h1>
-      <Input
-        action={
-          <Button
-            disabled={!username}
-            loading={!userFeeds}
-            onClick={handleSearch}
-          >
-            Go
-          </Button>
-        }
-        onChange={(_, { value }) => setUsername(value)}
-        value={username}
-        placeholder="用户名"
-      />
+      <Form onSubmit={() => navigate(`/tools/at/${username}`)}>
+        <Input
+          action={
+            <Button disabled={!username} type="submit">
+              Go
+            </Button>
+          }
+          onChange={(_, { value }) => setUsername(value)}
+          value={username}
+          placeholder="用户名"
+        />
+      </Form>
       <>
         {userFeeds ? (
           <Feed>

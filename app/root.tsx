@@ -21,11 +21,7 @@ import React, { PropsWithChildren, useEffect } from "react";
 
 import { MainMenu } from "./components/menu";
 import { Footer } from "./components/footer";
-import {
-  Button,
-  ButtonGroup,
-  Container,
-} from "semantic-ui-react";
+import { Button, ButtonGroup, Container } from "semantic-ui-react";
 import { Announcement } from "./components/announcement";
 
 import NProgress from "nprogress";
