@@ -23,7 +23,7 @@ import { Announcement } from "./components/announcement";
 import { Footer } from "./components/footer";
 import { MainMenu } from "./components/menu";
 
-import "nProgress/nProgress.css";
+import "nprogress/nprogress.css";
 
 export const meta: MetaFunction = () => {
   return [{ title: "犇犇黑历史" }];
