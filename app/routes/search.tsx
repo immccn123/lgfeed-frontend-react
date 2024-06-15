@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
 import { Location, useLocation, useNavigate } from "@remix-run/react";
+import { AxiosResponse } from "axios";
+import React, { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
 import {
   Button,
   Feed,
@@ -9,12 +11,11 @@ import {
   Icon,
   Select,
 } from "semantic-ui-react";
+
 import { Benben } from "~/components/feed";
+import { SegmentLoader } from "~/components/loader";
 import { BenbenItem as BenbenItem } from "~/interfaces";
 import { api } from "~/utils/api";
-import { SegmentLoader } from "~/components/loader";
-import { AxiosResponse } from "axios";
-import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -26,12 +27,12 @@ interface SearchPageProps {
 const CustomDatePicker: React.FC<{
   onChange(
     date: Date | null,
-    event: React.SyntheticEvent<any, Event> | undefined,
+    event: React.SyntheticEvent<unknown, Event> | undefined,
   ): void;
   selected: Date | null | undefined;
 }> = ({ selected, onChange }) => {
   const years = Array.from({ length: 50 }, (_, index) => {
-    let yr = (1990 + index).toString();
+    const yr = (1990 + index).toString();
     return { key: yr, value: yr, text: yr + " 年" };
   });
 
@@ -132,7 +133,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
     senderText.split(",").map((x) => parseInt(x.trim()));
 
   const getParams = () => {
-    let params: string[] = [];
+    const params: string[] = [];
 
     if (keyword) params.push(`keyword=${encodeURIComponent(keyword)}`);
     if (senderText)
@@ -149,7 +150,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
 
   const loadMore = () => {
     setLoading(true);
-    let params = getParams();
+    const params = getParams();
     if (results.length !== 0)
       params.push(`id_after=${results.slice(-1)[0].id}`);
 

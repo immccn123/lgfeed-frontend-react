@@ -1,5 +1,5 @@
-import React from "react";
 import Prism from "prismjs";
+import { FC } from "react";
 import "prismjs/components/prism-markdown";
 import "prismjs/themes/prism.css";
 
@@ -8,7 +8,7 @@ interface CodeSnippetProps {
   language: string;
 }
 
-const CodeSnippet: React.FC<CodeSnippetProps> = ({ code, language }) => {
+const CodeSnippet: FC<CodeSnippetProps> = ({ code, language }) => {
   const highlightedCode = Prism.highlight(
     code,
     Prism.languages[language],

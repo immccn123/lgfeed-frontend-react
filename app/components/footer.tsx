@@ -2,14 +2,9 @@
 
 import { Divider, Grid } from "semantic-ui-react";
 import "./styles/footer.css";
-import React, {
-  PropsWithChildren,
-  ReactNode,
-  useEffect,
-  useState,
-} from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 
-const FooterLayout: React.FC<{
+const FooterLayout: FC<{
   left: ReactNode;
   right: ReactNode;
 }> = ({ left, right }) => {
@@ -17,7 +12,7 @@ const FooterLayout: React.FC<{
 
   useEffect(() => {
     setWindowWidth(window.innerWidth);
-    let listener = (e: UIEvent) => {
+    const listener = (e: UIEvent) => {
       console.log(e);
       setWindowWidth(window.innerWidth);
     };
@@ -51,7 +46,7 @@ const FooterLayout: React.FC<{
   );
 };
 
-export const Footer: React.FC<{
+export const Footer: FC<{
   arcEnv?: string | null;
   disablePoweredBy?: boolean;
 }> = ({ arcEnv, disablePoweredBy }) => {

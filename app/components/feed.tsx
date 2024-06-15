@@ -1,14 +1,18 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Button, Feed, Icon, Image, Modal, Popup } from "semantic-ui-react";
-import { BenbenItem } from "~/interfaces";
-import Markdown from "marked-react";
 import { Link } from "@remix-run/react";
 import { AwesomeQR } from "awesome-qr";
+import html2canvas from "html2canvas";
+import Markdown from "marked-react";
+import { FC, useEffect, useMemo, useState } from "react";
+import { Button, Feed, Icon, Image, Modal, Popup } from "semantic-ui-react";
+
+import { BenbenItem } from "~/interfaces";
 
 import "./styles/feed.css";
-import CodeSnippet from "./code";
-import html2canvas from "html2canvas";
+
 import { dataURItoBlob, join } from "~/utils";
+import showNotification from "~/utils/notify";
+
+import CodeSnippet from "./code";
 
 const generateQRCode = (text: string): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -38,15 +42,13 @@ export interface BenbenItemProps {
   hideOperations?: boolean;
 }
 
-export const Benben: React.FC<BenbenItemProps> = ({
+export const Benben: FC<BenbenItemProps> = ({
   data,
   afterActions,
   hideOperations,
 }) => {
   const [linkQR, setLinkQR] = useState<string>();
   const [imgSrc, setImgSrc] = useState<string>();
-  const [copyDone, setCopyDone] = useState(false);
-  const [replyCopyDone, setReplyCopyDone] = useState(false);
   const id = `benben-${data.id}`;
 
   useEffect(() => {
@@ -57,7 +59,7 @@ export const Benben: React.FC<BenbenItemProps> = ({
   const copyReply = () => {
     const el = document.getElementById(`feed-${data.id}`) as HTMLElement;
     navigator.clipboard.writeText(` || @${data.username} : ${el.innerText}`);
-    setReplyCopyDone(true);
+    showNotification("回复文本已复制", "success");
   };
 
   const copyText = useMemo(
@@ -94,7 +96,10 @@ export const Benben: React.FC<BenbenItemProps> = ({
         } else {
           navigator.clipboard
             .write([new ClipboardItem({ "image/png": dataURItoBlob(data) })])
-            .then(() => setCopyDone(true));
+            .catch((e) =>
+              showNotification(`无法复制截图：${String(e)}`, "error"),
+            )
+            .then(() => showNotification("截图已复制", "success"));
         }
       });
   };
@@ -119,7 +124,7 @@ export const Benben: React.FC<BenbenItemProps> = ({
         关闭
       </Button>,
     ],
-    [data.content],
+    [data.content, copyText],
   );
 
   const summary = useMemo(
@@ -132,32 +137,25 @@ export const Benben: React.FC<BenbenItemProps> = ({
         </Feed.Date>
       </>
     ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [data.id],
   );
 
   const shareItems = useMemo(
     () => [
-      <>
+      <span>
         {linkQR ? <Image src={linkQR} /> : null}
         扫描二维码
-      </>,
+      </span>,
       <a className="clickable" onClick={copyLink}>
         复制链接
       </a>,
       <a className="clickable" onClick={() => genImg("download")}>
         下载截图
       </a>,
-      <Popup
-        trigger={
-          <a className="clickable" onClick={() => genImg("copy")}>
-            复制截图
-          </a>
-        }
-        open={copyDone}
-        onClose={() => setCopyDone(false)}
-      >
-        复制完成！
-      </Popup>,
+      <a className="clickable" onClick={() => genImg("copy")}>
+        复制截图
+      </a>,
     ],
     [linkQR],
   );
@@ -173,7 +171,7 @@ export const Benben: React.FC<BenbenItemProps> = ({
           ).then((x) => setLinkQR(x));
       }}
       trigger={
-        <a>
+        <a href="javascript:void 0">
           <Icon name="share square" />
           分享
         </a>
@@ -184,18 +182,10 @@ export const Benben: React.FC<BenbenItemProps> = ({
   );
 
   const reply = (
-    <Popup
-      trigger={
-        <a onClick={copyReply}>
-          <Icon name="reply" />
-          回复
-        </a>
-      }
-      open={replyCopyDone}
-      onClose={() => setReplyCopyDone(false)}
-    >
-      回复文本已复制！
-    </Popup>
+    <a onClick={copyReply}>
+      <Icon name="reply" />
+      回复
+    </a>
   );
 
   const metaActions = hideOperations ? (

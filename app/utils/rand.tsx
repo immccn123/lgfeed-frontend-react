@@ -1,6 +1,6 @@
 export function randomString(
   length: number,
-  stringSet: string = "1234567890poiuytrewqasdfghjklmnbvcxzQWERTYUIOPLKJHGFDSAZXCVBNM",
+  stringSet = "1234567890poiuytrewqasdfghjklmnbvcxzQWERTYUIOPLKJHGFDSAZXCVBNM",
 ) {
   const len = stringSet.length;
   let result = "";

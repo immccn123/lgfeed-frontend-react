@@ -1,6 +1,7 @@
 import { Link } from "@remix-run/react";
 import React from "react";
 import { Table, Image } from "semantic-ui-react";
+
 import { LeaderboardItem } from "~/interfaces";
 
 export interface LeaderboardProps {

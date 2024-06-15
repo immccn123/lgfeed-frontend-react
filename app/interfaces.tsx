@@ -1,3 +1,18 @@
+export type ProcessState =
+  | "STOPPED"
+  | "STARTING"
+  | "RUNNING"
+  | "BACKOFF"
+  | "STOPPING"
+  | "EXITED"
+  | "FATAL"
+  | "UNKNOWN";
+
+export interface ProcStatus {
+  fetcher_status: ProcessState;
+  loop_status: ProcessState;
+}
+
 export interface LeaderboardItem {
   uid: number | string;
   name: string;
@@ -44,7 +59,7 @@ export interface StatisticsMap {
 }
 
 export type RankResponse = LeaderboardItem[];
-export interface StatisticsResponse extends Statistics {}
-export interface UserFeedsResponse extends UserFeeds {}
-export interface BenbenItemResponse extends BenbenItem {}
-export interface StatisticsMapResponse extends StatisticsMap {}
+export type StatisticsResponse = Statistics
+export type UserFeedsResponse = UserFeeds
+export type BenbenItemResponse = BenbenItem
+export type StatisticsMapResponse = StatisticsMap

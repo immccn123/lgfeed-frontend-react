@@ -4,6 +4,7 @@ interface AnimatedNumberProps {
   value: number;
 }
 
+// eslint-disable-next-line react/prop-types
 export default function AnimatedNumber({ value }: AnimatedNumberProps) {
   const props = useSpring({
     number: value,

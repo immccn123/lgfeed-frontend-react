@@ -3,6 +3,7 @@ import { useLoaderData } from "@remix-run/react";
 import { Feed, Segment } from "semantic-ui-react";
 import useSWRImmutable from "swr/immutable";
 import { ZodError, z } from "zod";
+
 import { Benben } from "~/components/feed";
 import { SegmentLoader } from "~/components/loader";
 import { BenbenItem } from "~/interfaces";

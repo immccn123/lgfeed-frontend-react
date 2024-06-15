@@ -1,31 +1,28 @@
+import { useState } from "react";
 import {
   Button,
   Feed,
   Icon,
-  Input,
+  Label,
+  LabelDetail,
   List,
-  Segment,
+  ListItem,
   Statistic,
   StatisticLabel,
   StatisticValue,
-} from "semantic-ui-react";
-import { BenbenItem, StatisticsResponse } from "~/interfaces";
-import { Link } from "@remix-run/react";
-import { SegmentLoader } from "~/components/loader";
-import useSWR from "swr";
-import { BASE_URL, fetcher } from "~/utils/api";
-
-import { GridRow, GridColumn, Grid, Image } from "semantic-ui-react";
-import useSWRImmutable from "swr/dist/immutable";
-import { Benben } from "~/components/feed";
-
-import {
   PlaceholderParagraph,
   PlaceholderLine,
   PlaceholderHeader,
   Placeholder,
 } from "semantic-ui-react";
+import useSWR from "swr";
+
 import AnimatedNumber from "~/components/animated_number";
+import { Benben } from "~/components/feed";
+import { BenbenItem, ProcStatus, StatisticsResponse } from "~/interfaces";
+import { getColorByProcStatus, couldProcRestart } from "~/utils";
+import { api, fetcher } from "~/utils/api";
+import showNotification from "~/utils/notify";
 
 const MyStatistic = ({
   label,
@@ -39,7 +36,7 @@ const MyStatistic = ({
   <Statistic size="tiny">
     <StatisticLabel>{label}</StatisticLabel>
     <StatisticValue>
-      {value ? (
+      {value !== undefined ? (
         <>
           <AnimatedNumber value={value} /> {trailing}
         </>
@@ -51,6 +48,98 @@ const MyStatistic = ({
     </StatisticValue>
   </Statistic>
 );
+
+function BackendStatus() {
+  const { data, error, mutate } = useSWR<ProcStatus>(`/proc/status`, fetcher, {
+    refreshInterval: 5000,
+  });
+  const [fetcherRestarting, setFetcherRestarting] = useState(false);
+  const [loopRestarting, setLoopRestarting] = useState(false);
+
+  if (data === undefined)
+    return (
+      <Placeholder fluid>
+        <PlaceholderLine />
+        <PlaceholderLine />
+      </Placeholder>
+    );
+
+  if (error) {
+    return (
+      <p>
+        后端可能已经去世了（这个好像没法凭借阁下的一己之力重启了）。。。
+        <br />
+        或者是网络有问题？
+      </p>
+    );
+  }
+
+  const restarter = (proc: "fetcher" | "loop") => () => {
+    if (proc === "fetcher") setFetcherRestarting(true);
+    else setLoopRestarting(true);
+
+    api
+      .get(`/proc/start?proc=${proc}`)
+      .then(() => showNotification("已经发出启动进程请求", "success"))
+      .catch((e) => showNotification(String(e), "error"))
+      .finally(() => {
+        if (proc === "fetcher") setFetcherRestarting(false);
+        else setLoopRestarting(false);
+        mutate();
+      });
+  };
+
+  return (
+    <>
+      <List divided selection>
+        <ListItem>
+          轮询抓取器：
+          <Label color={getColorByProcStatus(data.fetcher_status)}>
+            {data.fetcher_status}
+
+            {couldProcRestart(data.fetcher_status) ? (
+              <LabelDetail>
+                <Button
+                  size="mini"
+                  labelPosition="left"
+                  color="green"
+                  onClick={restarter("fetcher")}
+                  disabled={fetcherRestarting}
+                  loading={fetcherRestarting}
+                >
+                  <Icon name="redo" />
+                  点击尝试重启
+                </Button>
+              </LabelDetail>
+            ) : null}
+          </Label>
+        </ListItem>
+        <ListItem>
+          循环抓取器：
+          <Label color={getColorByProcStatus(data.loop_status)}>
+            {data.loop_status}
+
+            {couldProcRestart(data.loop_status) ? (
+              <LabelDetail>
+                <Button
+                  size="mini"
+                  labelPosition="left"
+                  color="green"
+                  onClick={restarter("loop")}
+                  disabled={loopRestarting}
+                  loading={loopRestarting}
+                >
+                  <Icon name="redo" />
+                  点击尝试重启
+                </Button>
+              </LabelDetail>
+            ) : null}
+          </Label>
+        </ListItem>
+      </List>
+    </>
+  );
+}
 
 export default function Index() {
   const {
@@ -82,16 +171,6 @@ export default function Index() {
         value={statistics?.today_count}
         trailing="条"
       />
-      {/* <MyStatistic
-        label="累计发犇用户"
-        value={statistics?.total_user}
-        trailing="个"
-      />
-      <MyStatistic
-        label="近 24 小时内发犇用户"
-        value={statistics?.today_user}
-        trailing="个"
-      /> */}
 
       <h2>随机犇犇</h2>
       {randomBenben ? (
@@ -117,15 +196,19 @@ export default function Index() {
       )}
 
       <Button
-        onClick={() => {
-          mutateRandomBenben();
-        }}
+        onClick={() => mutateRandomBenben()}
         disabled={isBenbenValidating}
         loading={isBenbenValidating}
       >
         <Icon name="refresh" />
         换一个
       </Button>
+
+      <h2>爬虫状态</h2>
+      <p>
+        因学业繁忙，可能没有时间时时刻刻盯着服务器状态了，所以只有麻烦大家一起盯一下）
+      </p>
+      <BackendStatus />
     </>
   );
 }

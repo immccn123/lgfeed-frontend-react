@@ -1,6 +1,6 @@
+import { useNavigate } from "@remix-run/react";
 import { useState } from "react";
 import { Button, Form, Input } from "semantic-ui-react";
-import { useNavigate } from "@remix-run/react";
 
 interface UserDefaultProps {
   navigate: (to: string) => void;

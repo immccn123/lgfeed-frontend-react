@@ -1,5 +1,5 @@
-import { Dropdown, Icon, Menu } from "semantic-ui-react";
 import { Link, useLocation } from "@remix-run/react";
+import { Dropdown, Icon, Menu } from "semantic-ui-react";
 
 export const MainMenu = () => {
   const location = useLocation();

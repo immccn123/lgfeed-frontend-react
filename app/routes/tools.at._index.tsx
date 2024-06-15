@@ -1,13 +1,13 @@
-import React, { Component, useState } from "react";
-import { Button, Input, Form } from "semantic-ui-react";
 import { useNavigate } from "@remix-run/react";
+import { useState, FC } from "react";
+import { Button, Input, Form } from "semantic-ui-react";
 
 interface AtToolProps {
   navigate: (to: string) => void;
   username?: string;
 }
 
-const AtTool: React.FC<AtToolProps> = ({ navigate, username: _username }) => {
+const AtTool: FC<AtToolProps> = ({ navigate, username: _username }) => {
   const [username, setUsername] = useState(_username);
   return (
     <div>

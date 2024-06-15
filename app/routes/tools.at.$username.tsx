@@ -1,10 +1,11 @@
+import { useNavigate, useParams } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { Button, Feed, Input, Message, Segment, Form } from "semantic-ui-react";
-import { useNavigate, useParams } from "@remix-run/react";
-import { api } from "~/utils/api";
-import { BenbenItem } from "~/interfaces";
+
 import { Benben } from "~/components/feed";
 import { SegmentLoader } from "~/components/loader";
+import { BenbenItem } from "~/interfaces";
+import { api } from "~/utils/api";
 
 type AtResponse = BenbenItem[];
 
@@ -13,13 +14,9 @@ interface AtToolProps {
   username?: string;
 }
 
-const AtTool: React.FC<AtToolProps> = ({ username: _username, navigate }) => {
+const AtTool = ({ username: _username, navigate }: AtToolProps) => {
   const [username, setUsername] = useState<string | undefined>(_username);
   const [userFeeds, setUserFeeds] = useState<BenbenItem[] | undefined>();
-
-  const goToUserPage = () => {
-    navigate(`/tools/at/${username}`);
-  };
 
   const getUserFeed = () => {
     setUserFeeds(undefined);
@@ -29,11 +26,9 @@ const AtTool: React.FC<AtToolProps> = ({ username: _username, navigate }) => {
       .then(({ data }) => setUserFeeds(data));
   };
 
-  useEffect(() => {
-    getUserFeed();
-  }, []);
+  useEffect(getUserFeed, [username]);
 
-  const FeedList: React.FC<{}> = () => {
+  const FeedList: React.FC = () => {
     if (!userFeeds) return null;
     if (userFeeds.length <= 0)
       return (
@@ -43,10 +38,6 @@ const AtTool: React.FC<AtToolProps> = ({ username: _username, navigate }) => {
         </Message>
       );
     return userFeeds.map((value) => <Benben key={value.id} data={value} />);
-  };
-
-  const handleSearch = () => {
-    goToUserPage();
   };
 
   return (

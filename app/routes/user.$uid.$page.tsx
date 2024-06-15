@@ -1,3 +1,5 @@
+import { LoaderFunctionArgs } from "@remix-run/node";
+import { useLoaderData, useNavigate } from "@remix-run/react";
 import React, { useState } from "react";
 import {
   Button,
@@ -7,22 +9,18 @@ import {
   Message,
   Pagination,
   Segment,
-} from "semantic-ui-react";
-import { useLoaderData, useNavigate } from "@remix-run/react";
-import { fetcher } from "~/utils/api";
-import { UserFeeds } from "~/interfaces";
-import { Benben } from "~/components/feed";
-import useSWR from "swr";
-import { ZodError, z } from "zod";
-import { LoaderFunctionArgs } from "@remix-run/node";
 
-import {
   PlaceholderParagraph,
   PlaceholderLine,
   PlaceholderHeader,
   Placeholder,
-  Form,
-} from "semantic-ui-react";
+  Form} from "semantic-ui-react";
+import useSWR from "swr";
+import { ZodError, z } from "zod";
+
+import { Benben } from "~/components/feed";
+import { UserFeeds } from "~/interfaces";
+import { fetcher } from "~/utils/api";
 
 interface UserDefaultProps {
   navigate: (to: string) => void;
@@ -106,7 +104,7 @@ const Paginator: React.FC<{
           boundaryRange={0}
           activePage={activePage}
           ellipsisItem={null}
-          siblingRange={3}
+          siblingRange={2}
           totalPages={totalPages}
           onPageChange={(_, { activePage }) => goToPage(activePage)}
           disabled={isDisabled}
@@ -126,7 +124,7 @@ const UserDefault = ({ navigate, uid, page }: UserDefaultProps) => {
     fetcher,
   );
 
-  const { data: userFeeds, isLoading } = useSWR<UserFeeds>(
+  const { data: userFeed, isLoading } = useSWR<UserFeeds>(
     `/blackHistory/feed/${uid}?page=${page}&per_page=${perPage}`,
     fetcher,
     {
@@ -136,13 +134,9 @@ const UserDefault = ({ navigate, uid, page }: UserDefaultProps) => {
     },
   );
 
-  const handleSearch = () => {
-    navigate(`/user/${inputUid}/1`);
-  };
-
-  const goToPage = (page?: number | string) => {
+  const handleSearch = () => navigate(`/user/${inputUid}/1`);
+  const goToPage = (page?: number | string) =>
     navigate(`/user/${uid}/${page ?? 1}`);
-  };
 
   const UidInput = (
     <Form onSubmit={handleSearch}>
@@ -162,7 +156,7 @@ const UserDefault = ({ navigate, uid, page }: UserDefaultProps) => {
         type="number"
         min={1}
         max={10000000}
-        disabled={!userFeeds}
+        disabled={!userFeed}
       />
     </Form>
   );
@@ -187,8 +181,8 @@ const UserDefault = ({ navigate, uid, page }: UserDefaultProps) => {
             </Placeholder>
           )}
         </List.Item>
-        {userFeeds && userFeeds.feeds.length > 0 ? (
-          <List.Item>累计犇犇发送数量：{userFeeds.count}</List.Item>
+        {userFeed && userFeed.feeds.length > 0 ? (
+          <List.Item>累计犇犇发送数量：{userFeed.count}</List.Item>
         ) : (
           <Placeholder>
             <PlaceholderParagraph>
@@ -199,15 +193,15 @@ const UserDefault = ({ navigate, uid, page }: UserDefaultProps) => {
       </List>
 
       <h2>历史犇犇</h2>
-      {userFeeds && userFeeds.feeds.length > 0 ? (
+      {userFeed && userFeed.feeds.length > 0 ? (
         <>
           <Feed>
-            {userFeeds.feeds.map((value) => (
+            {userFeed.feeds.map((value) => (
               <Benben key={value.id} data={value} />
             ))}
           </Feed>
         </>
-      ) : userFeeds ? (
+      ) : userFeed ? (
         <Message>
           <Message.Header>唔……？</Message.Header>
           <Message.Content>没有找到 Ta 的数据呢</Message.Content>
@@ -230,8 +224,8 @@ const UserDefault = ({ navigate, uid, page }: UserDefaultProps) => {
 
       <Paginator
         goToPage={goToPage}
-        totalPages={userFeeds ? Math.ceil(userFeeds.count / perPage) : 1}
-        disabled={!(userFeeds && userFeeds.feeds.length > 0)}
+        totalPages={userFeed ? Math.ceil(userFeed.count / perPage) : 1}
+        disabled={!(userFeed && userFeed.feeds.length > 0)}
         activePage={page}
       />
     </div>

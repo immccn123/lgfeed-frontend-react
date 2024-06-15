@@ -3,11 +3,9 @@ import "./main.css";
 
 import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
-
 import {
   Link,
   Links,
-  // LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -17,16 +15,15 @@ import {
   useNavigation,
   useRouteError,
 } from "@remix-run/react";
-import React, { PropsWithChildren, useEffect } from "react";
-
-import { MainMenu } from "./components/menu";
-import { Footer } from "./components/footer";
-import { Button, ButtonGroup, Container } from "semantic-ui-react";
-import { Announcement } from "./components/announcement";
-
-import NProgress from "nprogress";
-import "nprogress/nprogress.css";
 import nProgress from "nprogress";
+import { PropsWithChildren, useEffect, FC } from "react";
+import { Button, ButtonGroup, Container } from "semantic-ui-react";
+
+import { Announcement } from "./components/announcement";
+import { Footer } from "./components/footer";
+import { MainMenu } from "./components/menu";
+
+import "nProgress/nProgress.css";
 
 export const meta: MetaFunction = () => {
   return [{ title: "犇犇黑历史" }];
@@ -46,9 +43,9 @@ export default function App() {
 
   useEffect(() => {
     if (navigation.state === "loading" || navigation.state === "submitting") {
-      NProgress.start();
+      nProgress.start();
     } else {
-      NProgress.done();
+      nProgress.done();
     }
   }, [navigation.state]);
 
@@ -82,7 +79,7 @@ export default function App() {
   );
 }
 
-const ErrorSlot: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+const ErrorSlot: FC<PropsWithChildren> = ({ children }) => {
   return (
     <html lang="zh-cn">
       <head>
