@@ -2,7 +2,7 @@
 
 <div style="width: 120px">
 
-[![](./public/logo.png)](https://www.figma.com/file/zjn9bnbcj7O16GY5hhXNDR/Untitled?type=design&node-id=4%3A2&mode=design&t=4pwF1Q3lF3k51Sbn-1)
+[![](./packages/web/public/logo.png)](https://www.figma.com/file/zjn9bnbcj7O16GY5hhXNDR/Untitled?type=design&node-id=4%3A2&mode=design&t=4pwF1Q3lF3k51Sbn-1)
 
 </div>
 
