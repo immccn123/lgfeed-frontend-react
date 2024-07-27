@@ -7,7 +7,7 @@
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc",
     "format": "prettier --write .",
-    "vercel-build": "remix build"
+    "vercel-build": "remix vite:build"
   },
   "type": "module",
   "dependencies": {
