@@ -57,8 +57,6 @@
     "globals": "^15.8.0",
     "prettier": "3.1.0",
     "prettier-eslint": "^16.3.0",
-    "rollup": "^4.19.0",
-    "terser": "^5.31.3",
     "typescript": "^5.5.4",
     "vite": "^5.3.5"
   },
