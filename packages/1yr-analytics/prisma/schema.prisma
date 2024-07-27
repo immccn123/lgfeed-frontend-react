@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model feed {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  user_color String   @db.VarChar(255)
+  username   String   @db.VarChar(255)
+  time       DateTime @db.Timestamp(6)
+  content    String   @db.VarChar(8192)
+  hash       String   @unique(map: "feed_hash") @db.VarChar(512)
+  grub_time  DateTime @db.Timestamp(6)
+
+  @@index([id], map: "id_index")
+  @@index([user_id, time(sort: Desc)], map: "idx_user_id_time")
+}

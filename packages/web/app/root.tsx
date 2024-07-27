@@ -1,8 +1,7 @@
 import "semantic-ui-css/semantic.min.css";
 import "./main.css";
 
-import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "@remix-run/node";
 import {
   Link,
   Links,
@@ -24,22 +23,14 @@ import { Footer } from "./components/footer";
 import { MainMenu } from "./components/menu";
 
 import "nprogress/nprogress.css";
+import "systemjs"
 
 export const meta: MetaFunction = () => {
   return [{ title: "犇犇黑历史" }];
 };
 
-export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
-];
-
-export const loader = () => {
-  return process.env.ARC_ENV ?? null;
-};
-
 export default function App() {
   const navigation = useNavigation();
-  const env = useLoaderData<typeof loader>();
 
   useEffect(() => {
     if (navigation.state === "loading" || navigation.state === "submitting") {
@@ -70,10 +61,9 @@ export default function App() {
           <Announcement />
           <Outlet />
         </Container>
-        <Footer arcEnv={env} />
+        <Footer />
         <ScrollRestoration />
         <Scripts />
-        {/* <LiveReload /> */}
       </body>
     </html>
   );
