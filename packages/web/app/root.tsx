@@ -29,12 +29,11 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  let adSense = false;
-  if (
-    new URL(request.url).host === "benben.sbs" ||
-    !request.headers.get("cookie")?.includes("noAd=1")
-  ) {
-    adSense = true;
+  let adSense: boolean | null = false;
+  if (new URL(request.url).host === "benben.sbs") {
+    if (!request.headers.get("cookie")?.includes("noAd=1")) adSense = true;
+  } else {
+    adSense = null;
   }
 
   return { adSense };
@@ -61,7 +60,7 @@ export default function App() {
         <Meta />
         <Links />
         <script src="/clarity.js"></script>
-        {adSense ? (
+        {adSense === true ? (
           <script
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4905414776827944"
@@ -72,7 +71,7 @@ export default function App() {
       <body>
         <MainMenu />
         <Container>
-          <Announcement />
+          <Announcement shouldShowAd={adSense !== null} />
           <Outlet />
         </Container>
         <Footer />
