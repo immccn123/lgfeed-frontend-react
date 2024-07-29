@@ -71,7 +71,7 @@ export default function App() {
       <body>
         <MainMenu />
         <Container>
-          <Announcement shouldShowAd={adSense !== null} />
+          <Announcement shouldShowAd={false} />
           <Outlet />
         </Container>
         <Footer />
