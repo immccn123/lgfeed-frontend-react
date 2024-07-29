@@ -42,21 +42,29 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
   const getSender = (senderText: string) =>
     senderText.split(",").map((x) => parseInt(x.trim()));
 
-  const getParams = () => {
+  const getParams = (isSearch: boolean = false) => {
     const params: string[] = [];
 
     if (keyword) params.push(`keyword=${encodeURIComponent(keyword)}`);
     if (senderText)
       getSender(senderText).forEach((value) => params.push(`senders=${value}`));
     if (dateBefore)
-      params.push(`date_before=${encodeURIComponent(dateBefore.getTime() * 1000)}`);
+      params.push(
+        `date_before=${encodeURIComponent(
+          dateBefore.getTime() * (isSearch ? 1000 : 1),
+        )}`,
+      );
     if (dateAfter)
-      params.push(`date_after=${encodeURIComponent(dateAfter.getTime() * 1000)}`);
+      params.push(
+        `date_after=${encodeURIComponent(
+          dateAfter.getTime() * (isSearch ? 1000 : 1),
+        )}`,
+      );
 
     return params;
   };
 
-  const handleSearch = () => navigate(`/search?` + getParams().join("&"));
+  const handleSearch = () => navigate(`/search?` + getParams(true).join("&"));
 
   const loadMore = () => {
     setLoading(true);
