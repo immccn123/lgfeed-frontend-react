@@ -1,7 +1,7 @@
 import "semantic-ui-css/semantic.min.css";
 import "./main.css";
 
-import type { MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import {
   Link,
   Links,
@@ -23,10 +23,21 @@ import { Footer } from "./components/footer";
 import { MainMenu } from "./components/menu";
 
 import "nprogress/nprogress.css";
-import "systemjs"
 
 export const meta: MetaFunction = () => {
   return [{ title: "犇犇黑历史" }];
+};
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  let adSense = false;
+  if (
+    new URL(request.url).host === "benben.sbs" ||
+    !request.headers.get("cookie")?.includes("noAd=1")
+  ) {
+    adSense = true;
+  }
+
+  return { adSense };
 };
 
 export default function App() {
@@ -40,7 +51,7 @@ export default function App() {
     }
   }, [navigation.state]);
 
-  const arcEnv = useLoaderData<string | null>();
+  const { adSense } = useLoaderData<typeof loader>();
 
   return (
     <html lang="zh-cn">
@@ -49,11 +60,14 @@ export default function App() {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
-        {arcEnv ? (
-          <script src="/_static/clarity.js"></script>
-        ) : (
-          <script src="/clarity.js"></script>
-        )}
+        <script src="/clarity.js"></script>
+        {adSense ? (
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4905414776827944"
+            crossOrigin="anonymous"
+          ></script>
+        ) : null}
       </head>
       <body>
         <MainMenu />
