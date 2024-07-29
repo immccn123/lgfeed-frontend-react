@@ -49,9 +49,9 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
     if (senderText)
       getSender(senderText).forEach((value) => params.push(`senders=${value}`));
     if (dateBefore)
-      params.push(`date_before=${encodeURIComponent(dateBefore.getTime())}`);
+      params.push(`date_before=${encodeURIComponent(dateBefore.getTime() * 1000)}`);
     if (dateAfter)
-      params.push(`date_after=${encodeURIComponent(dateAfter.getTime())}`);
+      params.push(`date_after=${encodeURIComponent(dateAfter.getTime() * 1000)}`);
 
     return params;
   };
