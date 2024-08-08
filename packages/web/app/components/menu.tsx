@@ -28,6 +28,12 @@ export const MainMenu = () => {
               active={location.pathname.startsWith("/tools/at")}
               name="被 at 查询（24 h）"
             />
+            <Menu.Item
+              as={Link}
+              to="/tools/circle"
+              active={location.pathname.startsWith("/tools/at")}
+              name="互动圈（Benben Circle）"
+            />
           </Dropdown.Menu>
         </Dropdown>
         <Menu.Item
