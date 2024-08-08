@@ -59,7 +59,7 @@ function getPos(index: number) {
 }
 
 const BenbenCircle = () => {
-  const [uid, setUid] = useState<number | null>(754021);
+  const [uid, setUid] = useState<number | null>();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<DataResponse>();
 
