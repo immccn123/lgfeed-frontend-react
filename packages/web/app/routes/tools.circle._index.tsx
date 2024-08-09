@@ -241,8 +241,6 @@ const BenbenCircle = () => {
                     download(
                       cy.current?.png({
                         bg: "lightblue",
-                        maxWidth: 500,
-                        maxHeight: 500,
                       })!,
                       `${uid}-circle.png`,
                     );
