@@ -13,6 +13,7 @@ import { dataURItoBlob, join } from "~/utils";
 import showNotification from "~/utils/notify";
 
 import CodeSnippet from "./code";
+import { download } from "~/utils/download";
 
 const generateQRCode = (text: string): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -66,6 +67,7 @@ export const Benben: FC<BenbenItemProps> = ({
     () => () => navigator.clipboard.writeText(data.content),
     [data.content],
   );
+
   const copyLink = useMemo(
     () => () =>
       navigator.clipboard.writeText(
@@ -89,10 +91,7 @@ export const Benben: FC<BenbenItemProps> = ({
         el.style.padding = padding;
 
         if (operation === "download") {
-          const link = document.createElement("a");
-          link.download = `${id}.png`;
-          link.href = data;
-          link.click();
+          download(data, `${id}.png`)
         } else {
           navigator.clipboard
             .write([new ClipboardItem({ "image/png": dataURItoBlob(data) })])

@@ -1,10 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, ButtonGroup, Form, Input, Segment } from "semantic-ui-react";
+import {
+  Button,
+  ButtonGroup,
+  Form,
+  Icon,
+  Input,
+  Segment,
+} from "semantic-ui-react";
 import { api } from "~/utils/api";
 import showNotification from "~/utils/notify";
 import cytoscape from "cytoscape";
 import { SegmentLoader } from "~/components/loader";
 import { ClientOnly } from "remix-utils/client-only";
+import { download } from "~/utils/download";
+import { AxiosError } from "axios";
 
 interface DataResponse {
   benbenCnt: number;
@@ -72,17 +81,26 @@ const BenbenCircle = () => {
       })
       .then((x) => {
         let data = x.data;
-        data.result = data.result.filter((x) => x.weight >= 1);
+        // >2 就是本人主动提起过的
+        data.result = data.result.filter((x) => x.weight > 2);
         setData(data);
       })
-      .catch(() => {
-        showNotification("获取数据失败", "error");
+      .catch((e) => {
+        if (e instanceof AxiosError) {
+          if (e.response?.status === 524)
+            return showNotification(
+              "获取数据超时啦 TAT，但是不要着急~ 请务必等两分钟再试试！",
+              "error",
+            );
+        }
+        showNotification("在获取数据时出现错误：" + String(e), "error");
       })
       .finally(() => setIsLoading(false));
   };
 
   const cyHtmlElement = useRef<HTMLDivElement>(null);
   const cy = useRef<cytoscape.Core>();
+  const originalZoom = useRef<number>();
 
   useEffect(() => {
     if (!data) {
@@ -140,10 +158,18 @@ const BenbenCircle = () => {
       layout: { name: "preset" },
     });
 
+    originalZoom.current = cy.current.zoom();
+
     return () => {
       cy.current?.destroy();
+      originalZoom.current = undefined;
     };
   }, [data]);
+
+  function reset() {
+    cy.current?.center();
+    cy.current?.zoom(originalZoom.current);
+  }
 
   return (
     <div>
@@ -176,9 +202,13 @@ const BenbenCircle = () => {
       </div>
       {isLoading && (
         <Segment>
-          <SegmentLoader
-            msg={`正在准备……稍候就好。此过程根据用户热度和缓存情况，时长在 10s ~ 120s 不等。如果这段时间实在是因为超时分析不出来，那么咱也没办法。`}
-          />
+          <SegmentLoader>
+            稍候就好。此过程根据用户热度和缓存情况，时长在 10s ~ 120s 不等。
+            <br />
+            <strong>
+              如果这段时间实在是因为超时导致获取数据失败，为了缓解服务器压力，请等待三分钟之后再重试，因为这个时候缓存应该已经建立。
+            </strong>
+          </SegmentLoader>
         </Segment>
       )}
       {data && (
@@ -187,7 +217,8 @@ const BenbenCircle = () => {
             <p>
               共分析了 {data.benbenCnt} 条相关犇犇。
               {data.cacheHit
-                ? "这是缓存的结果，缓存有效期自第一次查询起有 8 小时。"
+                ? "这是缓存的结果，缓存有效期自第一次查询起有 8 小时。" +
+                  "当然中间也可能因为算法微调而清空缓存，不过这就很玄学了。"
                 : "结果已缓存。"}
             </p>
             <div
@@ -198,9 +229,30 @@ const BenbenCircle = () => {
                 height: 500,
               }}
             ></div>
-            <ButtonGroup>
-              <Button onClick={() => cy.current?.reset()}>Reset</Button>
-            </ButtonGroup>
+            <div style={{ textAlign: "center" }}>
+              <ButtonGroup>
+                <Button onClick={reset}>
+                  <Icon name="history" />
+                  重置
+                </Button>
+                <Button
+                  onClick={() => {
+                    reset();
+                    download(
+                      cy.current?.png({
+                        bg: "lightblue",
+                        maxWidth: 500,
+                        maxHeight: 500,
+                      })!,
+                      `${uid}-circle.png`,
+                    );
+                  }}
+                >
+                  <Icon name="download" />
+                  保存图片
+                </Button>
+              </ButtonGroup>
+            </div>
           </Segment>
           <br />
           有奖竞猜：判断互动用户的算法是什么。找到了你认为正确的算法（含参数）发送邮件到

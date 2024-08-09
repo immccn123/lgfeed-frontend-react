@@ -4,6 +4,7 @@ import { Message } from "semantic-ui-react";
 const showNotification = (
   message: string,
   messageType?: "error" | "warning" | "success",
+  timeout?: number,
 ) => {
   const container = document.createElement("div");
   document.body.appendChild(container);
@@ -23,7 +24,7 @@ const showNotification = (
 
   setTimeout(() => {
     document.body.removeChild(container);
-  }, 5000);
+  }, timeout ?? 5000);
 };
 
 export default showNotification;
