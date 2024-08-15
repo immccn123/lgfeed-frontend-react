@@ -20,6 +20,7 @@ export const Announcement = ({ shouldShowAd }: { shouldShowAd: boolean }) => {
 
   return (
     <Message>
+      群号：313404608 |{" "}
       支持我们继续做下去！
       <a href="https://sponsor.imken.moe">捐赠（请备注为犇站）</a>
       {shouldShowAd && adStatus !== undefined ? (
