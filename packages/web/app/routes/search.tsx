@@ -64,11 +64,11 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
     return params;
   };
 
-  const handleSearch = () => navigate(`/search?` + getParams(true).join("&"));
+  const handleSearch = () => navigate(`/search?` + getParams().join("&"));
 
   const loadMore = () => {
     setLoading(true);
-    const params = getParams();
+    const params = getParams(true);
     if (results.length !== 0)
       params.push(`id_after=${results.slice(-1)[0].id}`);
 
