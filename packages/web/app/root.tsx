@@ -10,7 +10,6 @@ import {
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
-  useLoaderData,
   useNavigation,
   useRouteError,
 } from "@remix-run/react";
@@ -44,14 +43,16 @@ export default function App() {
   const navigation = useNavigation();
 
   useEffect(() => {
+    import("./static/clarity.js");
+  }, []);
+
+  useEffect(() => {
     if (navigation.state === "loading" || navigation.state === "submitting") {
       nProgress.start();
     } else {
       nProgress.done();
     }
   }, [navigation.state]);
-
-  const { adSense } = useLoaderData<typeof loader>();
 
   return (
     <html lang="zh-cn">
@@ -62,12 +63,6 @@ export default function App() {
         <Links />
         <ExternalScript
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4905414776827944"
-          crossOrigin="anonymous"
-          async
-          defer={false}
-        ></ExternalScript>
-        <ExternalScript
-          src="https://www.clarity.ms/tag/insqsmnvzb"
           crossOrigin="anonymous"
           async
           defer={false}
@@ -92,9 +87,9 @@ const ErrorSlot: FC<PropsWithChildren> = ({ children }) => {
     <>
       <MainMenu />
       <Container>{children}</Container>
-      <Footer disablePoweredBy />
+      {/* <Footer disablePoweredBy /> */}
       <ScrollRestoration />
-      <Scripts />
+      {/* <Scripts /> */}
     </>
   );
 };

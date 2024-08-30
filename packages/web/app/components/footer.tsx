@@ -1,17 +1,18 @@
-import { Divider } from "semantic-ui-react";
+import { Container, Divider } from "semantic-ui-react";
 import "./styles/footer.css";
 import { FC, ReactNode } from "react";
+import CommonAd from "./common_ad";
 
 const FooterLayout: FC<{
   left: ReactNode;
   right: ReactNode;
 }> = ({ left, right }) => {
-    return (
-      <>
-        {left}
-        {right}
-      </>
-    );
+  return (
+    <>
+      {left}
+      {right}
+    </>
+  );
 
   // return (
   //   <Grid>
@@ -87,9 +88,14 @@ export const Footer: FC<{
   );
 
   return (
-    <footer>
-      <Divider />
-      <FooterLayout left={left} right={right} />
-    </footer>
+    <>
+      <Container>
+        <CommonAd />
+      </Container>
+      <footer>
+        <Divider />
+        <FooterLayout left={left} right={right} />
+      </footer>
+    </>
   );
 };

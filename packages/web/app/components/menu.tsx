@@ -24,13 +24,13 @@ export const MainMenu = () => {
           as={Link}
           to="/tools/at"
           active={location.pathname.startsWith("/tools/at")}
-          name="被&at;查询"
+          name="被 at 查询"
         />
         <Menu.Item
           as={Link}
           to="/tools/circle"
           active={location.pathname.startsWith("/tools/circle")}
-          name="Benben Circle"
+          name="犇圈"
         />
         <Menu.Item
           as={Link}
