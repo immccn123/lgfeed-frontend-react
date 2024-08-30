@@ -196,8 +196,8 @@ const UserDefault = ({ navigate, uid, page }: UserDefaultProps) => {
       {userFeed && userFeed.feeds.length > 0 ? (
         <>
           <Feed>
-            {userFeed.feeds.map((value) => (
-              <Benben key={value.id} data={value} />
+            {userFeed.feeds.map((value, index) => (
+              <Benben key={value.id} data={value} adNext={index !== 0 && index % 15 === 0} />
             ))}
           </Feed>
         </>

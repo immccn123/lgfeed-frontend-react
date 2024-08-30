@@ -135,8 +135,12 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
       </div>
       <div style={{ paddingTop: "20px" }}>
         <Feed>
-          {results.map((value) => (
-            <Benben data={value} key={value.id} />
+          {results.map((value, index) => (
+            <Benben
+              data={value}
+              key={value.id}
+              adNext={index !== 0 && index % 15 === 0}
+            />
           ))}
         </Feed>
         {loading ? (

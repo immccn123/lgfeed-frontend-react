@@ -41,16 +41,31 @@ export interface BenbenItemProps {
   data: BenbenItem;
   afterActions?: React.ReactNode[];
   hideOperations?: boolean;
+  adNext?: boolean;
 }
 
 export const Benben: FC<BenbenItemProps> = ({
   data,
   afterActions,
   hideOperations,
+  adNext,
 }) => {
   const [linkQR, setLinkQR] = useState<string>();
   const [imgSrc, setImgSrc] = useState<string>();
+  const [isMounted, setIsMounted] = useState(false);
   const id = `benben-${data.id}`;
+
+  useEffect(() => {
+    if (adNext && !isMounted) {
+      try {
+        // @ts-ignore
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.error(e)
+      }
+      setIsMounted(true);
+    }
+  }, [adNext])
 
   useEffect(() => {
     const src = `https://cdn.luogu.com.cn/upload/usericon/${data.userId}.png`;
@@ -91,7 +106,7 @@ export const Benben: FC<BenbenItemProps> = ({
         el.style.padding = padding;
 
         if (operation === "download") {
-          download(data, `${id}.png`)
+          download(data, `${id}.png`);
         } else {
           navigator.clipboard
             .write([new ClipboardItem({ "image/png": dataURItoBlob(data) })])
@@ -214,19 +229,31 @@ export const Benben: FC<BenbenItemProps> = ({
   );
 
   return (
-    <Feed.Event id={id}>
-      <Feed.Label>
-        <Image avatar src={imgSrc} id={`${id}-avatar`} />
-      </Feed.Label>
-      <Feed.Content>
-        <Feed.Summary>{summary}</Feed.Summary>
-        <Feed.Extra text className="feed-content">
-          <div id={`feed-${data.id}`}>
-            <Markdown>{data.content}</Markdown>
-          </div>
-        </Feed.Extra>
-        <Feed.Meta>{metaActions}</Feed.Meta>
-      </Feed.Content>
-    </Feed.Event>
+    <>
+      <Feed.Event id={id}>
+        <Feed.Label>
+          <Image avatar src={imgSrc} id={`${id}-avatar`} />
+        </Feed.Label>
+        <Feed.Content>
+          <Feed.Summary>{summary}</Feed.Summary>
+          <Feed.Extra text className="feed-content">
+            <div id={`feed-${data.id}`}>
+              <Markdown>{data.content}</Markdown>
+            </div>
+          </Feed.Extra>
+          <Feed.Meta>{metaActions}</Feed.Meta>
+        </Feed.Content>
+      </Feed.Event>
+      <Feed.Event>
+        <ins
+          // @ts-ignore
+          class="adsbygoogle"
+          data-ad-format="fluid"
+          data-ad-layout-key="-gw-3+1f-3d+2z"
+          data-ad-client="ca-pub-4905414776827944"
+          data-ad-slot="5163409023"
+        ></ins>
+      </Feed.Event>
+    </>
   );
 };

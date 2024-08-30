@@ -23,6 +23,7 @@ import { Footer } from "./components/footer";
 import { MainMenu } from "./components/menu";
 
 import "nprogress/nprogress.css";
+import { ExternalScript } from "remix-utils/external-scripts";
 
 export const meta: MetaFunction = () => {
   return [{ title: "犇犇黑历史" }];
@@ -59,14 +60,18 @@ export default function App() {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
-        <script src="/clarity.js"></script>
-        {adSense === true ? (
-          <script
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4905414776827944"
-            crossOrigin="anonymous"
-          ></script>
-        ) : null}
+        <ExternalScript
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4905414776827944"
+          crossOrigin="anonymous"
+          async
+          defer={false}
+        ></ExternalScript>
+        <ExternalScript
+          src="https://www.clarity.ms/tag/insqsmnvzb"
+          crossOrigin="anonymous"
+          async
+          defer={false}
+        ></ExternalScript>
       </head>
       <body>
         <MainMenu />
@@ -84,21 +89,13 @@ export default function App() {
 
 const ErrorSlot: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <html lang="zh-cn">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <MainMenu />
-        <Container>{children}</Container>
-        <Footer disablePoweredBy />
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
+    <>
+      <MainMenu />
+      <Container>{children}</Container>
+      <Footer disablePoweredBy />
+      <ScrollRestoration />
+      <Scripts />
+    </>
   );
 };
 

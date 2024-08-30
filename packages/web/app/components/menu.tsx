@@ -20,22 +20,18 @@ export const MainMenu = () => {
           active={location.pathname === "/"}
           name="首页"
         />
-        <Dropdown item text="工具">
-          <Dropdown.Menu>
-            <Menu.Item
-              as={Link}
-              to="/tools/at"
-              active={location.pathname.startsWith("/tools/at")}
-              name="被 at 查询（24 h）"
-            />
-            <Menu.Item
-              as={Link}
-              to="/tools/circle"
-              active={location.pathname.startsWith("/tools/at")}
-              name="互动圈（Benben Circle）"
-            />
-          </Dropdown.Menu>
-        </Dropdown>
+        <Menu.Item
+          as={Link}
+          to="/tools/at"
+          active={location.pathname.startsWith("/tools/at")}
+          name="被&at;查询"
+        />
+        <Menu.Item
+          as={Link}
+          to="/tools/circle"
+          active={location.pathname.startsWith("/tools/at")}
+          name="Benben Circle"
+        />
         <Menu.Item
           as={Link}
           to="/user"

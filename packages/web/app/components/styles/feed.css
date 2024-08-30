@@ -10,3 +10,7 @@
 .clickable {
   cursor: pointer;
 }
+
+.adsbygoogle {
+  display: block;
+}

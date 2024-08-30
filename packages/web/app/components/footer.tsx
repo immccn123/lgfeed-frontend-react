@@ -1,49 +1,31 @@
-"use client";
-
-import { Divider, Grid } from "semantic-ui-react";
+import { Divider } from "semantic-ui-react";
 import "./styles/footer.css";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { FC, ReactNode } from "react";
 
 const FooterLayout: FC<{
   left: ReactNode;
   right: ReactNode;
 }> = ({ left, right }) => {
-  const [windowWidth, setWindowWidth] = useState<number>();
-
-  useEffect(() => {
-    setWindowWidth(window.innerWidth);
-    const listener = (e: UIEvent) => {
-      console.log(e);
-      setWindowWidth(window.innerWidth);
-    };
-    window.addEventListener("resize", listener);
-    return () => {
-      window.removeEventListener("resize", listener);
-    };
-  }, []);
-
-  if (windowWidth && windowWidth <= 1000) {
     return (
       <>
         {left}
         {right}
       </>
     );
-  }
 
-  return (
-    <Grid>
-      <Grid.Column floated="left" width={6}>
-        {left}
-      </Grid.Column>
-      <Grid.Column
-        floated={windowWidth && windowWidth < 600 ? "left" : "right"}
-        width={8}
-      >
-        {right}
-      </Grid.Column>
-    </Grid>
-  );
+  // return (
+  //   <Grid>
+  //     <Grid.Column floated="left" width={6}>
+  //       {left}
+  //     </Grid.Column>
+  //     <Grid.Column
+  //       floated={windowWidth && windowWidth < 600 ? "left" : "right"}
+  //       width={8}
+  //     >
+  //       {right}
+  //     </Grid.Column>
+  //   </Grid>
+  // );
 };
 
 export const Footer: FC<{
