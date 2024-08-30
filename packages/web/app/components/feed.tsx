@@ -61,11 +61,11 @@ export const Benben: FC<BenbenItemProps> = ({
         // @ts-ignore
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       } catch (e) {
-        console.error(e)
+        console.error(e);
       }
       setIsMounted(true);
     }
-  }, [adNext])
+  }, [adNext]);
 
   useEffect(() => {
     const src = `https://cdn.luogu.com.cn/upload/usericon/${data.userId}.png`;
@@ -244,16 +244,20 @@ export const Benben: FC<BenbenItemProps> = ({
           <Feed.Meta>{metaActions}</Feed.Meta>
         </Feed.Content>
       </Feed.Event>
-      <Feed.Event>
-        <ins
-          // @ts-ignore
-          class="adsbygoogle"
-          data-ad-format="fluid"
-          data-ad-layout-key="-gw-3+1f-3d+2z"
-          data-ad-client="ca-pub-4905414776827944"
-          data-ad-slot="5163409023"
-        ></ins>
-      </Feed.Event>
+      {adNext && (
+        <Feed.Event>
+          <Feed.Content>
+            <ins
+              // @ts-ignore
+              class="adsbygoogle"
+              data-ad-format="fluid"
+              data-ad-layout-key="-gw-3+1f-3d+2z"
+              data-ad-client="ca-pub-4905414776827944"
+              data-ad-slot="5163409023"
+            ></ins>
+          </Feed.Content>
+        </Feed.Event>
+      )}
     </>
   );
 };

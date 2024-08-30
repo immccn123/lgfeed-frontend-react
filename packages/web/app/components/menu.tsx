@@ -29,7 +29,7 @@ export const MainMenu = () => {
         <Menu.Item
           as={Link}
           to="/tools/circle"
-          active={location.pathname.startsWith("/tools/at")}
+          active={location.pathname.startsWith("/tools/circle")}
           name="Benben Circle"
         />
         <Menu.Item
