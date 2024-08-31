@@ -90,7 +90,9 @@ export const Footer: FC<{
   return (
     <>
       <Container>
-        <CommonAd />
+        <div style={{ paddingTop: "20px" }}>
+          <CommonAd type="fluid" />
+        </div>
       </Container>
       <footer>
         <Divider />

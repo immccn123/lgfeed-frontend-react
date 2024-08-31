@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import "./styles/ad.css";
 
-export default function CommonAd(props: Partial<HTMLElement>) {
+interface Props {
+  type: "auto" | "fluid";
+}
+
+export default function CommonAd({ type: _type }: Partial<Props>) {
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     try {
@@ -15,16 +19,23 @@ export default function CommonAd(props: Partial<HTMLElement>) {
     }
   });
 
+  const type = _type ?? "auto";
+  const height = type === "fluid" ? "90px" : undefined;
+  const responsive = type === "auto";
+
   return (
     <ins
-      // @ts-ignore
-      class="adsbygoogle"
-      {...props}
-      style={{ display: "block" }}
+      className="adsbygoogle"
+      style={{
+        display: responsive ? "inline-block" : "block",
+        height,
+        width: "100%",
+        // background: "black"
+      }}
       data-ad-client="ca-pub-4905414776827944"
       data-ad-slot="3969315658"
       data-ad-format="auto"
-      data-full-width-responsive="true"
+      data-full-width-responsive={responsive ? "true" : undefined}
     ></ins>
   );
 }

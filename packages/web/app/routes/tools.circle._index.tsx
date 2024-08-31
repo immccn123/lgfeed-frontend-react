@@ -14,6 +14,7 @@ import { SegmentLoader } from "~/components/loader";
 import { ClientOnly } from "remix-utils/client-only";
 import { download } from "~/utils/download";
 import { AxiosError } from "axios";
+import CommonAd from "~/components/common_ad";
 
 interface DataResponse {
   benbenCnt: number;
@@ -201,15 +202,20 @@ const BenbenCircle = () => {
         </Form>
       </div>
       {isLoading && (
-        <Segment>
-          <SegmentLoader>
-            稍候就好。此过程根据用户热度和缓存情况，时长在 10s ~ 120s 不等。
-            <br />
-            <strong>
-              如果这段时间实在是因为超时导致获取数据失败，为了缓解服务器压力，请等待三分钟之后再重试，因为这个时候缓存应该已经建立。
-            </strong>
-          </SegmentLoader>
-        </Segment>
+        <div style={{ height: "fit-content", paddingTop: "10px" }}>
+          <Segment>
+            <SegmentLoader height="400px">
+              稍候就好。此过程根据用户热度和缓存情况，时长在 10s ~ 120s 不等。
+              <br />
+              <strong>
+                如果这段时间实在是因为超时导致获取数据失败，为了缓解服务器压力，请等待三分钟之后再重试，因为这个时候缓存应该已经建立。
+              </strong>
+              <div style={{ paddingTop: "10px" }}>
+                <CommonAd />
+              </div>
+            </SegmentLoader>
+          </Segment>
+        </div>
       )}
       {data && (
         <>

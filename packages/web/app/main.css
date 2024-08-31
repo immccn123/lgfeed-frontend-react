@@ -22,3 +22,7 @@ body {
 .imken-date-picker .ui.icon.button {
   margin: 0 0.25em;
 }
+
+ins.adsbygoogle[data-ad-status="unfilled"] {
+  display: none !important;
+}
