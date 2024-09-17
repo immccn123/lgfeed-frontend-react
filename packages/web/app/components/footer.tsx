@@ -51,15 +51,39 @@ export const Footer: FC<{
   const left = (
     <div style={{ margin: 40 }}>
       <p>
-        为了提供更好的用户体验和优化网站性能，我们使用了 Microsoft Clarity
-        分析工具。通过使用
-        Clarity，我们可以收集有关访问者在我们网站上的交互方式的匿名数据。请查阅
-        <a href="https://privacy.microsoft.com/zh-cn/privacystatement">
-          {" "}
+        为了提升您的浏览体验并优化我们的网站，我们使用了 Microsoft Clarity
+        分析工具。Clarity
+        会收集您在网站上的匿名行为数据，帮助我们更好地了解您的需求。欲了解更多信息，参阅{" "}
+        <a
+          href="https://privacy.microsoft.com/zh-cn/privacystatement"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Microsoft 隐私声明
+        </a>。
+        <br />
+        为了向您提供更相关的广告，我们使用 Cookie
+        追踪您在我们的网站和其他网站上的浏览行为。Google
+        等第三方供应商也会使用这些信息向您展示个性化广告。若您欲退出个性化广告，可访问{" "}
+        <a
+          href="https://www.google.com/settings/ads"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Google 广告设置
         </a>
-        了解更多详细信息。使用我们的网站即表示您同意我们和 Microsoft
-        可以收集和使用这些数据。
+        或{" "}
+        <a
+          href="https://www.aboutads.info"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          About Ads
+        </a>{" "}
+        进行设置。
+        <br />
+        使用我们的网站即表示您同意我们、Microsoft、Google
+        及第三方供应商可以收集和使用上述的数据。
       </p>
       <p>
         Copyright &copy; {new Date().getUTCFullYear()}{" "}

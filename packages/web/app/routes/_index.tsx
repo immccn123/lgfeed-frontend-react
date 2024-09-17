@@ -159,7 +159,6 @@ export default function Index() {
 
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>犇犇黑历史</h1>
       <h2>统计数据</h2>
       <MyStatistic
         label="共计保存犇犇"

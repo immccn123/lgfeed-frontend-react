@@ -69,12 +69,15 @@ export default function App() {
         ></ExternalScript>
       </head>
       <body>
-        <MainMenu />
-        <Container>
-          <Announcement shouldShowAd={false} />
-          <Outlet />
-        </Container>
-        <Footer />
+        <MainMenu>
+          <Announcement />
+          <Container>
+            <div style={{ padding: "1rem" }}>
+              <Outlet />
+            </div>
+          </Container>
+          <Footer />
+        </MainMenu>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -87,9 +90,7 @@ const ErrorSlot: FC<PropsWithChildren> = ({ children }) => {
     <>
       <MainMenu />
       <Container>{children}</Container>
-      {/* <Footer disablePoweredBy /> */}
       <ScrollRestoration />
-      {/* <Scripts /> */}
     </>
   );
 };

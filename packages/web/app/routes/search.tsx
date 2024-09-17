@@ -10,19 +10,55 @@ import { api } from "~/utils/api";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { CustomDatePicker } from "~/components/date_picker";
+import random from "random";
 
 interface SearchPageProps {
   navigate: (to: string) => void;
   location: Location;
 }
 
+const substrPlaceholders = [
+  "It's MyGO",
+  "0721",
+  "AK IOI",
+  "原神",
+  "PANDORA PARADOXXX",
+  "Ciallo",
+  "maimai",
+  "CHUNITHM",
+  "黑神话：悟空",
+  "笑点解析",
+  "啊啊挨踢",
+  "arcaea",
+  "听好了",
+  "zak",
+  "蒸",
+  "南梁",
+  "114514",
+  "我什么都会做的",
+  "吃枣药丸",
+  "你先别急",
+  "whk",
+  "Ynoi",
+  "rp++",
+  "define int long long",
+  "骂谁罕见",
+  "洛天依",
+  "pure memory",
+  "rks",
+  "ptt",
+  "rating",
+  "dx rating",
+  "我们中出了一个叛徒",
+];
+
 const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
   const queryParams = new URLSearchParams(location.search);
 
-  const [keyword, setKeyword] = useState<string | null>(
-    queryParams.get("keyword"),
+  const [keyword, setKeyword] = useState<string | undefined>(
+    queryParams.get("keyword") ?? undefined,
   );
-  const [senderText, setSenderText] = useState<string | null>(
+  const [senderText, setSenderText] = useState<string | undefined>(
     queryParams.getAll("senders").join(","),
   );
   const [loading, setLoading] = useState(true);
@@ -94,15 +130,15 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
             <Form.Group widths="equal">
               <Form.Input
                 fluid
-                placeholder="AK IOI"
+                placeholder={random.choice(substrPlaceholders)}
                 icon="search"
                 iconPosition="left"
-                label="关键词（大小写不敏感）"
+                label="子串（大小写不敏感）"
                 value={keyword}
                 onChange={(_, { value }) => setKeyword(value)}
               />
               <Form.Input
-                placeholder="半角逗号分隔，如 1,385633"
+                placeholder="半角逗号分隔，如 1,385633（留空不作约束）"
                 icon="user"
                 iconPosition="left"
                 label="发送人 UID"
