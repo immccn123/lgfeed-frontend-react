@@ -10,23 +10,23 @@ import {
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
-  useNavigation,
   useRouteError,
 } from "@remix-run/react";
-import nProgress from "nprogress";
-import { PropsWithChildren, useEffect, FC } from "react";
+import { useEffect } from "react";
 import { Button, ButtonGroup, Container } from "semantic-ui-react";
 
 import { Announcement } from "./components/announcement";
 import { Footer } from "./components/footer";
 import { MainMenu } from "./components/menu";
 
-import "nprogress/nprogress.css";
 import { ExternalScript } from "remix-utils/external-scripts";
+import ErrorSlot from "./components/errorslot";
 
 export const meta: MetaFunction = () => {
   return [{ title: "犇犇黑历史" }];
 };
+
+
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   let adSense: boolean | null = false;
@@ -40,19 +40,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export default function App() {
-  const navigation = useNavigation();
-
   useEffect(() => {
     import("./static/clarity.js");
   }, []);
-
-  useEffect(() => {
-    if (navigation.state === "loading" || navigation.state === "submitting") {
-      nProgress.start();
-    } else {
-      nProgress.done();
-    }
-  }, [navigation.state]);
 
   return (
     <html lang="zh-cn">
@@ -85,20 +75,8 @@ export default function App() {
   );
 }
 
-const ErrorSlot: FC<PropsWithChildren> = ({ children }) => {
-  return (
-    <>
-      <MainMenu />
-      <Container>{children}</Container>
-      <ScrollRestoration />
-    </>
-  );
-};
-
 export const ErrorBoundary = () => {
   const error: any = useRouteError();
-
-  nProgress.done();
 
   if (!isRouteErrorResponse(error)) {
     return (
@@ -113,10 +91,8 @@ export const ErrorBoundary = () => {
   if (error.status === 404) {
     return (
       <ErrorSlot>
-        <h1>404 Not Found</h1>
-        <h2>你似乎来到了没有知识的荒原……</h2>
-        <p>（并不）（指知乎）</p>
-        <p>考虑</p>
+        <h1>404 Not Found - 页面未找到</h1>
+        <p>糟糕！页面走丢了。</p>
         <ButtonGroup>
           <Button primary onClick={() => window.history.back()}>
             返回上一页

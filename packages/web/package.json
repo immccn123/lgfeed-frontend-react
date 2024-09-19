@@ -31,6 +31,7 @@
     "react": "^18.3.1",
     "react-datepicker": "^7.3.0",
     "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.1",
     "react-turnstile": "^1.1.3",
     "remix-utils": "^7.6.0",
     "semantic-ui-css": "^2.5.0",
@@ -43,10 +44,13 @@
   "devDependencies": {
     "@eslint/compat": "^1.1.1",
     "@eslint/js": "^9.8.0",
+    "@iconify-json/mdi": "^1.2.0",
     "@remix-run/dev": "^2.10.3",
     "@remix-run/eslint-config": "^2.10.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@stylistic/eslint-plugin-ts": "^2.3.0",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
     "@types/cytoscape": "^3.21.5",
     "@types/nprogress": "^0.2.3",
     "@types/prismjs": "^1.26.4",
@@ -63,6 +67,7 @@
     "prettier": "3.1.0",
     "prettier-eslint": "^16.3.0",
     "typescript": "^5.5.4",
+    "unplugin-icons": "^0.19.3",
     "vite": "^5.3.5"
   },
   "engines": {

@@ -1,7 +1,8 @@
 import { Link } from "@remix-run/react";
 import { AwesomeQR } from "awesome-qr";
 import html2canvas from "html2canvas";
-import Markdown from "marked-react";
+// import Markdown from "marked-react";
+import Markdown from 'react-markdown'
 import { FC, useEffect, useMemo, useState } from "react";
 import { Button, Feed, Icon, Image, Modal, Popup } from "semantic-ui-react";
 

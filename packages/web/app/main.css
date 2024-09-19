@@ -1,7 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap");
+
 body {
   min-height: 100vh;
   height: auto;
   position: relative;
+  font-family: Lato, "Helvetica Neue", "Noto Sans SC", Arial, Helvetica,
+    sans-serif;
 }
 
 .field .react-datepicker-wrapper {
@@ -25,4 +29,17 @@ body {
 
 ins.adsbygoogle[data-ad-status="unfilled"] {
   display: none !important;
+}
+
+body,
+.ui.placeholder,
+.ui.placeholder .image.header:after,
+.ui.placeholder .line,
+.ui.placeholder .line:after,
+.ui.placeholder > :before {
+  background-color: #fffbff;
+}
+
+.ui.message {
+  background-color: #fffbff;
 }

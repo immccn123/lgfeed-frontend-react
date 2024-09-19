@@ -1,6 +1,6 @@
 import { Location, useLocation, useNavigate } from "@remix-run/react";
 import { AxiosResponse } from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Button, Feed, Segment, Form, Message, Icon } from "semantic-ui-react";
 
 import { Benben } from "~/components/feed";
@@ -117,6 +117,8 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
     });
   };
 
+  const placeholder = useMemo(() => random.choice(substrPlaceholders), [])
+
   useEffect(() => {
     loadMore();
   }, []);
@@ -130,7 +132,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ navigate, location }) => {
             <Form.Group widths="equal">
               <Form.Input
                 fluid
-                placeholder={random.choice(substrPlaceholders)}
+                placeholder={placeholder}
                 icon="search"
                 iconPosition="left"
                 label="子串（大小写不敏感）"

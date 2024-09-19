@@ -3,7 +3,7 @@ import { Message } from "semantic-ui-react";
 export const Announcement = () => {
   return (
     <Message
-      color="teal"
+      color="red"
       style={{
         border: "none",
         boxShadow: "none",
