@@ -2,3 +2,6 @@ User-Agent: *
 Disallow: /*
 Allow: /$
 Allow: /ads.txt
+
+User-agent: Mediapartners-Google
+Allow: *
