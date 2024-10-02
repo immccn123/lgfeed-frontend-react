@@ -8,6 +8,7 @@
 	import { PUBLIC_API_BASE } from '$env/static/public';
 	import MdiCubeScan from '~icons/mdi/cube-scan';
 	import MdiHours24 from '~icons/mdi/hours-24';
+	import { setTitle } from '$lib/state/title';
 
 	const stat = createQuery<API.Stat>({
 		queryKey: ['/statistics'],
@@ -39,12 +40,14 @@
 				$procStat.refetch();
 			});
 	}
+
+	setTitle('首页');
 </script>
 
 <div class="container m-5 mx-auto grid gap-4">
 	<div>
 		<h2 class="mb-2 text-xl">统计数据</h2>
-		<div class="stats border max-sm:stats-vertical">
+		<div class="stats max-sm:stats-vertical border">
 			<div class="stat">
 				<div class="stat-figure text-secondary"></div>
 				<div class="stat-title">累计保存的犇犇</div>

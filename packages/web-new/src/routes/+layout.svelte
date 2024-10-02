@@ -9,6 +9,9 @@
 	import Menu from '../components/Menu.svelte';
 
 	import { ModeWatcher, systemPrefersMode } from 'mode-watcher';
+	import HeadTitle from '../components/HeadTitle.svelte';
+	import ShareDialog from '../components/ShareDialog.svelte';
+	import MarkdownDialog from '../components/MarkdownDialog.svelte';
 
 	systemPrefersMode.subscribe((value) => {
 		if (value === 'light') document.body.setAttribute('data-theme', 'cupcake');
@@ -17,8 +20,10 @@
 </script>
 
 <ModeWatcher />
-
 <NotificationStack />
+<HeadTitle />
+<ShareDialog />
+<MarkdownDialog />
 
 <div class="h-screen">
 	<QueryClientProvider>
@@ -58,10 +63,6 @@
 </div>
 
 <style scoped>
-	:global(.menu:hover *[data-content]) {
-		display: unset;
-	}
-
 	@media (min-width: 1024px) {
 		.main-content {
 			padding-left: calc(56px + 16px);

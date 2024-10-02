@@ -12,9 +12,10 @@
 
 <ul
 	class="
-		menu menu-md bg-base-100 flex min-h-full max-lg:w-56
-		lg:fixed lg:border-r lg:transition-all lg:hover:w-56
-		lg:hover:shadow-xl
+		menu menu-md bg-base-100 lg:hover:glass flex
+		min-h-full max-lg:w-56 lg:fixed
+		lg:shadow lg:transition-[all!important]
+		lg:hover:w-56 lg:hover:shadow-xl
 	"
 >
 	<label for="sidebar-toggle" class="btn drawer-button btn-square btn-ghost mb-1 lg:hidden">
@@ -46,3 +47,14 @@
 		犇站 Zephyr Ver.
 	</MenuLink>
 </ul>
+
+<style scoped>
+	:global(.menu:hover *[data-content]) {
+		display: unset;
+	}
+
+	.menu {
+		transition-timing-function: cubic-bezier(0.22, 0.685, 0.03, 0.895);
+		transition-duration: 0.3s;
+	}
+</style>

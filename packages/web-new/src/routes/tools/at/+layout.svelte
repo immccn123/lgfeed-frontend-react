@@ -2,10 +2,13 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { initialUsername, isLoading } from './store';
+	import { setTitle } from '$lib/state/title';
 
 	$: username = $initialUsername ?? '';
 
 	onMount(() => () => ($initialUsername = username));
+
+	setTitle(`被 at 查询`);
 </script>
 
 <div class="container mx-auto">

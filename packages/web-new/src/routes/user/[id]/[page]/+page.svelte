@@ -7,6 +7,7 @@
 	import MdiPageFirst from '~icons/mdi/page-first';
 	import MdiPageLast from '~icons/mdi/page-last';
 	import Ad from '../../../../components/Ad.svelte';
+	import { setTitle } from '$lib/state/title.js';
 
 	export let data;
 
@@ -54,6 +55,8 @@
 
 		return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 	})();
+
+	$: setTitle(`${$historyUsernames.data?.join(' / ')?.concat('的') ?? ''}用户历史`);
 </script>
 
 <div class="grid gap-3">
