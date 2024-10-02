@@ -44,7 +44,7 @@
 <div class="container m-5 mx-auto grid gap-4">
 	<div>
 		<h2 class="mb-2 text-xl">统计数据</h2>
-		<div class="stats border">
+		<div class="stats border max-sm:stats-vertical">
 			<div class="stat">
 				<div class="stat-figure text-secondary"></div>
 				<div class="stat-title">累计保存的犇犇</div>

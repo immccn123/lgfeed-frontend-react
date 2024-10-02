@@ -8,14 +8,13 @@
 <footer class="footer bg-base-200 text-base-content p-10">
 	<aside>
 		<p>
-			犇站 ✨ Zephyr Version /
+			犇站 ✨ Zephyr Version<br>
 			<!-- svelte-ignore missing-declaration (declared in vite.config.ts) -->
 			<code>{__VERSION__} ({__LASTMOD__})</code>
 			<br />
 			Copyright &copy;
 			<a href="https://imken.moe" class="link-primary" target="_blank"> Imken Luo </a>
 		</p>
-		<div class="divider"></div>
 		<p>
 			本站已在随时准备跑路的状态下以极其不稳定的方式运行了 {runningDays} 天
 		</p>

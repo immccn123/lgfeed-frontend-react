@@ -9,6 +9,3 @@ export const load = ({ url: requestUrl }) => {
 		dateAfter: urlParams.get('date_after') ?? undefined
 	};
 };
-
-export const ssr = false;
-// export const prerender = false;
