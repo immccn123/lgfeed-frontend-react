@@ -19,6 +19,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "awesome-qr": "2.1.5-rc.0",
     "axios": "^1.7.2",
+    "core-js": "^3.38.1",
     "cytoscape": "^3.30.2",
     "date-fns": "^3.6.0",
     "express": "^4.19.2",
