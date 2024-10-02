@@ -9,6 +9,6 @@ export default {
 
 	plugins: [require('@tailwindcss/typography'), require('daisyui')],
 	daisyui: {
-		themes: ['cupcake', 'night']
+		themes: ['cupcake', 'dim']
 	}
 } as Config;

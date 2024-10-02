@@ -45,6 +45,7 @@
 		"awesome-qr": "2.1.5-rc.0",
 		"cytoscape": "^3.30.2",
 		"markdown-it": "^14.1.0",
+		"mode-watcher": "^0.4.1",
 		"svelty-picker": "^5.2.9"
 	}
 }
