@@ -14,7 +14,7 @@
 	let contentElement: HTMLDivElement;
 </script>
 
-<div class="card card-compact border break-words text-wrap {join && 'join-item'}">
+<div class="card card-compact text-wrap break-words border {join && 'join-item'}">
 	<div class="card-body">
 		<div class="flex">
 			<div class="avatar mr-3 flex-none">
@@ -78,9 +78,5 @@
 	:global(.prose img) {
 		max-width: 100%;
 		max-height: 500px;
-	}
-
-	.prose {
-		color: oklch(var(--pc));
 	}
 </style>
