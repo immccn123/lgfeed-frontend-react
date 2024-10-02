@@ -10,7 +10,7 @@
 
 <li class:disabled={to === undefined} class:menu-title={title}>
 	{#if to !== undefined}
-		<a href={to} class:active={fullMatch ? pathname === to : pathname.startsWith(to)}>
+		<a class="overflow-hidden text-nowrap" href={to} class:active={fullMatch ? pathname === to : pathname.startsWith(to)}>
 			{#if $$slots.icon}
 				<slot name="icon"></slot>
 			{:else}
@@ -21,7 +21,7 @@
 			</span>
 		</a>
 	{:else}
-		<span>
+		<span class="overflow-hidden text-nowrap">
 			{#if $$slots.icon}
 				<slot name="icon"></slot>
 			{:else}

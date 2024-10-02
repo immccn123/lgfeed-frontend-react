@@ -5,6 +5,7 @@
 	import { writable } from 'svelte/store';
 	import Ad from '../../../components/Ad.svelte';
 	import Loader from '../../../components/Loader.svelte';
+	import { setTitle } from '$lib/state/title';
 
 	const isLoading = writable(false);
 
@@ -13,6 +14,8 @@
 	let response: API.BenbenCircleResponse | undefined;
 	let container: HTMLDivElement;
 	let showContainer = false;
+
+	setTitle('犇圈');
 
 	function intersect(r: number, rn: number, n: number) {
 		let qn = Math.pow(2, rn + 2);

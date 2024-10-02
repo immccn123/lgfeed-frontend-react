@@ -1,20 +1,40 @@
 <script lang="ts">
-	import MarkdownIt from 'markdown-it';
 	import MdiLinkVariant from '~icons/mdi/link-variant';
 	import MdiReply from '~icons/mdi/reply';
 	import MdiShareVariant from '~icons/mdi/share-variant';
 	import MdiCodeTags from '~icons/mdi/code-tags';
-	import { copyText } from '$lib';
+	import MdiClose from '~icons/mdi/close';
+	import MdiContentCopy from '~icons/mdi/content-copy';
+
+	import MarkdownIt from 'markdown-it';
+
+	import { copyText, dataURItoBlob, download } from '$lib';
 	import { addNotification } from '$lib/state/notifications';
+	import { onMount } from 'svelte';
+
+	import Dialog from './Dialog.svelte';
+	import { showMarkdownDialog, showShareDialog } from '$lib/state/dialog';
 
 	export let id: number, username: string, time: string, content: string, grabTime: string;
 	export let userId: number,
 		join: boolean = false;
 
 	let contentElement: HTMLDivElement;
+	let origin = 'https://benben.sbs';
+
+	let markdownSrcDialog: Dialog;
+
+	onMount(() => {
+		origin = location.origin;
+	});
+
+	let benben: HTMLDivElement;
 </script>
 
-<div class="card card-compact text-wrap break-words border {join && 'join-item'}">
+<div
+	class="card card-compact text-wrap break-words border {join && 'join-item'}"
+	bind:this={benben}
+>
 	<div class="card-body">
 		<div class="flex">
 			<div class="avatar mr-3 flex-none">
@@ -50,21 +70,30 @@
 			<a class="link-primary" href="/feed/{id}">
 				<MdiLinkVariant class="inline" /> 永久链接
 			</a>
-			<button
-				class="link-primary"
-				on:click={() => {
+			<a
+				href="?"
+				class="link-primary inline"
+				on:click|preventDefault={() => {
 					copyText(` || @${username} : ${contentElement.innerText}`);
 					addNotification('success', '回复文本已复制！');
 				}}
 			>
 				<MdiReply class="inline" /> 回复
-			</button>
-			<span class="link-primary">
+			</a>
+			<a
+				href="?"
+				class="link-primary inline"
+				on:click|preventDefault={() => showShareDialog(id, benben)}
+			>
 				<MdiShareVariant class="inline" /> 分享
-			</span>
-			<span class="link-primary">
+			</a>
+			<a
+				href="?"
+				class="link-primary"
+				on:click|preventDefault={() => showMarkdownDialog(id, content)}
+			>
 				<MdiCodeTags class="inline" /> 查看 Markdown 源码
-			</span>
+			</a>
 			<span class="flex-grow"></span>
 		</div>
 	</div>

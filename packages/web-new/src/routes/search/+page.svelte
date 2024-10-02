@@ -8,6 +8,7 @@
 	import MdiSearch from '~icons/mdi/search';
 	import MdiMoreHoriz from '~icons/mdi/more-horiz';
 	import Ad from '../../components/Ad.svelte';
+	import { setTitle } from '$lib/state/title';
 
 	export let data;
 	let keyword = data.keyword ?? '';
@@ -15,6 +16,9 @@
 	let dateBefore = data.dateBefore;
 	let dateAfter = data.dateAfter;
 	let results: API.Benben[] = [];
+
+	if (keyword) setTitle(`检索 ${keyword} 的结果`);
+	else setTitle(`检索`);
 
 	const params = (search: boolean = false, loadMore = false) => {
 		const queryParams = [];
@@ -66,9 +70,9 @@
 </script>
 
 <div class="container mx-auto">
-	<h2 class="text-2xl mb-2">犇犇检索</h2>
+	<h2 class="mb-2 text-2xl">犇犇检索</h2>
 
-	<div class="w-full my-2">
+	<div class="my-2 w-full">
 		<form
 			class="grid gap-4 md:grid-cols-2 lg:grid-cols-4"
 			on:submit|preventDefault={searchHandler}
@@ -126,7 +130,11 @@
 			</div>
 		</form>
 
-		<button class="btn btn-sm mt-2 w-full" on:click={searchHandler} disabled={isFetching || isLoading}>
+		<button
+			class="btn btn-sm mt-2 w-full"
+			on:click={searchHandler}
+			disabled={isFetching || isLoading}
+		>
 			<MdiSearch /> 搜索
 		</button>
 	</div>
