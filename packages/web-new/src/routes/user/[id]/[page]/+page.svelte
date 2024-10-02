@@ -4,8 +4,6 @@
 	import { initialUid, isLoading } from '../../store.js';
 	import MdiCommentAlert from '~icons/mdi/comment-alert';
 	import Benben from '../../../../components/Benben.svelte';
-	import MdiNavigateNext from '~icons/mdi/navigate-next';
-	import MdiNavigateBefore from '~icons/mdi/navigate-before';
 	import MdiPageFirst from '~icons/mdi/page-first';
 	import MdiPageLast from '~icons/mdi/page-last';
 	import Ad from '../../../../components/Ad.svelte';
@@ -103,12 +101,6 @@
 			<a class="join-item btn {$isLoading && 'btn-disabled'}" href="/user/{uid}/1">
 				<MdiPageFirst />
 			</a>
-			<a
-				class="join-item btn {$isLoading && 'btn-disabled'}"
-				href="/user/{uid}/{Math.max(page - 1, 1)}"
-			>
-				<MdiNavigateBefore />
-			</a>
 			{#each pagesNavigation as p}
 				<a
 					class="
@@ -119,12 +111,6 @@
 					{p}
 				</a>
 			{/each}
-			<a
-				class="join-item btn {$isLoading && 'btn-disabled'}"
-				href="/user/{uid}/{Math.min(page + 1, pageLimit)}"
-			>
-				<MdiNavigateNext />
-			</a>
 			<a class="join-item btn {$isLoading && 'btn-disabled'}" href="/user/{uid}/{pageLimit}">
 				<MdiPageLast />
 			</a>
