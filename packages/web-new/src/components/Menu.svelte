@@ -12,10 +12,10 @@
 
 <ul
 	class="
-		menu menu-md bg-base-100 lg:hover:glass flex
-		min-h-full max-lg:w-56 lg:fixed
-		lg:shadow lg:transition-[all!important]
-		lg:hover:w-56 lg:hover:shadow-xl
+		menu menu-md bg-base-100 z-50 flex min-h-full
+		max-lg:w-56
+		lg:fixed lg:top-0 lg:shadow
+		lg:transition-[all!important] lg:hover:w-56 lg:hover:shadow-xl
 	"
 >
 	<label for="sidebar-toggle" class="btn drawer-button btn-square btn-ghost mb-1 lg:hidden">
