@@ -10,13 +10,17 @@
 
 <li class:disabled={to === undefined} class:menu-title={title}>
 	{#if to !== undefined}
-		<a class="overflow-hidden text-nowrap" href={to} class:active={fullMatch ? pathname === to : pathname.startsWith(to)}>
+		<a
+			class="overflow-hidden text-nowrap"
+			href={to}
+			class:active={fullMatch ? pathname === to : pathname.startsWith(to)}
+		>
 			{#if $$slots.icon}
 				<slot name="icon"></slot>
 			{:else}
 				<svg height="28px" width="28px"></svg>
 			{/if}
-			<span class="py-0 lg:hidden" data-content>
+			<span class="inline-block text-nowrap py-0 transition-opacity" data-content>
 				<slot />
 			</span>
 		</a>
@@ -27,7 +31,7 @@
 			{:else}
 				<svg height="28px" width="28px"></svg>
 			{/if}
-			<span class="py-0 lg:hidden" data-content>
+			<span class="text-nowrap py-0 transition-opacity" data-content>
 				<slot />
 			</span>
 		</span>

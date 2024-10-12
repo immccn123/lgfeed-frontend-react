@@ -3,16 +3,13 @@
 	import MdiReply from '~icons/mdi/reply';
 	import MdiShareVariant from '~icons/mdi/share-variant';
 	import MdiCodeTags from '~icons/mdi/code-tags';
-	import MdiClose from '~icons/mdi/close';
-	import MdiContentCopy from '~icons/mdi/content-copy';
 
 	import MarkdownIt from 'markdown-it';
 
-	import { copyText, dataURItoBlob, download } from '$lib';
+	import { copyText } from '$lib';
 	import { addNotification } from '$lib/state/notifications';
 	import { onMount } from 'svelte';
 
-	import Dialog from './Dialog.svelte';
 	import { showMarkdownDialog, showShareDialog } from '$lib/state/dialog';
 
 	export let id: number, username: string, time: string, content: string, grabTime: string;
@@ -21,8 +18,6 @@
 
 	let contentElement: HTMLDivElement;
 	let origin = 'https://benben.sbs';
-
-	let markdownSrcDialog: Dialog;
 
 	onMount(() => {
 		origin = location.origin;

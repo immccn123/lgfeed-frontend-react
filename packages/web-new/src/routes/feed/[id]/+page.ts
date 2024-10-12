@@ -8,5 +8,3 @@ export const load: PageLoad = async ({ params: { id: benbenId } }) => {
 
 	return { benben };
 };
-
-export const ssr = false;

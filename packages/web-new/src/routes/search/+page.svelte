@@ -73,70 +73,69 @@
 	<h2 class="mb-2 text-2xl">犇犇检索</h2>
 
 	<div class="my-2 w-full">
-		<form
-			class="grid gap-4 md:grid-cols-2 lg:grid-cols-4"
-			on:submit|preventDefault={searchHandler}
-		>
-			<div>
-				<div class="label">
-					<span class="label-text">子串</span>
+		<form on:submit|preventDefault={searchHandler}>
+			<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+				<div>
+					<div class="label">
+						<span class="label-text">子串</span>
+					</div>
+					<input
+						type="text"
+						bind:value={keyword}
+						placeholder="不区分大小写"
+						class="input input-bordered w-full"
+					/>
 				</div>
-				<input
-					type="text"
-					bind:value={keyword}
-					placeholder="不区分大小写"
-					class="input input-bordered w-full"
-				/>
+
+				<div>
+					<div class="label">
+						<span class="label-text">发送人 UID</span>
+					</div>
+					<input
+						type="text"
+						bind:value={senderText}
+						placeholder="半角逗号分隔，例如 1,114514,3698"
+						class="input input-bordered w-full"
+					/>
+				</div>
+
+				<div>
+					<div class="label">
+						<span class="label-text">起始时间</span>
+					</div>
+					<SveltyPicker
+						bind:value={dateAfter}
+						inputClasses="input input-bordered w-full"
+						displayFormat="yyyy-mm-dd hh:ii"
+						format="yyyy-mm-dd hh:ii"
+						mode="datetime"
+						placeholder="留空不作约束"
+					/>
+				</div>
+
+				<div>
+					<div class="label">
+						<span class="label-text">终止时间</span>
+					</div>
+					<SveltyPicker
+						bind:value={dateBefore}
+						inputClasses="input input-bordered w-full"
+						displayFormat="yyyy-mm-dd hh:ii"
+						format="yyyy-mm-dd hh:ii"
+						mode="datetime"
+						placeholder="留空不作约束"
+					/>
+				</div>
 			</div>
 
-			<div>
-				<div class="label">
-					<span class="label-text">发送人 UID</span>
-				</div>
-				<input
-					type="text"
-					bind:value={senderText}
-					placeholder="半角逗号分隔，例如 1,114514,3698"
-					class="input input-bordered w-full"
-				/>
-			</div>
-
-			<div>
-				<div class="label">
-					<span class="label-text">起始时间</span>
-				</div>
-				<SveltyPicker
-					bind:value={dateAfter}
-					inputClasses="input input-bordered w-full"
-					displayFormat="yyyy-mm-dd hh:ii"
-					format="yyyy-mm-dd hh:ii"
-					mode="datetime"
-					placeholder="留空不作约束"
-				/>
-			</div>
-
-			<div>
-				<div class="label">
-					<span class="label-text">终止时间</span>
-				</div>
-				<SveltyPicker
-					bind:value={dateBefore}
-					inputClasses="input input-bordered w-full"
-					displayFormat="yyyy-mm-dd hh:ii"
-					format="yyyy-mm-dd hh:ii"
-					mode="datetime"
-					placeholder="留空不作约束"
-				/>
-			</div>
+			<button
+				class="btn md:btn-sm mt-2 w-full"
+				on:click={searchHandler}
+				disabled={isFetching || isLoading}
+			>
+				<MdiSearch /> 搜索
+			</button>
 		</form>
-
-		<button
-			class="btn btn-sm mt-2 w-full"
-			on:click={searchHandler}
-			disabled={isFetching || isLoading}
-		>
-			<MdiSearch /> 搜索
-		</button>
 	</div>
 
 	<div>
@@ -159,7 +158,7 @@
 	</div>
 	{#if !isLoading}
 		{#if $query.hasNextPage}
-			<button class="btn btn-sm my-2 w-full" on:click={loadMore} disabled={isFetching}>
+			<button class="btn md:btn-sm my-2 w-full" on:click={loadMore} disabled={isFetching}>
 				{#if isFetching}
 					<span class="loading loading-ring loading-sm"></span>
 					少女祈祷中……

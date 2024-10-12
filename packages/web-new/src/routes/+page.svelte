@@ -44,7 +44,8 @@
 	setTitle('首页');
 </script>
 
-<div class="container m-5 mx-auto grid gap-4">
+<div class="container mx-auto grid gap-4">
+	<h1 class="text-2xl">首页</h1>
 	<div>
 		<h2 class="mb-2 text-xl">统计数据</h2>
 		<div class="stats max-sm:stats-vertical border">

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '../app.css';
-	import Announcement from '../components/Announcement.svelte';
 
 	import MdiMenu from '~icons/mdi/menu';
 	import NotificationStack from '../components/NotificationStack.svelte';
@@ -14,7 +13,7 @@
 	import MarkdownDialog from '../components/MarkdownDialog.svelte';
 
 	systemPrefersMode.subscribe((value) => {
-		if (value === 'light') document.body.setAttribute('data-theme', 'cupcake');
+		if (value === 'light') document.body.setAttribute('data-theme', 'lemonade');
 		else if (value === 'dark') document.body.setAttribute('data-theme', 'dim');
 	});
 </script>
@@ -30,7 +29,7 @@
 		<div class="drawer lg:drawer-open">
 			<input id="sidebar-toggle" type="checkbox" class="drawer-toggle" />
 			<div class="drawer-content bg-base-100 h-full">
-				<div class="navbar bg-base-100 sticky top-0 border shadow lg:hidden">
+				<div class="navbar bg-base-100 sticky top-0 z-10 border shadow lg:hidden">
 					<div class="flex-none">
 						<label for="sidebar-toggle" class="btn drawer-button btn-square btn-ghost">
 							<MdiMenu width="1.8em" height="1.8em" />
@@ -42,19 +41,15 @@
 					</div>
 				</div>
 				<div class="main-content flex h-full flex-col">
-					<main>
-						<div class="p-3">
-							<Announcement />
-							<slot></slot>
-						</div>
+					<main class="z-0 p-3">
+						<slot></slot>
 					</main>
 					<div class="flex-grow"></div>
 					<Footer />
 				</div>
 			</div>
-			<div class="drawer-side">
-				<label for="sidebar-toggle" aria-label="close sidebar" class="drawer-overlay"
-				></label>
+			<div class="drawer-side z-20">
+				<label for="sidebar-toggle" aria-label="close sidebar" class="drawer-overlay" />
 
 				<Menu />
 			</div>
