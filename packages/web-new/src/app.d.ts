@@ -15,6 +15,18 @@ declare global {
 	}
 
 	namespace API {
+		export interface TakedownInfo {
+			batch_id: number;
+			reason: string;
+			takedown_time: string;
+			takedown_user_id: number;
+		}
+
+		export interface BenbenTakedown {
+			takedown: true;
+			takedown_info: TakedownInfo;
+		}
+
 		export interface Benben {
 			id: number;
 			username: string;

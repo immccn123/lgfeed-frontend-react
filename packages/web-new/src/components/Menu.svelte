@@ -54,6 +54,7 @@
 			width: 0;
 			overflow: visible;
 			text-wrap: nowrap;
+			white-space: nowrap;
 			opacity: 0;
 			position: absolute;
 			left: calc(32px + 1rem);
