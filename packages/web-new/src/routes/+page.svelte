@@ -9,6 +9,7 @@
 	import MdiCubeScan from '~icons/mdi/cube-scan';
 	import MdiHours24 from '~icons/mdi/hours-24';
 	import { setTitle } from '$lib/state/title';
+	import Advertising from '../components/Advertising.svelte';
 
 	const stat = createQuery<API.Stat>({
 		queryKey: ['/statistics'],
@@ -48,7 +49,7 @@
 	<h1 class="text-2xl">首页</h1>
 	<div>
 		<h2 class="mb-2 text-xl">统计数据</h2>
-		<div class="stats max-sm:stats-vertical border">
+		<div class="stats max-sm:stats-vertical w-full">
 			<div class="stat">
 				<div class="stat-figure text-secondary"></div>
 				<div class="stat-title">累计保存的犇犇</div>
@@ -81,69 +82,72 @@
 		</div>
 	</div>
 
-	<div>
-		<h2 class="mb-2 text-xl">
-			随机犇犇 <button
-				class="btn btn-xs w-24"
-				disabled={$randomBenben.isRefetching}
-				on:click={() => $randomBenben.refetch()}
-			>
-				{#if $randomBenben.isRefetching}
-					<span class="loading loading-ring loading-xs"></span>
-				{:else if $randomBenben.isSuccess}
-					<MdiRefresh /> 换一个！
-				{/if}
-			</button>
-		</h2>
-		{#if $randomBenben.isLoading}
-			<div class="card card-compact border">
-				<div class="card-body">
-					<div class="flex">
-						<div class="avatar mr-3 flex-none">
-							<div class="skeleton h-10 shrink-0 rounded-full"></div>
-						</div>
-						<div class="grid flex-1 gap-1 leading-5">
-							<div class="skeleton h-4 w-56"></div>
-							<div class="skeleton h-4 w-56"></div>
-						</div>
-					</div>
-					<div class="skeleton h-12 w-full"></div>
-				</div>
-			</div>
-		{:else if $randomBenben.isSuccess}
-			<Benben join {...$randomBenben.data} />
-		{/if}
-	</div>
+	<h2 class="text-xl">
+		随机犇犇 <button
+			class="btn btn-xs w-24"
+			disabled={$randomBenben.isRefetching}
+			on:click={() => $randomBenben.refetch()}
+		>
+			{#if $randomBenben.isRefetching}
+				<span class="loading loading-ring loading-xs"></span>
+			{:else if $randomBenben.isSuccess}
+				<MdiRefresh /> 换一个！
+			{/if}
+		</button>
+	</h2>
+	<div class="row-auto grid grid-flow-row lg:grid-cols-4 items-stretch gap-2">
+		<div class="lg:col-span-2 h-full">
 
-	<div>
-		<h2 class="mb-2 text-xl">爬虫状态</h2>
-		<ul>
-			<li>
-				轮询抓取器：
-				{#if $procStat.isLoading}
-					<span class="loading loading-ring loading-sm"></span>
-				{:else if $procStat.isSuccess}
-					<ProcStatusBadge status={$procStat.data.fetcher_status} />
-					{#if isProcessDied($procStat.data.fetcher_status)}
-						<button class="btn btn-xs" on:click={() => restartProcess('fetcher')}>
-							重新启动
-						</button>
+			{#if $randomBenben.isLoading}
+				<div class="card card-compact border">
+					<div class="card-body">
+						<div class="flex">
+							<div class="avatar mr-3 flex-none">
+								<div class="skeleton h-10 shrink-0 rounded-full"></div>
+							</div>
+							<div class="grid flex-1 gap-1 leading-5">
+								<div class="skeleton h-4 w-56"></div>
+								<div class="skeleton h-4 w-56"></div>
+							</div>
+						</div>
+						<div class="skeleton h-12 w-full"></div>
+					</div>
+				</div>
+			{:else if $randomBenben.isSuccess}
+				<Benben {...$randomBenben.data} />
+			{/if}
+			<h2 class="my-2 text-xl">爬虫状态</h2>
+			<ul>
+				<li>
+					轮询抓取器：
+					{#if $procStat.isLoading}
+						<span class="loading loading-ring loading-sm"></span>
+					{:else if $procStat.isSuccess}
+						<ProcStatusBadge status={$procStat.data.fetcher_status} />
+						{#if isProcessDied($procStat.data.fetcher_status)}
+							<button class="btn btn-xs" on:click={() => restartProcess('fetcher')}>
+								重新启动
+							</button>
+						{/if}
 					{/if}
-				{/if}
-			</li>
-			<li>
-				循环抓取器：
-				{#if $procStat.isLoading}
-					<span class="loading loading-ring loading-sm"></span>
-				{:else if $procStat.isSuccess}
-					<ProcStatusBadge status={$procStat.data.loop_status} />
-					{#if isProcessDied($procStat.data.loop_status)}
-						<button class="btn btn-xs" on:click={() => restartProcess('loop')}>
-							重新启动
-						</button>
+				</li>
+				<li>
+					循环抓取器：
+					{#if $procStat.isLoading}
+						<span class="loading loading-ring loading-sm"></span>
+					{:else if $procStat.isSuccess}
+						<ProcStatusBadge status={$procStat.data.loop_status} />
+						{#if isProcessDied($procStat.data.loop_status)}
+							<button class="btn btn-xs" on:click={() => restartProcess('loop')}>
+								重新启动
+							</button>
+						{/if}
 					{/if}
-				{/if}
-			</li>
-		</ul>
+				</li>
+			</ul>
+		</div>
+		<div class="lg:col-span-2">
+			<Advertising />
+		</div>
 	</div>
 </div>

@@ -15,6 +15,7 @@
 	export let id: number, username: string, time: string, content: string, grabTime: string;
 	export let userId: number,
 		join: boolean = false;
+	export let fit = false;
 
 	let contentElement: HTMLDivElement;
 	// let origin = 'https://benben.sbs';
@@ -27,7 +28,7 @@
 </script>
 
 <div
-	class="card card-compact text-wrap break-words border {join && 'join-item'}"
+	class="card card-compact text-wrap break-words border {join && 'join-item'} {fit && 'h-full'}"
 	bind:this={benben}
 >
 	<div class="card-body">
