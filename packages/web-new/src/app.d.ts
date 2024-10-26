@@ -15,6 +15,11 @@ declare global {
 	}
 
 	namespace API {
+		export type Heatmap = {
+			date: string;
+			count: number;
+		}[];
+
 		export interface TakedownInfo {
 			batch_id: number;
 			reason: string;

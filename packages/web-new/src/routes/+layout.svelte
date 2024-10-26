@@ -13,8 +13,8 @@
 	import MarkdownDialog from '../components/MarkdownDialog.svelte';
 
 	systemPrefersMode.subscribe((value) => {
-		if (value === 'light') document.body.setAttribute('data-theme', 'lemonade');
-		else if (value === 'dark') document.body.setAttribute('data-theme', 'dim');
+		if (value === 'light') document.body.setAttribute('data-theme', 'lofi');
+		else if (value === 'dark') document.body.setAttribute('data-theme', 'black');
 	});
 </script>
 

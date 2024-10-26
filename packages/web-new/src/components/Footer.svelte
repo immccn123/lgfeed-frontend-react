@@ -17,7 +17,7 @@
 			<code>{__VERSION__} ({__LASTMOD__})</code>
 			<br />
 			Copyright &copy;
-			<a href="https://imken.moe" class="link-primary" target="_blank"> Imken </a>
+			<a href="https://imken.moe" class="link link-hover" target="_blank"> Imken </a>
 		</p>
 		<p>
 			本站已在随时准备跑路的状态下以极其不稳定的方式运行了 {runningDays} 天
@@ -25,7 +25,7 @@
 		<p>意见或问题反馈请加 QQ 群：313404608</p>
 		<p>
 			支持我们继续做下去！
-			<a class="link link-primary" href="https://sponsor.imken.moe/">捐赠（请备注为犇站）</a>
+			<a class="link link-error link-hover" href="https://sponsor.imken.moe/">捐赠（请备注为犇站）</a>
 		</p>
 	</aside>
 	<nav>

@@ -17,7 +17,7 @@
 		join: boolean = false;
 
 	let contentElement: HTMLDivElement;
-	let origin = 'https://benben.sbs';
+	// let origin = 'https://benben.sbs';
 
 	onMount(() => {
 		origin = location.origin;
@@ -46,7 +46,7 @@
 				</div>
 			</div>
 			<div class="flex-1 leading-5">
-				<a href="/user/{userId}" class="link-primary text-sm">
+				<a href="/user/{userId}" class="link link-hover text-sm">
 					{username}
 				</a>
 				<br /><span class="text-xs" style="color: 0xcccccc;">
@@ -60,14 +60,14 @@
 			{@html new MarkdownIt().render(content)}
 		</div>
 
-		<div class="card-actions text-secondary-content text-xs">
-			<a class="link-primary" href="/feed/{id}">#{id}</a>
-			<a class="link-primary" href="/feed/{id}">
+		<div class="card-actions text-xs">
+			<a class="link-hover" href="/feed/{id}">#{id}</a>
+			<a class="link-hover" href="/feed/{id}">
 				<MdiLinkVariant class="inline" /> 永久链接
 			</a>
 			<a
 				href="?"
-				class="link-primary inline"
+				class="link link-hover inline"
 				on:click|preventDefault={() => {
 					copyText(` || @${username} : ${contentElement.innerText}`);
 					addNotification('success', '回复文本已复制！');
@@ -77,14 +77,14 @@
 			</a>
 			<a
 				href="?"
-				class="link-primary inline"
+				class="link link-hover inline"
 				on:click|preventDefault={() => showShareDialog(id, benben)}
 			>
 				<MdiShareVariant class="inline" /> 分享
 			</a>
 			<a
 				href="?"
-				class="link-primary"
+				class="link link-hover"
 				on:click|preventDefault={() => showMarkdownDialog(id, content)}
 			>
 				<MdiCodeTags class="inline" /> 查看 Markdown 源码
