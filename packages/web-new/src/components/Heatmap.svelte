@@ -11,10 +11,9 @@
 	const width = 53 * cellSize;
 	const height = 7 * cellSize;
 
-	$: colorScale = d3
-		.scaleLinear<string>()
-		.domain([-1, 3])
-		.range($systemPrefersMode === 'light' ? ['#ebedf0', '#000000'] : ['#0e4429', '#39d353']);
+	$: colorScale = ($systemPrefersMode === 'light'
+		? ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39']
+		: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'])
 
 	onMount(() => {
 		systemPrefersMode.subscribe(() => {
@@ -24,14 +23,10 @@
 	});
 
 	const getColor = (count: number) => {
-		if (count == 0) return $systemPrefersMode === 'light' ? "#ebedf0" : "#161b22";
-		if (count >= 200) return $systemPrefersMode === 'light' ? "#000000" : "#ffffff";
-		return colorScale(countMap(count))
+		return colorScale[countMap(count)]
 	}
 
 	const countMap = (count: number) => {
-		// if (count >= 200) return 5;
-		// if (count >= 100) return 4;
 		if (count >= 50) return 3;
 		if (count >= 20) return 2;
 		if (count >= 5) return 1;
