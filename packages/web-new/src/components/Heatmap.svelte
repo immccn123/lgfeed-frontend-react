@@ -27,9 +27,10 @@
 	}
 
 	const countMap = (count: number) => {
-		if (count >= 50) return 3;
-		if (count >= 20) return 2;
-		if (count >= 5) return 1;
+		if (count >= 50) return 4;
+		if (count >= 20) return 3;
+		if (count >= 5) return 2;
+		if (count >= 1) return 1;
 		return 0;
 	};
 
