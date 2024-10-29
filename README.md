@@ -1,5 +1,3 @@
-# Lgfeed-frontend-react
+# benbensbs-web
 
-然而现在没有 React 了。
-
-这里是由 Imken 运营的「犇站」的前端 ~~初学 Svelte 写的东西~~
+benbensbs-web 的前端项目文件、使用 SvelteKit 编写
