@@ -8,6 +8,11 @@
 			src: '/advertising.webp',
 			alt: '广告位招租',
 			href: 'https://qm.qq.com/q/f2Wp6MF5lu'
+		},
+		{
+			src: 'https://static.imken.moe/bensite-advertising/blikznxt-exp20241130.webp',
+			alt: 'Ad by 501947',
+			href: 'https://www.luogu.com.cn/user/727558'
 		}
 	];
 </script>
@@ -20,7 +25,7 @@
 				out:fade={{ duration: 100 }}
 				in:fade={{ delay: 100 }}
 			>
-				<a href={item.href}> <img src={item.src} alt={item.alt} class="w-full" /> </a>
+				<a href={item.href} target="_blank"> <img src={item.src} alt={item.alt} class="w-full" /> </a>
 			</div>
 		{/if}
 	{/each}
