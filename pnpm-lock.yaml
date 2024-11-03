@@ -19,6 +19,9 @@ importers:
       awesome-qr:
         specifier: 2.1.5-rc.0
         version: 2.1.5-rc.0
+      chance:
+        specifier: ^1.1.12
+        version: 1.1.12
       cytoscape:
         specifier: ^3.30.2
         version: 3.30.2
@@ -56,6 +59,9 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.14
         version: 0.5.15(tailwindcss@3.4.13)
+      '@types/chance':
+        specifier: ^1.1.6
+        version: 1.1.6
       '@types/cytoscape':
         specifier: ^3.21.8
         version: 3.21.8
@@ -512,6 +518,9 @@ packages:
     peerDependencies:
       svelte: ^3.54.0 || ^4.0.0 || ^5.0.0-next.0
 
+  '@types/chance@1.1.6':
+    resolution: {integrity: sha512-V+pm3stv1Mvz8fSKJJod6CglNGVqEQ6OyuqitoDkWywEODM/eJd1eSuIp9xt6DrX8BWZ2eDSIzbw1tPCUTvGbQ==}
+
   '@types/clean-css@4.2.11':
     resolution: {integrity: sha512-Y8n81lQVTAfP2TOdtJJEsCoYl1AnOkqDqMvXb9/7pfgZZ7r8YrEyurrAvAoAjHOGXKRybay+5CsExqIH6liccw==}
 
@@ -842,6 +851,9 @@ packages:
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
+
+  chance@1.1.12:
+    resolution: {integrity: sha512-vVBIGQVnwtUG+SYe0ge+3MvF78cvSpuCOEUJr7sVEk2vSBuMW6OXNJjSzdtzrlxNUEaoqH2GBd5Y/+18BEB01Q==}
 
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
@@ -2566,6 +2578,8 @@ snapshots:
       '@tanstack/query-core': 5.56.2
       svelte: 4.2.19
 
+  '@types/chance@1.1.6': {}
+
   '@types/clean-css@4.2.11':
     dependencies:
       '@types/node': 20.14.12
@@ -2949,6 +2963,8 @@ snapshots:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+
+  chance@1.1.12: {}
 
   chokidar@3.6.0:
     dependencies:

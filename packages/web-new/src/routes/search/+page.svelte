@@ -158,9 +158,9 @@
 	</div>
 	{#if !isLoading}
 		{#if $query.hasNextPage}
-			<button class="btn md:btn-sm my-2 w-full" on:click={loadMore} disabled={isFetching}>
+			<button class="btn my-2 w-full" on:click={loadMore} disabled={isFetching}>
 				{#if isFetching}
-					<span class="loading loading-ring loading-sm"></span>
+					<span class="loading loading-ring"></span>
 					少女祈祷中……
 				{:else}
 					<MdiMoreHoriz /> 加载更多
