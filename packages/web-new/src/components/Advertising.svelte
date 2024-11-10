@@ -18,7 +18,11 @@
 			src: 'https://static.imken.moe/bensite-advertising/7-365654-exp241231.png',
 			alt: 'Sleeping Cup - by 365654',
 			href: 'http://8.136.99.126'
-		}
+		},
+		{
+			src: 'https://static.imken.moe/bensite-advertising/test8.webp',
+			alt: 'OIer 观测者交流群 群号 946034915',
+		},
 	]);
 
 	let activeItem = 0;
