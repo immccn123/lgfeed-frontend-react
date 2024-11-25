@@ -15,7 +15,7 @@
 		"@iconify-json/mdi": "^1.2.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/adapter-static": "^3.0.5",
-		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/kit": "^2.8.3",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@tailwindcss/typography": "^0.5.14",
 		"@types/chance": "^1.1.6",
